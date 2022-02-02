@@ -1,9 +1,16 @@
 import { Refine } from "@pankod/refine";
 import routerProvider from "@pankod/refine-react-router";
 
+import axios from "axios";
+
 import "@pankod/refine/dist/styles.min.css";
-import { DataProvider } from "@pankod/refine-strapi";
-import strapiAuthProvider from "authProvider";
+import { DataProvider, AuthHelper } from "@pankod/refine-strapi-v4";
+//import strapiAuthProvider from "authProvider";
+import { UserList , UserCreate, UserEdit, UserShow } from "pages/users";
+import { SchoolYearList , SchoolYearCreate, SchoolYearEdit, SchoolYearShow } from "pages/school_years";
+import { CourseList , CourseCreate, CourseEdit, CourseShow } from "pages/courses";
+import { LibraryList , LibraryCreate, LibraryEdit, LibraryShow } from "pages/libraries";
+import { BookList , BookCreate, BookEdit, BookShow } from "pages/books";
 import {
   Title,
   Header,
@@ -12,15 +19,20 @@ import {
   Layout,
   OffLayoutArea,
 } from "components/layout";
+
+import { API_URL/* , TOKEN_KEY */ } from "./constants";
+
 import { useTranslation } from "react-i18next";
 
-function App() {
+const App: React.FC = () => {
   const { t, i18n } = useTranslation();
-  const API_URL = "your-strapi-api-url";
+  const axiosInstance = axios.create();
+  //const strapiAuthHelper = AuthHelper(API_URL + "/api");
+  //const API_URL = "192.168.1.31:1337/api";
+  //const { authProvider, axiosInstance } = strapiAuthProvider(API_URL);
+  const dataProvider = DataProvider(API_URL + "/api", axiosInstance);
 
-  const { authProvider, axiosInstance } = strapiAuthProvider(API_URL);
-  const dataProvider = DataProvider(API_URL, axiosInstance);
-
+  console.log('dataProvider: ', dataProvider);
   const i18nProvider = {
     translate: (key: string, params: object) => t(key, params),
     changeLocale: (lang: string) => i18n.changeLanguage(lang),
@@ -31,7 +43,44 @@ function App() {
     <Refine
       routerProvider={routerProvider}
       dataProvider={dataProvider}
-      authProvider={authProvider}
+      //authProvider={authProvider}
+      resources={[
+        {
+          name: "users",
+          list: UserList,
+          create: UserCreate,
+          edit: UserEdit,
+          show: UserShow,
+        },
+        {
+          name: "school-years",
+          list: SchoolYearList,
+          create: SchoolYearCreate,
+          edit: SchoolYearEdit,
+          show: SchoolYearShow,
+        },
+        {
+          name: "courses",
+          list: CourseList,
+          create: CourseCreate,
+          edit: CourseEdit,
+          show: CourseShow,
+        },
+        {
+          name: "libraries",
+          list: LibraryList,
+          create: LibraryCreate,
+          edit: LibraryEdit,
+          show: LibraryShow,
+        },
+        {
+          name: "books",
+          list: BookList,
+          create: BookCreate,
+          edit: BookEdit,
+          show: BookShow,
+        },
+      ]}
       Title={Title}
       Header={Header}
       Sider={Sider}
