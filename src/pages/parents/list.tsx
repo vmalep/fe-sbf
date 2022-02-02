@@ -10,10 +10,10 @@ import {
   DeleteButton,
   ShowButton,
 } from "@pankod/refine";
-import { IUser } from "interfaces";
+import { IParent } from "interfaces";
 
-export const UserList: React.FC<IResourceComponentsProps> = () => {
-  const { tableProps, sorter } = useTable<IUser>({
+export const ParentList: React.FC<IResourceComponentsProps> = () => {
+  const { tableProps, sorter } = useTable<IParent>({
     initialSorter: [
       {
         field: "id",
@@ -50,7 +50,7 @@ export const UserList: React.FC<IResourceComponentsProps> = () => {
           defaultSortOrder={getDefaultSortOrder("email", sorter)}
           sorter
         />
-        <Table.Column<IUser>
+        <Table.Column<IParent>
           title="Actions"
           dataIndex="actions"
           render={(_, record) => (

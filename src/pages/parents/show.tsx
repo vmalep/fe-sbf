@@ -5,12 +5,12 @@ import {
   IResourceComponentsProps,
 } from "@pankod/refine";
 
-import { IUser } from "interfaces";
+import { IParent } from "interfaces";
 
 const { Title, Text } = Typography;
 
-export const UserShow: React.FC<IResourceComponentsProps> = () => {
-  const { queryResult } = useShow<IUser>();
+export const ParentShow: React.FC<IResourceComponentsProps> = () => {
+  const { queryResult } = useShow<IParent>();
   const { data, isLoading } = queryResult;
   const record = data?.data;
 

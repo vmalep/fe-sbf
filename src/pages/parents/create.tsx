@@ -1,5 +1,5 @@
 import {
-  Edit,
+  Create,
   Form,
   Input,
   IResourceComponentsProps,
@@ -8,21 +8,15 @@ import {
 
 import "react-mde/lib/styles/css/react-mde-all.css";
 
-import { IUser } from "interfaces";
+import { IParent } from "interfaces";
 
-export const UserEdit: React.FC<IResourceComponentsProps> = () => {
+export const ParentCreate: React.FC<IResourceComponentsProps> = () => {
 
-  const { formProps, saveButtonProps } = useForm<IUser>();
+  const { formProps, saveButtonProps } = useForm<IParent>();
 
   return (
-    <Edit saveButtonProps={saveButtonProps}>
+    <Create saveButtonProps={saveButtonProps}>
       <Form {...formProps} layout="vertical">
-        <Form.Item
-          label="Id"
-          name="id"
-        >
-          <Input disabled={true} />
-        </Form.Item>
         <Form.Item
           label="Username"
           name="username"
@@ -38,6 +32,6 @@ export const UserEdit: React.FC<IResourceComponentsProps> = () => {
           <Input />
         </Form.Item>
       </Form>
-    </Edit>
+    </Create>
   );
 };

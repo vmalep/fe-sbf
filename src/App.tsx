@@ -6,7 +6,7 @@ import axios from "axios";
 import "@pankod/refine/dist/styles.min.css";
 import { DataProvider, AuthHelper } from "@pankod/refine-strapi-v4";
 //import strapiAuthProvider from "authProvider";
-import { UserList , UserCreate, UserEdit, UserShow } from "pages/users";
+import { ParentList , ParentCreate, ParentEdit, ParentShow } from "pages/parents";
 import { SchoolYearList , SchoolYearCreate, SchoolYearEdit, SchoolYearShow } from "pages/school_years";
 import { CourseList , CourseCreate, CourseEdit, CourseShow } from "pages/courses";
 import { LibraryList , LibraryCreate, LibraryEdit, LibraryShow } from "pages/libraries";
@@ -46,11 +46,11 @@ const App: React.FC = () => {
       //authProvider={authProvider}
       resources={[
         {
-          name: "users",
-          list: UserList,
-          create: UserCreate,
-          edit: UserEdit,
-          show: UserShow,
+          name: "parents",
+          list: ParentList,
+          create: ParentCreate,
+          edit: ParentEdit,
+          show: ParentShow,
         },
         {
           name: "school-years",

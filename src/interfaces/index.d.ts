@@ -23,7 +23,7 @@ export interface ISchoolYear {
   id: string;
   title: string;
 }
-export interface IUser {
+export interface IParent {
   id: string;
   username: string;
   email: string;
