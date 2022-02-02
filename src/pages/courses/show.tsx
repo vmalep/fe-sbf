@@ -10,7 +10,12 @@ import { ICourse } from "interfaces";
 const { Title, Text } = Typography;
 
 export const CourseShow: React.FC<IResourceComponentsProps> = () => {
-  const { queryResult } = useShow<ICourse>();
+  const { queryResult } = useShow<ICourse>({
+    metaData: {
+      populate: ["libraries"],
+    },
+  });
+  console.log(queryResult);
   const { data, isLoading } = queryResult;
   const record = data?.data;
 

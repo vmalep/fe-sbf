@@ -1,15 +1,30 @@
 export interface IBook {
   id: string;
   price: number;
-  users_permissions_user: IUser;
-  library: ILibrary;
+  parents: {
+    data: {
+      id: string;
+      attributes: ImageBitmapRenderingContextSettings;
+    };
+  };
+  library: {
+    data: {
+      id: string;
+      attributes: ILibrary;
+    };
+  };
   is_available: boolean;
 }
 export interface ICourse{
   id: string;
   title: string;
-  school_year: ISchoolYear;
-  libraries: {//ILibrary[];
+  school_year: {
+    data: {
+      id: string;
+      attributes: ISchoolYear;
+    };
+  };
+  libraries: {
     data: {
       id: string;
       attributes: ILibrary;
@@ -19,8 +34,18 @@ export interface ICourse{
 export interface ILibrary {
   id: string;
   title: string;
-  course: ICourse;
-  books: IBook[];
+  course: {
+    data: {
+      id: string;
+      attributes: ICourse;
+    };
+  };
+  books: {
+    data: {
+      id: string;
+      attributes: IBook;
+    };
+  };
   isdn: string;
   author: string;
 }

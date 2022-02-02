@@ -10,9 +10,15 @@ import { ILibrary } from "interfaces";
 const { Title, Text } = Typography;
 
 export const LibraryShow: React.FC<IResourceComponentsProps> = () => {
-  const { queryResult } = useShow<ILibrary>();
+  const { queryResult } = useShow<ILibrary>({
+    metaData: {
+      populate: ["course"],
+    },
+  });
   const { data, isLoading } = queryResult;
   const record = data?.data;
+  const course = record?.course.data?.attributes;
+  console.log(course);
 
   return (
     <Show isLoading={isLoading}>
@@ -24,6 +30,8 @@ export const LibraryShow: React.FC<IResourceComponentsProps> = () => {
       <Text>{record?.author}</Text>
       <Title level={5}>ISDN</Title>
       <Text>{record?.isdn}</Text>
+      <Title level={5}>Course</Title>
+      <Text>{course?.title}</Text>
     </Show>
   );
 };
