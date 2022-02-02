@@ -55,6 +55,7 @@ export interface ISchoolYear {
 }
 export interface IParent {
   id: string;
+  title: string;
   username: string;
   email: string;
 }

@@ -31,7 +31,7 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
   console.log(tableProps);
 
   const { selectProps: selectLibraryProps } = useSelect<ILibrary>({
-    resource: "lbraries",
+    resource: "libraries",
     optionLabel: "title",
     optionValue: "id",
   });
