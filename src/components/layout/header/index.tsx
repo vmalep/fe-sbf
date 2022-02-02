@@ -64,9 +64,9 @@ export const Header: React.FC = () => {
         </Button>
       </Dropdown>
       <Space style={{ marginLeft: "8px" }}>
-        {user?.name && (
+        {user?.username && (
           <Text ellipsis strong>
-            {user.name}
+            {user.username}
           </Text>
         )}
         {user?.avatar && <Avatar src={user?.avatar} alt={user?.name} />}
