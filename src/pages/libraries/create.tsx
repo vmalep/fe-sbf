@@ -7,6 +7,7 @@ import {
   Select,
   useSelect,
 } from "@pankod/refine";
+import { mediaUploadMapper } from "@pankod/refine-strapi-v4";
 
 import "react-mde/lib/styles/css/react-mde-all.css";
 
@@ -19,7 +20,7 @@ export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
       populate: ["course"],
     },
   });
- 
+
   const { selectProps } = useSelect<ICourse>({
     resource: "courses",
     defaultValue: queryResult?.data?.data?.course?.data?.id,
@@ -27,11 +28,23 @@ export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
 
   return (
     <Create saveButtonProps={saveButtonProps}>
-      <Form {...formProps} layout="vertical">
+      <Form {...formProps} layout="vertical"
+        onFinish={(values: any) => {
+          return (
+            formProps.onFinish &&
+            formProps.onFinish(
+              mediaUploadMapper({
+                ...values,
+                course: values.course?.data.id,
+              }),
+            )
+          );
+        }}
+      >
         <Form.Item
           label="Title"
           name="title"
-          rules={[{required: true}]}
+          rules={[{ required: true }]}
         >
           <Input />
         </Form.Item>
@@ -49,7 +62,7 @@ export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
         </Form.Item>
         <Form.Item
           label="Course"
-          name={["course", "data", "attributes", "title"]}
+          name={["course", "data", "id"]}
           rules={[{ required: true }]}
         >
           <Select {...selectProps} />

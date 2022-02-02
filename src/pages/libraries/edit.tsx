@@ -7,6 +7,7 @@ import {
   Select,
   useSelect,
 } from "@pankod/refine";
+import { mediaUploadMapper } from "@pankod/refine-strapi-v4";
 
 import "react-mde/lib/styles/css/react-mde-all.css";
 
@@ -27,7 +28,19 @@ export const LibraryEdit: React.FC<IResourceComponentsProps> = () => {
 
   return (
     <Edit saveButtonProps={saveButtonProps}>
-      <Form {...formProps} layout="vertical">
+      <Form {...formProps} layout="vertical"
+        onFinish={(values: any) => {
+          return (
+            formProps.onFinish &&
+            formProps.onFinish(
+              mediaUploadMapper({
+                ...values,
+                course: values.course?.data.id,
+              }),
+            )
+          );
+        }}
+      >
         <Form.Item
           label="ID"
           name="id"
@@ -57,7 +70,7 @@ export const LibraryEdit: React.FC<IResourceComponentsProps> = () => {
         </Form.Item>
         <Form.Item
           label="Course"
-          name={["course", "data", "attributes", "title"]}
+          name={["course", "data", "id"]}
           rules={[{ required: true }]}
         >
           <Select {...selectProps} />

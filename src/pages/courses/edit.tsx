@@ -7,11 +7,7 @@ import {
   Select,
   useSelect,
 } from "@pankod/refine";
-import {
-  useStrapiUpload,
-  getValueProps,
-  mediaUploadMapper,
-} from "@pankod/refine-strapi-v4";
+import { mediaUploadMapper } from "@pankod/refine-strapi-v4";
 
 import "react-mde/lib/styles/css/react-mde-all.css";
 
@@ -28,7 +24,6 @@ export const CourseEdit: React.FC<IResourceComponentsProps> = () => {
   const { selectProps } = useSelect<ISchoolYear>({
     resource: "school-years",
     defaultValue: queryResult?.data?.data?.school_year?.data?.id,
-
   });
 
   return (

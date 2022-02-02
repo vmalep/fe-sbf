@@ -7,6 +7,7 @@ import {
   Select,
   useSelect,
 } from "@pankod/refine";
+import { mediaUploadMapper } from "@pankod/refine-strapi-v4";
 
 import "react-mde/lib/styles/css/react-mde-all.css";
 
@@ -27,17 +28,29 @@ export const CourseCreate: React.FC<IResourceComponentsProps> = () => {
 
   return (
     <Create saveButtonProps={saveButtonProps}>
-      <Form {...formProps} layout="vertical">
+      <Form {...formProps} layout="vertical"
+        onFinish={(values: any) => {
+          return (
+            formProps.onFinish &&
+            formProps.onFinish(
+              mediaUploadMapper({
+                ...values,
+                school_year: values.school_year?.data.id,
+              }),
+            )
+          );
+        }}
+      >
         <Form.Item
           label="Title"
           name="title"
-          rules={[{required: true}]}
+          rules={[{ required: true }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           label="School year"
-          name={["school_year", "data", "attributes", "title"]}
+          name={["school_year", "data", "id"]}
           rules={[{ required: true }]}
         >
           <Select {...selectProps} />
