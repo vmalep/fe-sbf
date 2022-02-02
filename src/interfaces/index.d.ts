@@ -9,7 +9,12 @@ export interface ICourse{
   id: string;
   title: string;
   school_year: ISchoolYear;
-  libraries: ILibrary[];
+  libraries: {//ILibrary[];
+    data: {
+      id: string;
+      attributes: ILibrary;
+    };
+  };
 }
 export interface ILibrary {
   id: string;

@@ -9,6 +9,9 @@ import {
   EditButton,
   DeleteButton,
   ShowButton,
+  Select,
+  useSelect,
+  FilterDropdown,
 } from "@pankod/refine";
 import { ICourse } from "interfaces";
 
@@ -20,6 +23,15 @@ export const CourseList: React.FC<IResourceComponentsProps> = () => {
         order: "desc",
       },
     ],
+    metaData: {
+      populate: ["libraries"],
+    },
+  });
+
+  const { selectProps } = useSelect({
+    resource: "libraries",
+    optionLabel: "title",
+    optionValue: "id",
   });
   console.log(tableProps);
 
@@ -41,6 +53,21 @@ export const CourseList: React.FC<IResourceComponentsProps> = () => {
           render={(value) => <TextField value={value} />}
           defaultSortOrder={getDefaultSortOrder("title", sorter)}
           sorter
+        />
+        <Table.Column
+          key="[libraries][id]"
+          dataIndex={["libraries", "data", "attributes", "title"]}
+          title="Libraries"
+          filterDropdown={(props) => (
+            <FilterDropdown {...props}>
+              <Select
+                style={{ minWidth: 200 }}
+                mode="multiple"
+                placeholder="Select Library"
+                {...selectProps}
+              />
+            </FilterDropdown>
+          )}
         />
         <Table.Column<ICourse>
           title="Actions"
