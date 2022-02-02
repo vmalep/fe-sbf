@@ -20,8 +20,12 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
         order: "desc",
       },
     ],
+    metaData: {
+      populate: ["course"],
+    },
   });
-  console.log(tableProps);
+
+  //const course = record?.course.data?.attributes;
 
   return (
     <List>
@@ -50,13 +54,20 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
           defaultSortOrder={getDefaultSortOrder("author", sorter)}
           sorter
         />
+        <Table.Column
+          key="[course][id]"
+          dataIndex={["course", "data", "attributes", "title"]}
+          title="Course"
+          render={(value) => <TextField value={value} />}
+          sorter
+        />
         <Table.Column<ILibrary>
           title="Actions"
           dataIndex="actions"
           render={(_, record) => (
             <Space>
-              <EditButton hideText size="small" recordItemId={record.id} />
               <ShowButton hideText size="small" recordItemId={record.id} />
+              <EditButton hideText size="small" recordItemId={record.id} />
               <DeleteButton hideText size="small" recordItemId={record.id} />
             </Space>
           )}

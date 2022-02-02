@@ -18,7 +18,6 @@ export const LibraryShow: React.FC<IResourceComponentsProps> = () => {
   const { data, isLoading } = queryResult;
   const record = data?.data;
   const course = record?.course.data?.attributes;
-  console.log(course);
 
   return (
     <Show isLoading={isLoading}>
