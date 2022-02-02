@@ -4,15 +4,22 @@ import {
   Input,
   IResourceComponentsProps,
   useForm,
+  Select,
+  useSelect,
 } from "@pankod/refine";
 
 import "react-mde/lib/styles/css/react-mde-all.css";
 
-import { ICourse } from "interfaces";
+import { ICourse, ISchoolYear } from "interfaces";
 
 export const CourseCreate: React.FC<IResourceComponentsProps> = () => {
 
-  const { formProps, saveButtonProps } = useForm<ICourse>();
+  const { formProps, saveButtonProps, queryResult } = useForm<ICourse>();
+
+  const { selectProps } = useSelect<ISchoolYear>({
+    resource: "school-years",
+    defaultValue: queryResult?.data?.data?.school_year?.data?.id,
+  });
 
   return (
     <Create saveButtonProps={saveButtonProps}>
@@ -23,6 +30,13 @@ export const CourseCreate: React.FC<IResourceComponentsProps> = () => {
           rules={[{required: true}]}
         >
           <Input />
+        </Form.Item>
+        <Form.Item
+          label="School year"
+          name="school_year"
+          rules={[{ required: true }]}
+        >
+          <Select {...selectProps} />
         </Form.Item>
       </Form>
     </Create>

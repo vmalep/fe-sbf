@@ -7,60 +7,33 @@ import {
   Select,
   useSelect,
 } from "@pankod/refine";
-import {
-  //useStrapiUpload,
-  //getValueProps,
-  mediaUploadMapper,
-} from "@pankod/refine-strapi-v4";
 
 import "react-mde/lib/styles/css/react-mde-all.css";
 
-//import { /* TOKEN_KEY, */ API_URL } from "../../constants";
-import { ICourse, ILibrary } from "interfaces";
+import { ICourse, ISchoolYear } from "interfaces";
 
 export const CourseEdit: React.FC<IResourceComponentsProps> = () => {
 
-  const { formProps, saveButtonProps, queryResult } = useForm<ICourse>({
-    metaData: { populate: ["libraries"] },
-  });
+  const { formProps, saveButtonProps, queryResult } = useForm<ICourse>();
 
-  const { selectProps } = useSelect<ILibrary>({
-    resource: "libraries",
-    defaultValue: queryResult?.data?.data?.libraries?.data?.id,
+  const { selectProps } = useSelect<ISchoolYear>({
+    resource: "school-years",
+    defaultValue: queryResult?.data?.data?.school_year?.data?.id,
   });
 
   return (
     <Edit saveButtonProps={saveButtonProps}>
-      <Form {...formProps} layout="vertical"
-        onFinish={(values: any) => {
-          return (
-            formProps.onFinish &&
-            formProps.onFinish(
-              mediaUploadMapper({
-                ...values,
-                libraries: values.libraries?.data.id,
-              }),
-            )
-          );
-        }}
-      >
-        <Form.Item
-          label="Id"
-          name="id"
-        >
-          <Input disabled={true} />
-        </Form.Item>
+      <Form {...formProps} layout="vertical">
         <Form.Item
           label="Title"
           name="title"
-          rules={[{ required: true }]}
+          rules={[{required: true}]}
         >
           <Input />
         </Form.Item>
         <Form.Item
-          wrapperCol={{ span: 8 }}
-          label="Libraries"
-          name={["libraries", "data", "id"]}
+          label="School year"
+          name="school_year"
           rules={[{ required: true }]}
         >
           <Select {...selectProps} />

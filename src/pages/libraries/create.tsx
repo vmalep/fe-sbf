@@ -7,9 +7,6 @@ import {
   Select,
   useSelect,
 } from "@pankod/refine";
-import {
-  mediaUploadMapper,
-} from "@pankod/refine-strapi-v4";
 
 import "react-mde/lib/styles/css/react-mde-all.css";
 
@@ -17,7 +14,11 @@ import { ILibrary, ICourse } from "interfaces";
 
 export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
 
-  const { formProps, saveButtonProps, queryResult } = useForm<ILibrary>();
+  const { formProps, saveButtonProps, queryResult } = useForm<ILibrary>({
+    metaData: {
+      populate: ["course"],
+    },
+  });
 
   const { selectProps } = useSelect<ICourse>({
     resource: "courses",
