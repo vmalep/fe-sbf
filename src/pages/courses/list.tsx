@@ -13,7 +13,7 @@ import {
   useSelect,
   FilterDropdown,
 } from "@pankod/refine";
-import { ICourse } from "interfaces";
+import { ICourse, ILibrary } from "interfaces";
 
 export const CourseList: React.FC<IResourceComponentsProps> = () => {
   const { tableProps, sorter } = useTable<ICourse>({
@@ -28,12 +28,11 @@ export const CourseList: React.FC<IResourceComponentsProps> = () => {
     },
   });
 
-  const { selectProps } = useSelect({
+  const { selectProps } = useSelect<ILibrary>({
     resource: "libraries",
     optionLabel: "title",
     optionValue: "id",
   });
-  console.log(tableProps);
 
   return (
     <List>

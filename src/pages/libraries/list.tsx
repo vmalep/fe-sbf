@@ -9,8 +9,11 @@ import {
   EditButton,
   DeleteButton,
   ShowButton,
+  Select,
+  useSelect,
+  FilterDropdown,
 } from "@pankod/refine";
-import { ILibrary } from "interfaces";
+import { ICourse, ILibrary } from "interfaces";
 
 export const LibraryList: React.FC<IResourceComponentsProps> = () => {
   const { tableProps, sorter } = useTable<ILibrary>({
@@ -25,7 +28,11 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
     },
   });
 
-  //const course = record?.course.data?.attributes;
+  const { selectProps } = useSelect<ICourse>({
+    resource: "courses",
+    optionLabel: "title",
+    optionValue: "id",
+  });
 
   return (
     <List>
@@ -60,6 +67,16 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
           title="Course"
           render={(value) => <TextField value={value} />}
           sorter
+          filterDropdown={(props) => (
+            <FilterDropdown {...props}>
+              <Select
+                style={{ minWidth: 200 }}
+                mode="multiple"
+                placeholder="Select Courses"
+                {...selectProps}
+              />
+            </FilterDropdown>
+          )}
         />
         <Table.Column<ILibrary>
           title="Actions"
