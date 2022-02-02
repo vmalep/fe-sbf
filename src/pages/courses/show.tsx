@@ -12,12 +12,12 @@ const { Title, Text } = Typography;
 export const CourseShow: React.FC<IResourceComponentsProps> = () => {
   const { queryResult } = useShow<ICourse>({
     metaData: {
-      populate: ["libraries"],
+      populate: ["school_year"],
     },
   });
-  console.log(queryResult);
   const { data, isLoading } = queryResult;
   const record = data?.data;
+  const school_year = record?.school_year.data?.attributes;
 
   return (
     <Show isLoading={isLoading}>
@@ -25,6 +25,8 @@ export const CourseShow: React.FC<IResourceComponentsProps> = () => {
       <Text>{record?.id}</Text>
       <Title level={5}>Title</Title>
       <Text>{record?.title}</Text>
+      <Title level={5}>School year</Title>
+      <Text>{school_year?.title}</Text>
     </Show>
   );
 };

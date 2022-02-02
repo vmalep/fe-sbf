@@ -19,6 +19,8 @@ export const LibraryEdit: React.FC<IResourceComponentsProps> = () => {
       populate: ["course"],
     },
   });
+  const course = queryResult?.data?.data?.course;
+  console.log(course);
   
   const { selectProps } = useSelect<ICourse>({
     resource: "courses",
@@ -51,7 +53,7 @@ export const LibraryEdit: React.FC<IResourceComponentsProps> = () => {
         </Form.Item>
         <Form.Item
           label="Course"
-          name="course"
+          name={["course", "data", "attributes", "title"]}
           rules={[{ required: true }]}
         >
           <Select {...selectProps} />

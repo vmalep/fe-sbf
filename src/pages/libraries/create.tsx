@@ -22,7 +22,7 @@ export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
 
   const { selectProps } = useSelect<ICourse>({
     resource: "courses",
-    defaultValue: queryResult?.data?.data?.course?.data?.id,
+    optionValue: queryResult?.data?.data?.course?.data?.id,
   });
 
   return (

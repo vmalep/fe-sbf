@@ -14,11 +14,16 @@ import { ICourse, ISchoolYear } from "interfaces";
 
 export const CourseEdit: React.FC<IResourceComponentsProps> = () => {
 
-  const { formProps, saveButtonProps, queryResult } = useForm<ICourse>();
+  const { formProps, saveButtonProps, queryResult } = useForm<ICourse>({
+    metaData: {
+      populate: ["school_year"],
+    },
+  });
 
   const { selectProps } = useSelect<ISchoolYear>({
     resource: "school-years",
-    defaultValue: queryResult?.data?.data?.school_year?.data?.id,
+    optionLabel: "title",
+    optionValue: "id",
   });
 
   return (
