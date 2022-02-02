@@ -8,8 +8,8 @@ import {
   useSelect,
 } from "@pankod/refine";
 import {
-  useStrapiUpload,
-  getValueProps,
+  //useStrapiUpload,
+  //getValueProps,
   mediaUploadMapper,
 } from "@pankod/refine-strapi-v4";
 
@@ -27,7 +27,6 @@ export const CourseEdit: React.FC<IResourceComponentsProps> = () => {
   const { selectProps } = useSelect<ILibrary>({
     resource: "libraries",
     defaultValue: queryResult?.data?.data?.libraries?.data?.id,
-    //metaData: { locale: queryResult?.data?.data.locale },
   });
 
   return (

@@ -4,39 +4,69 @@ import {
   Input,
   IResourceComponentsProps,
   useForm,
+  Select,
+  useSelect,
 } from "@pankod/refine";
+import {
+  mediaUploadMapper,
+} from "@pankod/refine-strapi-v4";
 
 import "react-mde/lib/styles/css/react-mde-all.css";
 
-import { ILibrary } from "interfaces";
+import { ILibrary, ICourse } from "interfaces";
 
 export const LibraryEdit: React.FC<IResourceComponentsProps> = () => {
 
-  const { formProps, saveButtonProps } = useForm<ILibrary>();
+  const { formProps, saveButtonProps, queryResult } = useForm<ILibrary>();
+
+  const { selectProps } = useSelect<ICourse>({
+    resource: "courses",
+    defaultValue: queryResult?.data?.data?.course?.data?.id,
+  });
 
   return (
     <Edit saveButtonProps={saveButtonProps}>
-      <Form {...formProps} layout="vertical">
+      <Form {...formProps} layout="vertical"
+/*         onFinish={(values: any) => {
+          console.log(values);
+          return (
+            formProps.onFinish &&
+            formProps.onFinish(
+              mediaUploadMapper({
+                ...values,
+                course: values.course,
+              }),
+            )
+          );
+        }} */
+      >
         <Form.Item
           label="Title"
           name="title"
-          rules={[{required: true}]}
+          rules={[{ required: true }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           label="Author"
           name="author"
-          rules={[{required: true}]}
+          rules={[{ required: true }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           label="ISDN"
           name="isdn"
-          rules={[{required: true}]}
+          rules={[{ required: true }]}
         >
           <Input />
+        </Form.Item>
+        <Form.Item
+          label="Course"
+          name="course"
+          rules={[{ required: true }]}
+        >
+          <Select {...selectProps} />
         </Form.Item>
       </Form>
     </Edit>
