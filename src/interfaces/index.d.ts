@@ -4,7 +4,7 @@ export interface IBook {
   parents: {
     data: {
       id: string;
-      attributes: ImageBitmapRenderingContextSettings;
+      attributes: IParent;
     };
   };
   library: {

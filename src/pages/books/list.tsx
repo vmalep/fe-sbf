@@ -10,8 +10,11 @@ import {
   DeleteButton,
   ShowButton,
   NumberField,
+  Select,
+  useSelect,
+  FilterDropdown,
 } from "@pankod/refine";
-import { IBook } from "interfaces";
+import { IBook, ILibrary, IParent } from "interfaces";
 
 export const BookList: React.FC<IResourceComponentsProps> = () => {
   const { tableProps, sorter } = useTable<IBook>({
@@ -21,8 +24,23 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
         order: "desc",
       },
     ],
+    metaData: {
+      populate: "*",
+    },
   });
   console.log(tableProps);
+
+  const { selectProps: selectLibraryProps } = useSelect<ILibrary>({
+    resource: "lbraries",
+    optionLabel: "title",
+    optionValue: "id",
+  });
+
+  const { selectProps: selectParentProps } = useSelect<IParent>({
+    resource: "parents",
+    optionLabel: "username",
+    optionValue: "id",
+  });
 
   return (
     <List>
@@ -42,6 +60,38 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
           render={(value) => <NumberField value={value} />}
           defaultSortOrder={getDefaultSortOrder("title", sorter)}
           sorter
+        />
+        <Table.Column
+          key="[library][id]"
+          dataIndex={["library", "data", "attributes", "title"]}
+          title="Title"
+          sorter
+          filterDropdown={(props) => (
+            <FilterDropdown {...props}>
+              <Select
+                style={{ minWidth: 200 }}
+                mode="multiple"
+                placeholder="Select Title"
+                {...selectLibraryProps}
+              />
+            </FilterDropdown>
+          )}
+        />
+        <Table.Column
+          key="[parent][id]"
+          dataIndex={["parent", "data", "attributes", "username"]}
+          title="Owner"
+          sorter
+          filterDropdown={(props) => (
+            <FilterDropdown {...props}>
+              <Select
+                style={{ minWidth: 200 }}
+                mode="multiple"
+                placeholder="Select Parent"
+                {...selectParentProps}
+              />
+            </FilterDropdown>
+          )}
         />
         <Table.Column<IBook>
           title="Actions"
