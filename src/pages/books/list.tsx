@@ -71,7 +71,7 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
         />
         <Table.Column
           key="[parent][id]"
-          dataIndex={["parent", "data", "attributes", "username"]}
+          dataIndex={["parent", "data", "attributes", "title"]}
           title="Owner"
           sorter
           filterDropdown={(props) => (
@@ -79,7 +79,7 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
               <Select
                 style={{ minWidth: 200 }}
                 mode="multiple"
-                placeholder="Select Parent"
+                placeholder="Select Owner"
                 {...selectParentProps}
               />
             </FilterDropdown>

@@ -27,7 +27,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
       <Title level={5}>Title</Title>
       <Text>{library?.title}</Text>
       <Title level={5}>Owner</Title>
-      <Text>{parent?.username}</Text>
+      <Text>{parent?.title}</Text>
       <Title level={5}>Price</Title>
       <Text>{record?.price}</Text>
     </Show>
