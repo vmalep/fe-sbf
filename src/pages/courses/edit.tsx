@@ -7,6 +7,11 @@ import {
   Select,
   useSelect,
 } from "@pankod/refine";
+import {
+  useStrapiUpload,
+  getValueProps,
+  mediaUploadMapper,
+} from "@pankod/refine-strapi-v4";
 
 import "react-mde/lib/styles/css/react-mde-all.css";
 
@@ -22,23 +27,41 @@ export const CourseEdit: React.FC<IResourceComponentsProps> = () => {
 
   const { selectProps } = useSelect<ISchoolYear>({
     resource: "school-years",
-    optionLabel: "title",
-    optionValue: "id",
+    defaultValue: queryResult?.data?.data?.school_year?.data?.id,
+
   });
 
   return (
     <Edit saveButtonProps={saveButtonProps}>
-      <Form {...formProps} layout="vertical">
+      <Form {...formProps} layout="vertical"
+        onFinish={(values: any) => {
+          return (
+            formProps.onFinish &&
+            formProps.onFinish(
+              mediaUploadMapper({
+                ...values,
+                school_year: values.school_year?.data.id,
+              }),
+            )
+          );
+        }}
+      >
+        <Form.Item
+          label="ID"
+          name="id"
+        >
+          <Input disabled={true} />
+        </Form.Item>
         <Form.Item
           label="Title"
           name="title"
-          rules={[{required: true}]}
+          rules={[{ required: true }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           label="School year"
-          name="school_year"
+          name={["school_year", "data", "id"]}
           rules={[{ required: true }]}
         >
           <Select {...selectProps} />

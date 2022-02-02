@@ -14,7 +14,11 @@ import { ICourse, ISchoolYear } from "interfaces";
 
 export const CourseCreate: React.FC<IResourceComponentsProps> = () => {
 
-  const { formProps, saveButtonProps, queryResult } = useForm<ICourse>();
+  const { formProps, saveButtonProps, queryResult } = useForm<ICourse>({
+    metaData: {
+      populate: ["school_year"],
+    },
+  });
 
   const { selectProps } = useSelect<ISchoolYear>({
     resource: "school-years",
@@ -33,7 +37,7 @@ export const CourseCreate: React.FC<IResourceComponentsProps> = () => {
         </Form.Item>
         <Form.Item
           label="School year"
-          name="school_year"
+          name={["school_year", "data", "attributes", "title"]}
           rules={[{ required: true }]}
         >
           <Select {...selectProps} />

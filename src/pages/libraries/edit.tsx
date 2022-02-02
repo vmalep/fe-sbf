@@ -19,9 +19,7 @@ export const LibraryEdit: React.FC<IResourceComponentsProps> = () => {
       populate: ["course"],
     },
   });
-  const course = queryResult?.data?.data?.course;
-  console.log(course);
-  
+
   const { selectProps } = useSelect<ICourse>({
     resource: "courses",
     defaultValue: queryResult?.data?.data?.course?.data?.id,
@@ -30,6 +28,12 @@ export const LibraryEdit: React.FC<IResourceComponentsProps> = () => {
   return (
     <Edit saveButtonProps={saveButtonProps}>
       <Form {...formProps} layout="vertical">
+        <Form.Item
+          label="ID"
+          name="id"
+        >
+          <Input disabled={true} />
+        </Form.Item>
         <Form.Item
           label="Title"
           name="title"

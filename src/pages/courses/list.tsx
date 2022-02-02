@@ -13,7 +13,7 @@ import {
   useSelect,
   FilterDropdown,
 } from "@pankod/refine";
-import { ICourse, ILibrary } from "interfaces";
+import { ICourse, ISchoolYear } from "interfaces";
 
 export const CourseList: React.FC<IResourceComponentsProps> = () => {
   const { tableProps, sorter } = useTable<ICourse>({
@@ -24,12 +24,12 @@ export const CourseList: React.FC<IResourceComponentsProps> = () => {
       },
     ],
     metaData: {
-      populate: ["libraries"],
+      populate: ["school_year"],
     },
   });
 
-  const { selectProps } = useSelect<ILibrary>({
-    resource: "libraries",
+  const { selectProps } = useSelect<ISchoolYear>({
+    resource: "school-years",
     optionLabel: "title",
     optionValue: "id",
   });
@@ -54,15 +54,15 @@ export const CourseList: React.FC<IResourceComponentsProps> = () => {
           sorter
         />
         <Table.Column
-          key="[libraries][id]"
-          dataIndex={["libraries", "data", "attributes", "title"]}
-          title="Libraries"
+          key="[school_year][id]"
+          dataIndex={["school_year", "data", "attributes", "title"]}
+          title="School year"
           filterDropdown={(props) => (
             <FilterDropdown {...props}>
               <Select
                 style={{ minWidth: 200 }}
                 mode="multiple"
-                placeholder="Select Library"
+                placeholder="Select School year"
                 {...selectProps}
               />
             </FilterDropdown>
