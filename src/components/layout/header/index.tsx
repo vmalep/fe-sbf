@@ -22,6 +22,7 @@ export const Header: React.FC = () => {
   const changeLanguage = useSetLocale();
   const { data: user } = useGetIdentity();
 
+  console.log('user: ', user);
   const currentLocale = locale();
 
   const menu = (

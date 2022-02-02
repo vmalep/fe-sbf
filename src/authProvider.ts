@@ -1,5 +1,5 @@
 import { AuthProvider } from "@pankod/refine";
-import { AuthHelper } from "@pankod/refine-strapi";
+import { AuthHelper } from "@pankod/refine-strapi-v4";
 import axios from "axios";
 
 const strapiAuthProvider = (apiUrl: string) => {
@@ -27,7 +27,12 @@ const strapiAuthProvider = (apiUrl: string) => {
       localStorage.removeItem(TOKEN_KEY);
       return Promise.resolve();
     },
-    checkError: () => Promise.resolve(),
+    checkError: (error) => {
+      if (error.status === 401) {
+          return Promise.reject();
+      }
+      return Promise.resolve();
+    },
     checkAuth: () => {
       const token = localStorage.getItem(TOKEN_KEY);
       if (token) {
