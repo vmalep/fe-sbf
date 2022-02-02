@@ -14,7 +14,7 @@ import {
   useSelect,
   FilterDropdown,
 } from "@pankod/refine";
-import { IBook, ILibrary, IParent } from "interfaces";
+import { IBook, ILibrary, IUser } from "interfaces";
 
 export const BookList: React.FC<IResourceComponentsProps> = () => {
   const { tableProps, sorter } = useTable<IBook>({
@@ -28,7 +28,6 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
       populate: "*",
     },
   });
-  console.log(tableProps);
 
   const { selectProps: selectLibraryProps } = useSelect<ILibrary>({
     resource: "libraries",
@@ -36,8 +35,8 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
     optionValue: "id",
   });
 
-  const { selectProps: selectParentProps } = useSelect<IParent>({
-    resource: "parents",
+  const { selectProps: selectParentProps } = useSelect<IUser>({
+    resource: "users",
     optionLabel: "username",
     optionValue: "id",
   });
@@ -70,8 +69,8 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
           )}
         />
         <Table.Column
-          key="[parent][id]"
-          dataIndex={["parent", "data", "attributes", "title"]}
+          key="[user][id]"
+          dataIndex={["users_permissions_user", "data", "attributes", "username"]}
           title="Owner"
           sorter
           filterDropdown={(props) => (

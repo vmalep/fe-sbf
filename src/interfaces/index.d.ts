@@ -7,6 +7,12 @@ export interface IBook {
       attributes: IParent;
     };
   };
+  users_permissions_user: {
+    data: {
+      id: string;
+      attributes: IUser;
+    };
+  };
   library: {
     data: {
       id: string;
@@ -58,4 +64,12 @@ export interface IParent {
   title: string;
   username: string;
   email: string;
+}
+export interface IUser {
+  id: string;
+  username: string;
+  email: string;
+  firstname: string;
+  lastname: string;
+  phone: string;
 }

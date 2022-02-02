@@ -17,8 +17,9 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
   });
   const { data, isLoading } = queryResult;
   const record = data?.data;
+  console.log(record);
   const library = record?.library.data?.attributes;
-  const parent = record?.parent.data?.attributes;
+  const user = record?.users_permissions_user.data?.attributes;
 
   return (
     <Show isLoading={isLoading}>
@@ -27,7 +28,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
       <Title level={5}>Title</Title>
       <Text>{library?.title}</Text>
       <Title level={5}>Owner</Title>
-      <Text>{parent?.title}</Text>
+      <Text>{user?.username}</Text>
       <Title level={5}>Price</Title>
       <Text>{record?.price}</Text>
     </Show>

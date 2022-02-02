@@ -11,7 +11,7 @@ import { mediaUploadMapper } from "@pankod/refine-strapi-v4";
 
 import "react-mde/lib/styles/css/react-mde-all.css";
 
-import { IBook, ILibrary, IParent } from "interfaces";
+import { IBook, ILibrary, IUser } from "interfaces";
 
 export const BookEdit: React.FC<IResourceComponentsProps> = () => {
 
@@ -21,9 +21,10 @@ export const BookEdit: React.FC<IResourceComponentsProps> = () => {
     },
   });
 
-  const { selectProps: selectParentProps } = useSelect<IParent>({
-    resource: "parents",
+  const { selectProps: selectParentProps } = useSelect<IUser>({
+    resource: "users",
     defaultValue: queryResult?.data?.data?.parent?.data?.id,
+    optionLabel: "username",
   });
 
   const { selectProps: selectLibraryProps } = useSelect<ILibrary>({
@@ -40,7 +41,7 @@ export const BookEdit: React.FC<IResourceComponentsProps> = () => {
             formProps.onFinish(
               mediaUploadMapper({
                 ...values,
-                parent: values.parent?.data.id,
+                users_permissions_user: values.users_permissions_user?.data.id,
                 library: values.library?.data.id,
               }),
             )
@@ -49,7 +50,7 @@ export const BookEdit: React.FC<IResourceComponentsProps> = () => {
       >
         <Form.Item
           label="Owner"
-          name={["parent", "data", "id"]}
+          name={["users_permissions_user", "data", "id"]}
           rules={[{ required: true }]}
         >
           <Select {...selectParentProps} />
