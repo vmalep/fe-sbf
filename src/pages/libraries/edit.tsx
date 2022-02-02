@@ -26,20 +26,7 @@ export const LibraryEdit: React.FC<IResourceComponentsProps> = () => {
 
   return (
     <Edit saveButtonProps={saveButtonProps}>
-      <Form {...formProps} layout="vertical"
-/*         onFinish={(values: any) => {
-          console.log(values);
-          return (
-            formProps.onFinish &&
-            formProps.onFinish(
-              mediaUploadMapper({
-                ...values,
-                course: values.course,
-              }),
-            )
-          );
-        }} */
-      >
+      <Form {...formProps} layout="vertical">
         <Form.Item
           label="Title"
           name="title"
