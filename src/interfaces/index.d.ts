@@ -1,7 +1,7 @@
 export interface IBook {
   id: string;
   price: number;
-  parents: {
+  parent: {
     data: {
       id: string;
       attributes: IParent;

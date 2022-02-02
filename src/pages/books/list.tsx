@@ -54,14 +54,6 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
           sorter
         />
         <Table.Column
-          dataIndex="price"
-          key="price"
-          title="Price"
-          render={(value) => <NumberField value={value} />}
-          defaultSortOrder={getDefaultSortOrder("title", sorter)}
-          sorter
-        />
-        <Table.Column
           key="[library][id]"
           dataIndex={["library", "data", "attributes", "title"]}
           title="Title"
@@ -92,6 +84,14 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
               />
             </FilterDropdown>
           )}
+        />
+        <Table.Column
+          dataIndex="price"
+          key="price"
+          title="Price"
+          render={(value) => <NumberField value={value} />}
+          defaultSortOrder={getDefaultSortOrder("title", sorter)}
+          sorter
         />
         <Table.Column<IBook>
           title="Actions"
