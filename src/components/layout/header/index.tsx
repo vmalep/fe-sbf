@@ -16,17 +16,11 @@ import { useTranslation } from "react-i18next";
 const { DownOutlined } = Icons;
 const { Text } = Typography;
 
-interface HeaderProps {
-  role: string;
-  setRole: React.Dispatch<React.SetStateAction<string>>;
-}
-
-export const Header: React.FC<HeaderProps> = ({ role, setRole }) => {
+export const Header: React.FC = () => {
   const { i18n } = useTranslation();
   const locale = useGetLocale();
   const changeLanguage = useSetLocale();
   const { data: user } = useGetIdentity();
-  //setRole(user.role);
   
   const currentLocale = locale();
 

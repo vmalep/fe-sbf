@@ -12,6 +12,8 @@ import {
   Select,
   useSelect,
   FilterDropdown,
+  useImport,
+  ImportButton,
 } from "@pankod/refine";
 import { ICourse, ILibrary } from "interfaces";
 
@@ -34,8 +36,14 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
     optionValue: "id",
   });
 
+  const importProps = useImport<ILibrary>();
+
   return (
-    <List>
+    <List
+      pageHeaderProps={{
+        extra: <ImportButton {...importProps} />,
+      }}
+    >
       <Table {...tableProps} rowKey="id">
         <Table.Column
           dataIndex="id"
