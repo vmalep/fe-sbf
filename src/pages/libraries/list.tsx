@@ -15,7 +15,7 @@ import {
   useImport,
   ImportButton,
 } from "@pankod/refine";
-import { ICourse, ILibrary } from "interfaces";
+import { ICourse, ILibrary, ISchoolYear } from "interfaces";
 
 export const LibraryList: React.FC<IResourceComponentsProps> = () => {
   const { tableProps, sorter } = useTable<ILibrary>({
@@ -26,11 +26,17 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
       },
     ],
     metaData: {
-      populate: ["course"],
+      populate: {
+        course: {
+          populate: ['school_year'],
+        }
+      }
     },
   });
 
-  const { selectProps } = useSelect<ICourse>({
+  console.log(tableProps)
+
+  const { selectProps: selectCourseProps } = useSelect<ICourse>({
     resource: "courses",
     optionLabel: "title",
     optionValue: "id",
@@ -44,7 +50,14 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
         extra: <ImportButton {...importProps} />,
       }}
     >
-      <Table {...tableProps} rowKey="id">
+      <Table
+        {...tableProps}
+        rowKey="id"
+        pagination={{
+          ...tableProps.pagination,
+          pageSize: 20,
+        }}
+      >
         <Table.Column
           dataIndex="id"
           key="id"
@@ -81,7 +94,24 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
                 style={{ minWidth: 200 }}
                 mode="multiple"
                 placeholder="Select Courses"
-                {...selectProps}
+                {...selectCourseProps}
+              />
+            </FilterDropdown>
+          )}
+        />
+        <Table.Column
+          key="[course][id]"
+          dataIndex={["course", "data", "attributes", "title"]}
+          title="Course"
+          render={(value) => <TextField value={value} />}
+          sorter
+          filterDropdown={(props) => (
+            <FilterDropdown {...props}>
+              <Select
+                style={{ minWidth: 200 }}
+                mode="multiple"
+                placeholder="Select Courses"
+                {...selectCourseProps}
               />
             </FilterDropdown>
           )}
