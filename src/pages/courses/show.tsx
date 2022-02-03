@@ -5,6 +5,8 @@ import {
   IResourceComponentsProps,
 } from "@pankod/refine";
 
+import { RenderLibraries } from "components/customRenders"
+
 import { ICourse } from "interfaces";
 
 const { Title, Text } = Typography;
@@ -12,14 +14,14 @@ const { Title, Text } = Typography;
 export const CourseShow: React.FC<IResourceComponentsProps> = () => {
   const { queryResult } = useShow<ICourse>({
     metaData: {
-      populate: ["school_year"],
+      populate: "*",
     },
   });
   const { data, isLoading } = queryResult;
   const record = data?.data;
   const school_year = record?.school_year.data?.attributes;
 
-  return (
+  const renderCourse = () => (
     <Show isLoading={isLoading}>
       <Title level={5}>Id</Title>
       <Text>{record?.id}</Text>
@@ -29,4 +31,11 @@ export const CourseShow: React.FC<IResourceComponentsProps> = () => {
       <Text>{school_year?.title}</Text>
     </Show>
   );
+
+  return (
+    <>
+      {renderCourse()}
+      {RenderLibraries({ record })}
+    </>
+  )
 };
