@@ -98,6 +98,34 @@ const App: React.FC = () => {
       routerProvider={routerProvider}
       resources={[
         {
+          name: "books",
+          list: BookList,
+          create: BookCreate,
+          edit: BookEdit,
+          show: BookShow,
+        },
+        {
+          name: "libraries",
+          list: LibraryList,
+          create: LibraryCreate,
+          edit: LibraryEdit,
+          show: LibraryShow,
+        },
+        {
+          name: "courses",
+          list: CourseList,
+          create: CourseCreate,
+          edit: CourseEdit,
+          show: CourseShow,
+        },
+        {
+          name: "school-years",
+          list: SchoolYearList,
+          create: SchoolYearCreate,
+          edit: SchoolYearEdit,
+          show: SchoolYearShow,
+        },
+        {
           name: "users",
           list: UserList,
           create: UserCreate,
@@ -111,34 +139,6 @@ const App: React.FC = () => {
           edit: ParentEdit,
           show: ParentShow,
         }, */
-        {
-          name: "school-years",
-          list: SchoolYearList,
-          create: SchoolYearCreate,
-          edit: SchoolYearEdit,
-          show: SchoolYearShow,
-        },
-        {
-          name: "courses",
-          list: CourseList,
-          create: CourseCreate,
-          edit: CourseEdit,
-          show: CourseShow,
-        },
-        {
-          name: "libraries",
-          list: LibraryList,
-          create: LibraryCreate,
-          edit: LibraryEdit,
-          show: LibraryShow,
-        },
-        {
-          name: "books",
-          list: BookList,
-          create: BookCreate,
-          edit: BookEdit,
-          show: BookShow,
-        },
       ]}
       Title={Title}
       Header={Header}
