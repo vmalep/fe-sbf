@@ -8,7 +8,7 @@ export const Title: React.FC<TitleProps> = ({ collapsed }) => (
   <Link to="/">
     {collapsed ? (
       <img
-        src={"/refine-collapsed.svg"}
+        src={"/SBF-collapsed.svg"}
         alt="Refine"
         style={{
           display: "flex",
@@ -19,7 +19,7 @@ export const Title: React.FC<TitleProps> = ({ collapsed }) => (
       />
     ) : (
       <img
-        src={"/refine.svg"}
+        src={"/SBF.svg"}
         alt="Refine"
         style={{
           width: "200px",

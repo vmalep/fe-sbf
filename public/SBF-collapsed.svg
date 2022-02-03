@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="34"
+   height="45"
+   viewBox="0 0 8.9958334 11.90625"
+   version="1.1"
+   id="svg24948"
+   inkscape:version="1.1.1 (3bf5ae0d25, 2021-09-20)"
+   sodipodi:docname="SBF-collapsed.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview24950"
+     pagecolor="#505050"
+     bordercolor="#ffffff"
+     borderopacity="1"
+     inkscape:pageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     width="34mm"
+     units="px"
+     inkscape:zoom="12.030079"
+     inkscape:cx="14.920933"
+     inkscape:cy="10.972497"
+     inkscape:window-width="1920"
+     inkscape:window-height="1043"
+     inkscape:window-x="370"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs24945" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.7066px;line-height:1.25;font-family:Purisa;-inkscape-font-specification:'Purisa, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.442665"
+       x="-1.0569961"
+       y="13.102466"
+       id="text31810"
+       transform="scale(1.1019991,0.90744175)"><tspan
+         sodipodi:role="line"
+         id="tspan31808"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.7066px;font-family:Purisa;-inkscape-font-specification:'Purisa, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0.442665"
+         x="-1.0569961"
+         y="13.102466">S</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.25583px;line-height:1.25;font-family:Purisa;-inkscape-font-specification:'Purisa, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.156396"
+       x="2.8836265"
+       y="-1.6303663"
+       id="text40370"
+       transform="rotate(72.077687)"><tspan
+         sodipodi:role="line"
+         id="tspan40368"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:6.25583px;font-family:Purisa;-inkscape-font-specification:'Purisa, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0.156396"
+         x="2.8836265"
+         y="-1.6303663">B</tspan></text>
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.08052px;line-height:1.25;font-family:Purisa;-inkscape-font-specification:'Purisa, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.127013"
+       x="-8.7392569"
+       y="8.6693716"
+       id="text48338"
+       transform="rotate(-73.573586)"><tspan
+         sodipodi:role="line"
+         id="tspan48336"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:5.08052px;font-family:Purisa;-inkscape-font-specification:'Purisa, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#ffffff;stroke-width:0.127013"
+         x="-8.7392569"
+         y="8.6693716">F</tspan></text>
+  </g>
+</svg>
