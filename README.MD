@@ -15,6 +15,8 @@ The application is still in early stage and partially implemented.
 
 This frontend is developped with Refine (http://refine.dev) and the backed, developped with Strapi (http://strapi.io) is deployed on Heroku.
 
+The backend repo is available here: https://github.com/vmalep/be-sbf
+
 ## Available Scripts
 
 ### Running the development server.
