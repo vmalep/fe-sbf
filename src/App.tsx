@@ -13,24 +13,19 @@ import { SchoolYearList, SchoolYearCreate, SchoolYearEdit, SchoolYearShow } from
 import { CourseList, CourseCreate, CourseEdit, CourseShow } from "pages/courses";
 import { LibraryList, LibraryCreate, LibraryEdit, LibraryShow } from "pages/libraries";
 import { BookList, BookCreate, BookEdit, BookShow } from "pages/books";
-import {
-  Title,
-  Header,
-  Sider,
-  Footer,
-  Layout,
-  OffLayoutArea,
-} from "components/layout";
+import { Title, Header, Sider, Footer, Layout, OffLayoutArea } from "components/layout";
 
 import { API_URL, TOKEN_KEY } from "./constants";
 
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 
 const App: React.FC = () => {
   const { t, i18n } = useTranslation();
   const axiosInstance = axios.create();
   const strapiAuthHelper = AuthHelper(API_URL + "/api");
-  const currentRole = GetUserRole(API_URL + "/api");
+  const getCurrentRole = GetUserRole(API_URL + "/api");
+  const [role, setRole] = useState("");
 
   const authProvider: AuthProvider = {
     login: async ({ username, password }) => {
@@ -78,7 +73,7 @@ const App: React.FC = () => {
       if (status === 200) {
         console.log('user data');
         const { id, username, email } = data;
-        const role = await currentRole.role(id, token);
+        const role = await getCurrentRole.role(id, token);
 
         return Promise.resolve({
           id,
@@ -98,20 +93,22 @@ const App: React.FC = () => {
     getLocale: () => i18n.language,
   };
 
+  //console.log('current role = ', role);
+
   return (
     <Refine
       authProvider={authProvider}
       dataProvider={DataProvider(API_URL + "/api", axiosInstance)}
 /*       accessControlProvider={{
         can: async ({ resource, action }) => {
-            const enforcer = await newEnforcer(model, adapter);
-            const can = await enforcer.enforce(
-                "editor",
-                resource,
-                action,
-            );
+          const enforcer = await newEnforcer(model, adapter);
+          const can = await enforcer.enforce(
+            "admin",
+            resource,
+            action,
+          );
 
-            return Promise.resolve({ can });
+          return Promise.resolve({ can });
         },
       }} */
       routerProvider={routerProvider}
@@ -151,16 +148,9 @@ const App: React.FC = () => {
           edit: UserEdit,
           show: UserShow,
         },
-/*         {
-          name: "parents",
-          list: ParentList,
-          create: ParentCreate,
-          edit: ParentEdit,
-          show: ParentShow,
-        }, */
       ]}
       Title={Title}
-      Header={Header}
+      Header={() => <Header role={role} setRole={setRole} />}
       Sider={Sider}
       Footer={Footer}
       Layout={Layout}
