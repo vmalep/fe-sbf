@@ -111,6 +111,18 @@ const App: React.FC = () => {
           return Promise.resolve({ can });
         },
       }} */
+      accessControlProvider={{
+        can: async ({ resource, action, params }) => {
+            if (resource === "courses" && action === "edit") {
+                return Promise.resolve({
+                    can: false,
+                    reason: "Unauthorized",
+                });
+            }
+
+            return Promise.resolve({ can: true });
+        },
+      }}
       routerProvider={routerProvider}
       resources={[
         {
