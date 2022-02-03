@@ -41,6 +41,12 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
     optionValue: "id",
   });
 
+  const { selectProps: selectSchoolYearProps } = useSelect<ICourse>({
+    resource: "school-years",
+    optionLabel: "title",
+    optionValue: "id",
+  });
+
   const importProps = useImport<ILibrary>();
 
   return (
@@ -92,16 +98,16 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
               <Select
                 style={{ minWidth: 200 }}
                 mode="multiple"
-                placeholder="Select Courses"
-                {...selectCourseProps}
+                placeholder="Select School year"
+                {...selectSchoolYearProps}
               />
             </FilterDropdown>
           )}
         />
         <Table.Column
-          key="[course][id]"
-          dataIndex={["course", "data", "attributes", "title"]}
-          title="Course"
+          key="[school_year][id]"
+          dataIndex={["course", "data", "attributes", "school_year", "data", "attributes", "title"]}
+          title="School year"
           render={(value) => <TextField value={value} />}
           sorter
           filterDropdown={(props) => (
