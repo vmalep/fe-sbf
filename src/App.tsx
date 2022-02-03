@@ -1,33 +1,31 @@
 import { Refine, AuthProvider } from "@pankod/refine";
 import routerProvider from "@pankod/refine-react-router";
-
 import axios from "axios";
-
 import "@pankod/refine/dist/styles.min.css";
 import { DataProvider, AuthHelper } from "@pankod/refine-strapi-v4";
+import { newEnforcer } from "casbin.js";
+import { model, adapter } from "./accessControl";
+import GetUserRole from "./helpers/getUserRole";
+
 import { UserList, UserCreate, UserEdit, UserShow } from "pages/users";
 //import { ParentList, ParentCreate, ParentEdit, ParentShow } from "pages/parents";
-import { SchoolYearList, SchoolYearCreate, SchoolYearEdit, SchoolYearShow } from "pages/school_years";
+import { SchoolYearList, SchoolYearCreate, SchoolYearEdit, SchoolYearShow } from "pages/school-years";
 import { CourseList, CourseCreate, CourseEdit, CourseShow } from "pages/courses";
 import { LibraryList, LibraryCreate, LibraryEdit, LibraryShow } from "pages/libraries";
 import { BookList, BookCreate, BookEdit, BookShow } from "pages/books";
-import {
-  Title,
-  Header,
-  Sider,
-  Footer,
-  Layout,
-  OffLayoutArea,
-} from "components/layout";
+import { Title, Header, Sider, Footer, Layout, OffLayoutArea } from "components/layout";
 
 import { API_URL, TOKEN_KEY } from "./constants";
 
 import { useTranslation } from "react-i18next";
+import { useState } from "react";
 
 const App: React.FC = () => {
   const { t, i18n } = useTranslation();
   const axiosInstance = axios.create();
   const strapiAuthHelper = AuthHelper(API_URL + "/api");
+  const getCurrentRole = GetUserRole(API_URL + "/api");
+  const [role, setRole] = useState("");
 
   const authProvider: AuthProvider = {
     login: async ({ username, password }) => {
@@ -73,11 +71,15 @@ const App: React.FC = () => {
 
       const { data, status } = await strapiAuthHelper.me(token);
       if (status === 200) {
+        console.log('user data');
         const { id, username, email } = data;
+        const role = await getCurrentRole.role(id, token);
+
         return Promise.resolve({
           id,
           username,
           email,
+          role,
         });
       }
 
@@ -91,10 +93,36 @@ const App: React.FC = () => {
     getLocale: () => i18n.language,
   };
 
+  //console.log('current role = ', role);
+
   return (
     <Refine
       authProvider={authProvider}
       dataProvider={DataProvider(API_URL + "/api", axiosInstance)}
+/*       accessControlProvider={{
+        can: async ({ resource, action }) => {
+          const enforcer = await newEnforcer(model, adapter);
+          const can = await enforcer.enforce(
+            "admin",
+            resource,
+            action,
+          );
+
+          return Promise.resolve({ can });
+        },
+      }} */
+      accessControlProvider={{
+        can: async ({ resource, action, params }) => {
+            if (resource === "courses" && action === "edit") {
+                return Promise.resolve({
+                    can: false,
+                    reason: "Unauthorized",
+                });
+            }
+
+            return Promise.resolve({ can: true });
+        },
+      }}
       routerProvider={routerProvider}
       resources={[
         {
@@ -132,16 +160,9 @@ const App: React.FC = () => {
           edit: UserEdit,
           show: UserShow,
         },
-/*         {
-          name: "parents",
-          list: ParentList,
-          create: ParentCreate,
-          edit: ParentEdit,
-          show: ParentShow,
-        }, */
       ]}
       Title={Title}
-      Header={Header}
+      Header={() => <Header role={role} setRole={setRole} />}
       Sider={Sider}
       Footer={Footer}
       Layout={Layout}
