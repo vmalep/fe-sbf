@@ -72,4 +72,12 @@ export interface IUser {
   firstname: string;
   lastname: string;
   phone: string;
+  provider: string;
+  role: {
+    data: {
+      attributes: {
+        type: string;
+      };
+    };
+  };
 }

@@ -1,13 +1,15 @@
 import { Refine, AuthProvider } from "@pankod/refine";
 import routerProvider from "@pankod/refine-react-router";
-
 import axios from "axios";
-
 import "@pankod/refine/dist/styles.min.css";
 import { DataProvider, AuthHelper } from "@pankod/refine-strapi-v4";
+import { newEnforcer } from "casbin.js";
+import { model, adapter } from "./accessControl";
+import GetUserRole from "./helpers/getUserRole";
+
 import { UserList, UserCreate, UserEdit, UserShow } from "pages/users";
 //import { ParentList, ParentCreate, ParentEdit, ParentShow } from "pages/parents";
-import { SchoolYearList, SchoolYearCreate, SchoolYearEdit, SchoolYearShow } from "pages/school_years";
+import { SchoolYearList, SchoolYearCreate, SchoolYearEdit, SchoolYearShow } from "pages/school-years";
 import { CourseList, CourseCreate, CourseEdit, CourseShow } from "pages/courses";
 import { LibraryList, LibraryCreate, LibraryEdit, LibraryShow } from "pages/libraries";
 import { BookList, BookCreate, BookEdit, BookShow } from "pages/books";
@@ -28,6 +30,7 @@ const App: React.FC = () => {
   const { t, i18n } = useTranslation();
   const axiosInstance = axios.create();
   const strapiAuthHelper = AuthHelper(API_URL + "/api");
+  const currentRole = GetUserRole(API_URL + "/api");
 
   const authProvider: AuthProvider = {
     login: async ({ username, password }) => {
@@ -73,11 +76,15 @@ const App: React.FC = () => {
 
       const { data, status } = await strapiAuthHelper.me(token);
       if (status === 200) {
+        console.log('user data');
         const { id, username, email } = data;
+        const role = await currentRole.role(id, token);
+
         return Promise.resolve({
           id,
           username,
           email,
+          role,
         });
       }
 
@@ -95,6 +102,18 @@ const App: React.FC = () => {
     <Refine
       authProvider={authProvider}
       dataProvider={DataProvider(API_URL + "/api", axiosInstance)}
+/*       accessControlProvider={{
+        can: async ({ resource, action }) => {
+            const enforcer = await newEnforcer(model, adapter);
+            const can = await enforcer.enforce(
+                "editor",
+                resource,
+                action,
+            );
+
+            return Promise.resolve({ can });
+        },
+      }} */
       routerProvider={routerProvider}
       resources={[
         {
