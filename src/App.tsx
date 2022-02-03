@@ -22,6 +22,7 @@ import { useState } from "react";
 const App: React.FC = () => {
   const { t, i18n } = useTranslation();
   const axiosInstance = axios.create();
+  //const TOKEN_KEY = process.env.REACT_APP_API_TOKEN_KEY;
   const strapiAuthHelper = AuthHelper(API_URL + "/api");
   const getCurrentRole = GetUserRole(API_URL + "/api");
   const [role, setRole] = useState("");
