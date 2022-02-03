@@ -26,11 +26,10 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
       },
     ],
     metaData: {
-      populate: {
-        course: {
-          populate: ['school_year'],
-        }
-      }
+      populate: [
+        'course',
+        'course.school_year',
+      ],
     },
   });
 
