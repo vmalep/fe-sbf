@@ -3,8 +3,7 @@ import routerProvider from "@pankod/refine-react-router";
 import axios from "axios";
 import "@pankod/refine/dist/styles.min.css";
 import { DataProvider, AuthHelper } from "@pankod/refine-strapi-v4";
-import { newEnforcer } from "casbin.js";
-import { model, adapter } from "./accessControl";
+
 import GetUserRole from "./helpers/getUserRole";
 
 import { UserList, UserCreate, UserEdit, UserShow } from "pages/users";
@@ -100,18 +99,6 @@ const App: React.FC = () => {
       authProvider={authProvider}
       dataProvider={DataProvider(API_URL + "/api", axiosInstance)}
 /*       accessControlProvider={{
-        can: async ({ resource, action }) => {
-          const enforcer = await newEnforcer(model, adapter);
-          const can = await enforcer.enforce(
-            "admin",
-            resource,
-            action,
-          );
-
-          return Promise.resolve({ can });
-        },
-      }} */
-      accessControlProvider={{
         can: async ({ resource, action, params }) => {
             if (resource === "courses" && action === "edit") {
                 return Promise.resolve({
@@ -122,7 +109,7 @@ const App: React.FC = () => {
 
             return Promise.resolve({ can: true });
         },
-      }}
+      }} */
       routerProvider={routerProvider}
       resources={[
         {
