@@ -20,7 +20,7 @@ export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
       populate: ["course"/* , "course.school_year" */],
     },
   });
-  console.log(formProps);
+  console.log(queryResult);
 
   const { selectProps } = useSelect<ICourse>({
     resource: "courses",

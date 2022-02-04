@@ -20,6 +20,7 @@ export const LibraryEdit: React.FC<IResourceComponentsProps> = () => {
       populate: ["course"],
     },
   });
+  console.log(queryResult);
 
   const { selectProps } = useSelect<ICourse>({
     resource: "courses",
