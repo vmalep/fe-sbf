@@ -13,6 +13,7 @@ import {
   Select,
   useSelect,
   FilterDropdown,
+  BooleanField,
 } from "@pankod/refine";
 import { IBook, ILibrary, IUser } from "interfaces";
 
@@ -91,6 +92,12 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
           render={(value) => <NumberField value={value} />}
           defaultSortOrder={getDefaultSortOrder("title", sorter)}
           sorter
+        />
+        <Table.Column
+          key="is_available"
+          dataIndex="is_available"
+          title="Available"
+          render={(value) => <BooleanField value={value} />}
         />
         <Table.Column<IBook>
           title="Actions"
