@@ -20,8 +20,9 @@ export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
       populate: ["course"],
     },
   });
+  console.log(formProps);
 
-  const { selectProps: selectCourseProps } = useSelect<ICourse>({
+  const { selectProps } = useSelect<ICourse>({
     resource: "courses",
     defaultValue: queryResult?.data?.data?.course?.data?.id,
   });
@@ -51,12 +52,14 @@ export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
         <Form.Item
           label="Author"
           name="author"
+          rules={[{ required: true }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           label="ISDN"
           name="isdn"
+          rules={[{ required: true }]}
         >
           <Input />
         </Form.Item>
@@ -65,7 +68,7 @@ export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
           name={["course", "data", "id"]}
           rules={[{ required: true }]}
         >
-              <Select {...selectCourseProps} />
+          <Select {...selectProps} />
         </Form.Item>
       </Form>
     </Create>

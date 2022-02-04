@@ -20,6 +20,7 @@ export const CourseCreate: React.FC<IResourceComponentsProps> = () => {
       populate: ["school_year"],
     },
   });
+  console.log(formProps);
 
   const { selectProps } = useSelect<ISchoolYear>({
     resource: "school-years",
