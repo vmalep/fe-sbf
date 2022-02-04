@@ -17,7 +17,7 @@ export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
 
   const { formProps, saveButtonProps, queryResult } = useForm<ILibrary>({
     metaData: {
-      populate: ["course"],
+      populate: ["course"/* , "course.school_year" */],
     },
   });
   console.log(formProps);
@@ -59,7 +59,6 @@ export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
         <Form.Item
           label="ISDN"
           name="isdn"
-          rules={[{ required: true }]}
         >
           <Input />
         </Form.Item>
