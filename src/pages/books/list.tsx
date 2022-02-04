@@ -13,97 +13,257 @@ import {
   Select,
   useSelect,
   FilterDropdown,
+  BooleanField,
+  CrudFilters,
+  Form,
+  Input,
+  Button,
+  Card,
+  Icons,
+  FormProps,
+  Row,
+  Col,
+  Radio,
+  HttpError,
+  InputNumber,
 } from "@pankod/refine";
-import { IBook, ILibrary, IUser } from "interfaces";
+
+import {
+  IBook,
+  IUser,
+  ILibrary,
+  ICourse,
+  //ISchoolYear
+  IBookFilterVariables,
+} from "interfaces";
 
 export const BookList: React.FC<IResourceComponentsProps> = () => {
-  const { tableProps, sorter } = useTable<IBook>({
+  const { tableProps, sorter, searchFormProps } = useTable<IBook, HttpError, IBookFilterVariables>({
     initialSorter: [
       {
         field: "id",
         order: "desc",
       },
     ],
+    onSearch: (params) => {
+      const filters: CrudFilters = [];
+      const { /* q,  */is_available, minprice, maxprice } = params;
+
+      filters.push(
+        /*         {
+                  field: "q",
+                  operator: "eq",
+                  value: q,
+                }, */
+        {
+          field: "is_available",
+          operator: "eq",
+          value: is_available,
+        },
+        {
+          field: "price",
+          operator: "gte",
+          value: minprice ? minprice : undefined,
+        },
+        {
+          field: "price",
+          operator: "lte",
+          value: maxprice ? maxprice : undefined,
+        },
+      );
+
+      return filters;
+    },
     metaData: {
-      populate: "*",
+      populate: [
+        "users_permissions_user",
+        "library",
+        "library.course",
+        "library.course.school_year",
+      ],
     },
   });
 
-  const { selectProps: selectLibraryProps } = useSelect<ILibrary>({
+  console.log(tableProps);
+
+
+  const { selectProps: librarySelectProps } = useSelect<ILibrary>({
     resource: "libraries",
-    optionLabel: "title",
-    optionValue: "id",
   });
 
-  const { selectProps: selectParentProps } = useSelect<IUser>({
+  const { selectProps: courseSelectProps } = useSelect<ICourse>({
+    resource: "courses",
+  });
+
+  const { selectProps: userSelectProps } = useSelect<IUser>({
     resource: "users",
     optionLabel: "username",
     optionValue: "id",
   });
 
   return (
-    <List>
-      <Table {...tableProps} rowKey="id">
-        <Table.Column
-          dataIndex="id"
-          key="id"
-          title="ID"
-          render={(value) => <TextField value={value} />}
-          defaultSortOrder={getDefaultSortOrder("id", sorter)}
-          sorter
-        />
-        <Table.Column
-          key="[library][id]"
-          dataIndex={["library", "data", "attributes", "title"]}
-          title="Title"
-          sorter
-          filterDropdown={(props) => (
-            <FilterDropdown {...props}>
-              <Select
-                style={{ minWidth: 200 }}
-                mode="multiple"
-                placeholder="Select Title"
-                {...selectLibraryProps}
-              />
-            </FilterDropdown>
-          )}
-        />
-        <Table.Column
-          key="[user][id]"
-          dataIndex={["users_permissions_user", "data", "attributes", "username"]}
-          title="Owner"
-          sorter
-          filterDropdown={(props) => (
-            <FilterDropdown {...props}>
-              <Select
-                style={{ minWidth: 200 }}
-                mode="multiple"
-                placeholder="Select Owner"
-                {...selectParentProps}
-              />
-            </FilterDropdown>
-          )}
-        />
-        <Table.Column
-          dataIndex="price"
-          key="price"
-          title="Price"
-          render={(value) => <NumberField value={value} />}
-          defaultSortOrder={getDefaultSortOrder("title", sorter)}
-          sorter
-        />
-        <Table.Column<IBook>
-          title="Actions"
-          dataIndex="actions"
-          render={(_, record) => (
-            <Space>
-              <ShowButton hideText size="small" recordItemId={record.id} />
-              <EditButton hideText size="small" recordItemId={record.id} />
-              <DeleteButton hideText size="small" recordItemId={record.id} />
-            </Space>
-          )}
-        />
-      </Table>
-    </List>
+    <>
+      <Card>
+        <Filter formProps={searchFormProps} />
+      </Card>
+      <Card>
+        <List>
+          <Table {...tableProps} rowKey="id">
+            <Table.Column
+              dataIndex="id"
+              key="id"
+              title="ID"
+              render={(value) => <TextField value={value} />}
+              defaultSortOrder={getDefaultSortOrder("id", sorter)}
+              sorter
+            />
+            {/*             <Table.Column
+              key="[school_year][id]"
+              dataIndex={["library", "data", "attributes", "course", "data", "attributes", "school_year", "data", "attributes", "title"]}
+              title="School year"
+              render={(value) => <TextField value={value} />}
+              sorter
+              filterDropdown={(props) => (
+                <FilterDropdown {...props}>
+                  <Select
+                    style={{ minWidth: 200 }}
+                    mode="multiple"
+                    placeholder="Select Courses"
+                    {...selectSchoolYearProps}
+                  />
+                </FilterDropdown>
+              )}
+            /> */}
+            <Table.Column
+              key="[course][id]"
+              dataIndex={["library", "data", "attributes", "course", "data", "attributes", "title"]}
+              title="Course"
+              render={(value) => <TextField value={value} />}
+              sorter
+              filterDropdown={(props) => (
+                <FilterDropdown {...props}>
+                  <Select
+                    allowClear
+                    style={{ minWidth: 200 }}
+                    mode="multiple"
+                    placeholder="Select Courses"
+                    {...courseSelectProps}
+                  />
+                </FilterDropdown>
+              )}
+            />
+            <Table.Column
+              key="[library][id]"
+              dataIndex={["library", "data", "attributes", "title"]}
+              title="Title"
+              sorter
+              filterDropdown={(props) => (
+                <FilterDropdown {...props}>
+                  <Select
+                    allowClear
+                    style={{ minWidth: 200 }}
+                    mode="multiple"
+                    placeholder="Select Title"
+                    {...librarySelectProps}
+                  />
+                </FilterDropdown>
+              )}
+            />
+            <Table.Column
+              key="[user][id]"
+              dataIndex={["users_permissions_user", "data", "attributes", "username"]}
+              title="Owner"
+              sorter
+              filterDropdown={(props) => (
+                <FilterDropdown {...props}>
+                  <Select
+                    allowClear
+                    style={{ minWidth: 200 }}
+                    mode="multiple"
+                    placeholder="Select Owner"
+                    {...userSelectProps}
+                  />
+                </FilterDropdown>
+              )}
+            />
+            <Table.Column
+              dataIndex="price"
+              key="price"
+              title="Price"
+              render={(value) => <NumberField value={value} />}
+              defaultSortOrder={getDefaultSortOrder("title", sorter)}
+              sorter
+            />
+            <Table.Column
+              key="is_available"
+              dataIndex="is_available"
+              title="Available"
+              render={(value) => <BooleanField value={value} />}
+            />
+            <Table.Column<IBook>
+              title="Actions"
+              dataIndex="actions"
+              render={(_, record) => (
+                <Space>
+                  <ShowButton hideText size="small" recordItemId={record.id} />
+                  <EditButton hideText size="small" recordItemId={record.id} />
+                  <DeleteButton hideText size="small" recordItemId={record.id} />
+                </Space>
+              )}
+            />
+          </Table>
+        </List>
+      </Card>
+    </>
+  );
+};
+
+const Filter: React.FC<{ formProps: FormProps }> = ({ formProps }) => {
+
+  return (
+    <Form layout="horizontal" {...formProps}>
+      {/*       <Row>
+        <Col>
+          <Form.Item label="Search" name="q">
+            <Input
+              placeholder="ID, Title, Price, etc."
+              prefix={<Icons.SearchOutlined />}
+            />
+          </Form.Item>
+        </Col>
+      </Row> */}
+      <Row>
+        <Col flex="1 0 auto">
+          <Form.Item label="Availability" name="is_available">
+            <Radio.Group>
+              <Radio value={true}>Only available</Radio>
+              {/* <Radio value={false}>False</Radio> // Not working (?) */}
+              <Radio value={undefined}>Both</Radio>
+            </Radio.Group>
+          </Form.Item>
+        </Col>
+        <Col flex="1 0 auto">
+          <Row gutter={[8, 8]}>
+            <Col>
+              <Form.Item label="Min price" name="minprice">
+                <InputNumber prefix="€" />
+              </Form.Item>
+            </Col>
+            <Col>
+              <Form.Item label="Max price" name="maxprice">
+                <InputNumber prefix="€" />
+              </Form.Item>
+            </Col>
+          </Row>
+        </Col>
+        <Col flex="1 0 auto">
+          <Form.Item>
+            <Button htmlType="submit" type="primary">
+              Filter
+            </Button>
+          </Form.Item>
+        </Col>
+      </Row>
+    </Form>
   );
 };
