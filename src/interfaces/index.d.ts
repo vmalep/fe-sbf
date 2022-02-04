@@ -1,4 +1,4 @@
-export interface IBook {
+export interface IBook { // Todo: add picture, status ("as new", "used", etc.)
   id: string;
   price: number;
   parent: {
@@ -59,13 +59,13 @@ export interface ISchoolYear {
   id: string;
   title: string;
 }
-export interface IParent {
+export interface IParent { // To be removed
   id: string;
   title: string;
   username: string;
   email: string;
 }
-export interface IUser {
+export interface IUser { // Todo: add geo location
   id: string;
   username: string;
   email: string;
