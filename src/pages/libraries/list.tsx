@@ -99,7 +99,7 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
                 style={{ minWidth: 200 }}
                 mode="multiple"
                 placeholder="Select School year"
-                {...selectSchoolYearProps}
+                {...selectCourseProps}
               />
             </FilterDropdown>
           )}
@@ -116,7 +116,7 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
                 style={{ minWidth: 200 }}
                 mode="multiple"
                 placeholder="Select Courses"
-                {...selectCourseProps}
+                {...selectSchoolYearProps}
               />
             </FilterDropdown>
           )}

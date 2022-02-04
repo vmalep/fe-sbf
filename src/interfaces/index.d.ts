@@ -1,12 +1,6 @@
 export interface IBook { // Todo: add picture, status ("as new", "used", etc.)
   id: string;
   price: number;
-  parent: {
-    data: {
-      id: string;
-      attributes: IParent;
-    };
-  };
   users_permissions_user: {
     data: {
       id: string;
@@ -20,22 +14,6 @@ export interface IBook { // Todo: add picture, status ("as new", "used", etc.)
     };
   };
   is_available: boolean;
-}
-export interface ICourse{
-  id: string;
-  title: string;
-  school_year: {
-    data: {
-      id: string;
-      attributes: ISchoolYear;
-    };
-  };
-  libraries: {
-    data: {
-      id: string;
-      attributes: ILibrary;
-    };
-  };
 }
 export interface ILibrary {
   id: string;
@@ -54,6 +32,22 @@ export interface ILibrary {
   };
   isdn: string;
   author: string;
+}
+export interface ICourse{
+  id: string;
+  title: string;
+  school_year: {
+    data: {
+      id: string;
+      attributes: ISchoolYear;
+    };
+  };
+  libraries: {
+    data: {
+      id: string;
+      attributes: ILibrary;
+    };
+  };
 }
 export interface ISchoolYear {
   id: string;
@@ -80,4 +74,11 @@ export interface IUser { // Todo: add geo location
       };
     };
   };
+}
+export interface IBookFilterVariables {
+  q: string;
+  is_available: boolean;
+  minprice: number;
+  maxprice: number;
+  //createdAt: [Dayjs, Dayjs];
 }

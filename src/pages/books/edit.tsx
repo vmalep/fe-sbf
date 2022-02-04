@@ -23,7 +23,7 @@ export const BookEdit: React.FC<IResourceComponentsProps> = () => {
 
   const { selectProps: selectParentProps } = useSelect<IUser>({
     resource: "users",
-    defaultValue: queryResult?.data?.data?.parent?.data?.id,
+    defaultValue: queryResult?.data?.data?.users_permissions_user?.data?.id,
     optionLabel: "username",
   });
 
