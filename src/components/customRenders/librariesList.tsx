@@ -8,29 +8,16 @@ import {
   Menu,
   useDelete,
   useTranslate,
-  useTable
+  //useTable
 } from "@pankod/refine";
 
 import { ILibrary } from "interfaces";
 
-export interface RenderLibrariesPropTypes {
-  record?: {
-    libraries: {
-      data: {
-        id: string;
-        attributes: ILibrary;
-      };
-    };
-  }
-}
-const { CloseCircleOutlined, CheckCircleOutlined } = Icons;
+import NormalizeData from "helpers/normalizeData";
 
-export const RenderLibraries = (props: RenderLibrariesPropTypes) => {
+export const RenderLibraries = (props: any) => {
 
-  console.log('props:' , props.record);
-  const { tableProps } = useTable<ILibrary>({
-    resource: "libraries",
-  });
+  const dataSource = NormalizeData(props?.data);
 
   const { show, edit } = useNavigation();
   const { Meta } = Card;
@@ -100,7 +87,7 @@ export const RenderLibraries = (props: RenderLibrariesPropTypes) => {
     <Card>
       <Meta title="Library" />
       <Table
-        {...tableProps}
+        dataSource={dataSource}
         onRow={(record) => {
           return {
             onClick: () => {
