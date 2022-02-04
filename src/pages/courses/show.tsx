@@ -32,10 +32,12 @@ export const CourseShow: React.FC<IResourceComponentsProps> = () => {
     </Show>
   );
 
+    console.log(record);
+
   return (
     <>
       {renderCourse()}
-      {RenderLibraries({ record })}
+      {RenderLibraries(record?.libraries)}
     </>
   )
 };
