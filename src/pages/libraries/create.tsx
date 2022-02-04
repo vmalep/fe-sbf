@@ -21,7 +21,7 @@ export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
     },
   });
 
-  const { selectProps } = useSelect<ICourse>({
+  const { selectProps: selectCourseProps } = useSelect<ICourse>({
     resource: "courses",
     defaultValue: queryResult?.data?.data?.course?.data?.id,
   });
@@ -65,7 +65,7 @@ export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
           name={["course", "data", "id"]}
           rules={[{ required: true }]}
         >
-          <Select {...selectProps} />
+              <Select {...selectCourseProps} />
         </Form.Item>
       </Form>
     </Create>
