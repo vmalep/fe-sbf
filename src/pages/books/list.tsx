@@ -86,29 +86,20 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
 
   console.log(tableProps);
 
-  const { selectProps: selectLibraryProps } = useSelect<ILibrary>({
+
+  const { selectProps: librarySelectProps } = useSelect<ILibrary>({
     resource: "libraries",
-    optionLabel: "title",
-    optionValue: "id",
   });
 
-  const { selectProps: selectUserProps } = useSelect<IUser>({
+  const { selectProps: courseSelectProps } = useSelect<ICourse>({
+    resource: "courses",
+  });
+
+  const { selectProps: userSelectProps } = useSelect<IUser>({
     resource: "users",
     optionLabel: "username",
     optionValue: "id",
   });
-
-  const { selectProps: selectCourseProps } = useSelect<ICourse>({
-    resource: "school-years",
-    optionLabel: "title",
-    optionValue: "id",
-  });
-
-  /*   const { selectProps: selectSchoolYearProps } = useSelect<ISchoolYear>({
-      resource: "school-years",
-      optionLabel: "title",
-      optionValue: "id",
-    }); */
 
   return (
     <>
@@ -152,10 +143,11 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
               filterDropdown={(props) => (
                 <FilterDropdown {...props}>
                   <Select
+                    allowClear
                     style={{ minWidth: 200 }}
                     mode="multiple"
                     placeholder="Select Courses"
-                    {...selectCourseProps}
+                    {...courseSelectProps}
                   />
                 </FilterDropdown>
               )}
@@ -168,10 +160,11 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
               filterDropdown={(props) => (
                 <FilterDropdown {...props}>
                   <Select
+                    allowClear
                     style={{ minWidth: 200 }}
                     mode="multiple"
                     placeholder="Select Title"
-                    {...selectLibraryProps}
+                    {...librarySelectProps}
                   />
                 </FilterDropdown>
               )}
@@ -184,10 +177,11 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
               filterDropdown={(props) => (
                 <FilterDropdown {...props}>
                   <Select
+                    allowClear
                     style={{ minWidth: 200 }}
                     mode="multiple"
                     placeholder="Select Owner"
-                    {...selectUserProps}
+                    {...userSelectProps}
                   />
                 </FilterDropdown>
               )}
