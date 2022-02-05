@@ -5,7 +5,6 @@ import "@pankod/refine/dist/styles.min.css";
 import { DataProvider, AuthHelper } from "@pankod/refine-strapi-v4";
 
 import GetUserRole from "./helpers/getUserRole";
-import GetCurrSchoolYear from "helpers/getCurrSchoolYear";
 
 import { UserList, UserCreate, UserEdit, UserShow } from "pages/users";
 //import { ParentList, ParentCreate, ParentEdit, ParentShow } from "pages/parents";
@@ -29,7 +28,6 @@ const App: React.FC = () => {
   //const TOKEN_KEY = process.env.REACT_APP_API_TOKEN_KEY;
   const strapiAuthHelper = AuthHelper(API_URL + "/api");
   const getCurrentRole = GetUserRole(API_URL + "/api");
-  const getCurrSchoolYear = GetCurrSchoolYear(API_URL + "/api");
   const [role, setRole] = useState("public");
   const [currSchoolYear, setCurrSchoolYear] = useState("1");
 
@@ -80,7 +78,6 @@ const App: React.FC = () => {
       if (status === 200) {
         const { id, username, email } = data;
         const role = await getCurrentRole.role(id, token);
-        console.log("year 1: ", await getCurrSchoolYear.title('1', token));
         setRole(role);
         return Promise.resolve({
           id,

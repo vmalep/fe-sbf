@@ -10,8 +10,6 @@ import {
   useGetLocale,
   useSetLocale,
   useGetIdentity,
-  useSelect,
-  useOne,
   useList,
 } from "@pankod/refine";
 import { useTranslation } from "react-i18next";
@@ -40,11 +38,6 @@ export const Header: React.FC<HeaderProps> = ({ currSchoolYear, setCurrSchoolYea
 
   const currentLocale = locale();
 
-  const schoolYearTitle = useOne<ISchoolYear>({
-    resource: "school-years",
-    id: currSchoolYear,
-  });
-
   // Todo: add a selection box for the school year that applies to all the records as prefilter
   const schoolYearListQueryResult = useList<ISchoolYearListQueryResult>({ resource: "school-years" });
 
@@ -52,9 +45,10 @@ export const Header: React.FC<HeaderProps> = ({ currSchoolYear, setCurrSchoolYea
 
   const schoolYearList = NormalizeData(schoolYearListQueryResult).data;
   console.log('schoolYearSelect: ', schoolYearList);
+  //console.log(schoolYearList.find((obj: any) => obj.id === "1"));
 
   const schoolYearMenu = (
-    <Menu selectedKeys={[currentLocale]}>
+    <Menu selectedKeys={[currSchoolYear]}>
       {[...(schoolYearList || [])].sort().map((schoolYear: ISchoolYear) => (
         <Menu.Item
           key={schoolYear.id}
