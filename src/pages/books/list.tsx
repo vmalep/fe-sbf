@@ -16,10 +16,8 @@ import {
   BooleanField,
   CrudFilters,
   Form,
-  Input,
   Button,
   Card,
-  Icons,
   FormProps,
   Row,
   Col,
@@ -47,7 +45,7 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
     ],
     onSearch: (params) => {
       const filters: CrudFilters = [];
-      const { /* q,  */school_year_id, is_available, minprice, maxprice } = params;
+      const { /* q,  */is_available, minprice, maxprice } = params;
 
       filters.push(
         /*         {
@@ -55,11 +53,6 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
                   operator: "eq",
                   value: q,
                 }, */
-        {
-          field: "library.course.school_year",
-          operator: "eq",
-          value: school_year_id,
-        },
         {
           field: "is_available",
           operator: "eq",
@@ -244,14 +237,6 @@ const Filter: React.FC<{ formProps: FormProps }> = ({ formProps }) => {
         </Col>
       </Row> */}
       <Row>
-        <Col flex="1 0 auto">
-          <Form.Item label="School year" name="school_year_id">
-            <Select
-              placeholder="Select School year"
-              {...selectProps}
-            />
-          </Form.Item>
-        </Col>
         <Col flex="1 0 auto">
           <Form.Item label="Availability" name="is_available">
             <Radio.Group>
