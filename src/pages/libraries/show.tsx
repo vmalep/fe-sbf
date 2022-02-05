@@ -4,7 +4,7 @@ import {
   Typography,
   IResourceComponentsProps,
 } from "@pankod/refine";
-import { RenderLibraries } from "components/customRenders";
+//import { RenderLibraries } from "components/customRenders";
 import { RenderBooks } from "components/customRenders/BooksList";
 
 import { ILibrary } from "interfaces";
