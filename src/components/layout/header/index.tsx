@@ -11,6 +11,7 @@ import {
   useSetLocale,
   useGetIdentity,
   useSelect,
+  useOne,
   useList,
 } from "@pankod/refine";
 import { useTranslation } from "react-i18next";
@@ -29,7 +30,7 @@ interface HeaderProps {
 
 type ISchoolYearListQueryResult = {
   options: ISchoolYear;
-  };
+};
 
 export const Header: React.FC<HeaderProps> = ({ currSchoolYear, setCurrSchoolYear }) => {
   const { i18n } = useTranslation();
@@ -38,6 +39,11 @@ export const Header: React.FC<HeaderProps> = ({ currSchoolYear, setCurrSchoolYea
   const { data: user } = useGetIdentity();
 
   const currentLocale = locale();
+
+  const schoolYearTitle = useOne<ISchoolYear>({
+    resource: "school-years",
+    id: currSchoolYear,
+  });
 
   // Todo: add a selection box for the school year that applies to all the records as prefilter
   const schoolYearListQueryResult = useList<ISchoolYearListQueryResult>({ resource: "school-years" });

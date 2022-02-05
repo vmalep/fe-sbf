@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IUser } from "interfaces";
+//import { IUser } from "interfaces";
 
 const GetUserRole = (API_URL: string) => ({
 
