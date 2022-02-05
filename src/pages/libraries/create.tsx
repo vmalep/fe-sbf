@@ -6,6 +6,7 @@ import {
   useForm,
   Select,
   useSelect,
+  useList,
 } from "@pankod/refine";
 import { mediaUploadMapper } from "@pankod/refine-strapi-v4";
 
@@ -22,10 +23,19 @@ export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
   });
   console.log(queryResult);
 
-  const { selectProps } = useSelect<ICourse>({ // Todo: display the title of the course concatenated with the school-year
+/*   const { selectProps } = useSelect<ICourse>({ // Todo: display the title of the course concatenated with the school-year
     resource: "courses",
     defaultValue: queryResult?.data?.data?.course?.data?.id,
+  }); */
+
+  const courseSelect = useList<ICourse>({
+    resource: "courses",
+    metaData: {
+      populate: ["school_year"],
+    },
   });
+
+  const { Option } = Select;
 
   return (
     <Create saveButtonProps={saveButtonProps}>
@@ -67,7 +77,23 @@ export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
           name={["course", "data", "id"]}
           rules={[{ required: true }]}
         >
-          <Select {...selectProps} />
+          {/* <Select {...selectProps} /> */}
+          <Select
+            defaultValue={
+              queryResult?.data?.data?.course?.data?.id
+            }
+          >
+            {(courseSelect?.data?.data || []).map(
+              (course: ICourse) => {
+                console.log('course: ', course);
+                return (
+                  <Option key={course.id}>
+                    {course.title} - {course.school_year.data.attributes.title}
+                  </Option>
+                );
+              }
+            )}
+          </Select>
         </Form.Item>
       </Form>
     </Create>
