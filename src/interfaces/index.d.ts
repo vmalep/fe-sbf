@@ -77,7 +77,6 @@ export interface IUser { // Todo: add geo location
 }
 export interface IBookFilterVariables {
   q: string;
-  school_year_id: string;
   is_available: boolean;
   minprice: number;
   maxprice: number;
