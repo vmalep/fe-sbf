@@ -17,12 +17,12 @@ export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
 
   const { formProps, saveButtonProps, queryResult } = useForm<ILibrary>({
     metaData: {
-      populate: ["course"/* , "course.school_year" */],
+      populate: ["course", "course.school_year"],
     },
   });
   console.log(queryResult);
 
-  const { selectProps } = useSelect<ICourse>({
+  const { selectProps } = useSelect<ICourse>({ // Todo: display the title of the course concatenated with the school-year
     resource: "courses",
     defaultValue: queryResult?.data?.data?.course?.data?.id,
   });
