@@ -16,10 +16,8 @@ import {
   BooleanField,
   CrudFilters,
   Form,
-  Input,
   Button,
   Card,
-  Icons,
   FormProps,
   Row,
   Col,
@@ -33,7 +31,7 @@ import {
   IUser,
   ILibrary,
   ICourse,
-  //ISchoolYear
+  ISchoolYear,
   IBookFilterVariables,
 } from "interfaces";
 
@@ -219,6 +217,12 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
 };
 
 const Filter: React.FC<{ formProps: FormProps }> = ({ formProps }) => {
+
+  const { selectProps } = useSelect<ISchoolYear>({
+    resource: "school-years",
+    optionLabel: "title",
+    optionValue: "id",
+  });
 
   return (
     <Form layout="horizontal" {...formProps}>

@@ -14,6 +14,9 @@ import {
   FilterDropdown,
   useImport,
   ImportButton,
+  useExport,
+  ExportButton,
+  CreateButton,
 } from "@pankod/refine";
 import { ICourse, ILibrary, ISchoolYear } from "interfaces";
 
@@ -48,11 +51,18 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
   });
 
   const importProps = useImport<ILibrary>();
+  const { triggerExport, isLoading } = useExport<ILibrary>();
 
   return (
     <List
       pageHeaderProps={{
-        extra: <ImportButton {...importProps} />,
+        extra: (
+          <>
+            <ImportButton {...importProps} />
+            <ExportButton onClick={triggerExport} loading={isLoading} />
+            <CreateButton />
+          </>
+        ),
       }}
     >
       <Table
