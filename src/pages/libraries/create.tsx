@@ -23,13 +23,11 @@ export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
   });
   console.log(queryResult);
 
-/*   const { selectProps } = useSelect<ICourse>({ // Todo: display the title of the course concatenated with the school-year
-    resource: "courses",
-    defaultValue: queryResult?.data?.data?.course?.data?.id,
-  }); */
-
   const courseSelect = useList<ICourse>({
     resource: "courses",
+    config: {
+      pagination: { pageSize: 500 },
+    },
     metaData: {
       populate: ["school_year"],
     },

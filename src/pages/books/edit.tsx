@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Edit,
   Form,
@@ -8,6 +9,9 @@ import {
   useSelect,
 } from "@pankod/refine";
 import { mediaUploadMapper } from "@pankod/refine-strapi-v4";
+
+import ReactMarkdown from "react-markdown";
+import ReactMde from "react-mde";
 
 import "react-mde/lib/styles/css/react-mde-all.css";
 
@@ -31,6 +35,8 @@ export const BookEdit: React.FC<IResourceComponentsProps> = () => {
     resource: "libraries",
     defaultValue: queryResult?.data?.data?.library?.data?.id,
   });
+
+  const [selectedTab, setSelectedTab] = useState<"write" | "preview">("write");
 
   return (
     <Edit saveButtonProps={saveButtonProps}>
@@ -58,9 +64,40 @@ export const BookEdit: React.FC<IResourceComponentsProps> = () => {
         <Form.Item
           label="Title"
           name={["library", "data", "id"]}
+          /* rules={[{ required: true }]} */
+        >
+          <Select {...selectLibraryProps} disabled={true} />
+        </Form.Item>
+        <Form.Item
+          label="Status"
+          name="status"
           rules={[{ required: true }]}
         >
-          <Select {...selectLibraryProps} />
+          <Select
+            options={[
+              { label: "As new", value: "asNew" },
+              { label: "Fine", value: "fine" },
+              { label: "Very good", value: "veryGood" },
+              { label: "Good", value: "good" },
+              { label: "Fair", value: "fair" },
+              { label: "Poor", value: "poor" },
+              { label: "Binding copy", value: "bindingCopy" },
+            ]}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Comment"
+          name="comment"
+        >
+          <ReactMde
+            selectedTab={selectedTab}
+            onTabChange={setSelectedTab}
+            generateMarkdownPreview={(markdown) =>
+              Promise.resolve(
+                <ReactMarkdown>{markdown}</ReactMarkdown>,
+              )
+            }
+          />
         </Form.Item>
         <Form.Item
           label="Price"

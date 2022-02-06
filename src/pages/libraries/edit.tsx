@@ -17,6 +17,9 @@ export const LibraryEdit: React.FC<IResourceComponentsProps> = () => {
 
   const { formProps, saveButtonProps, queryResult } = useForm<ILibrary>({
     metaData: {
+      config: {
+        pagination: { pageSize: 500 },
+      },
       populate: ["course"],
     },
   });

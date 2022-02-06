@@ -29,7 +29,9 @@ const App: React.FC = () => {
   const strapiAuthHelper = AuthHelper(API_URL + "/api");
   const getCurrentRole = GetUserRole(API_URL + "/api");
   const [role, setRole] = useState("public");
+  const [currSchoolYear, setCurrSchoolYear] = useState("1");
 
+  
   const authProvider: AuthProvider = {
     login: async ({ username, password }) => {
       const { data, status } = await strapiAuthHelper.login(
@@ -62,7 +64,7 @@ const App: React.FC = () => {
         };
         return Promise.resolve();
       }
-
+      
       return Promise.reject();
     },
     getPermissions: () => Promise.resolve(),
@@ -71,7 +73,7 @@ const App: React.FC = () => {
       if (!token) {
         return Promise.reject();
       }
-
+      
       const { data, status } = await strapiAuthHelper.me(token);
       if (status === 200) {
         const { id, username, email } = data;
@@ -160,7 +162,8 @@ const App: React.FC = () => {
         },
       ]}
       Title={Title}
-      Header={Header}
+      //Header={Header}
+      Header={() => <Header currSchoolYear={currSchoolYear} setCurrSchoolYear={setCurrSchoolYear} />}
       Sider={Sider}
       Footer={Footer}
       Layout={Layout}

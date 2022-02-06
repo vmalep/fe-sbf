@@ -1,3 +1,4 @@
+import React, { useState } from "react";
 import {
   Create,
   Form,
@@ -8,6 +9,9 @@ import {
   useSelect,
 } from "@pankod/refine";
 import { mediaUploadMapper } from "@pankod/refine-strapi-v4";
+
+import ReactMarkdown from "react-markdown";
+import ReactMde from "react-mde";
 
 import "react-mde/lib/styles/css/react-mde-all.css";
 
@@ -32,6 +36,8 @@ export const BookCreate: React.FC<IResourceComponentsProps> = () => {
     resource: "libraries",
     defaultValue: queryResult?.data?.data?.library?.data?.id,
   });
+
+  const [selectedTab, setSelectedTab] = useState<"write" | "preview">("write");
 
   return (
     <Create saveButtonProps={saveButtonProps}>
@@ -62,6 +68,37 @@ export const BookCreate: React.FC<IResourceComponentsProps> = () => {
           rules={[{ required: true }]}
         >
           <Select {...selectLibraryProps} />
+        </Form.Item>
+        <Form.Item
+          label="Status"
+          name="status"
+          rules={[{ required: true }]}
+        >
+          <Select
+            options={[
+              {label: "As new", value: "asNew"},
+              {label: "Fine", value: "fine"},
+              {label: "Very good", value: "veryGood"},
+              {label: "Good", value: "good"},
+              {label: "Fair", value: "fair"},
+              {label: "Poor", value: "poor"},
+              {label: "Binding copy", value: "bindingCopy"},
+            ]}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Comment"
+          name="comment"
+        >
+          <ReactMde
+            selectedTab={selectedTab}
+            onTabChange={setSelectedTab}
+            generateMarkdownPreview={(markdown) =>
+              Promise.resolve(
+                <ReactMarkdown>{markdown}</ReactMarkdown>,
+              )
+            }
+          />
         </Form.Item>
         <Form.Item
           label="Price"
