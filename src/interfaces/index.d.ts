@@ -14,6 +14,10 @@ export interface IBook { // Todo: add picture, status ("as new", "used", etc.)
     };
   };
   is_available: boolean;
+  comment: string;
+  state: "asNew" | "fine" | "veryGood" | "good" | "fair" | "poor" | "bindingCopy";
+  img_url: string;
+  school_year_id: string;
 }
 export interface ILibrary {
   id: string;
@@ -32,6 +36,7 @@ export interface ILibrary {
   };
   isdn: string;
   author: string;
+  school_year_id: string;
 }
 export interface ICourse{
   id: string;
@@ -48,16 +53,11 @@ export interface ICourse{
       attributes: ILibrary;
     };
   };
+  school_year_id: string;
 }
 export interface ISchoolYear {
   id: string;
   title: string;
-}
-export interface IParent { // To be removed
-  id: string;
-  title: string;
-  username: string;
-  email: string;
 }
 export interface IUser { // Todo: add geo location
   id: string;
