@@ -3,6 +3,7 @@ import {
   Edit,
   Form,
   Input,
+  Radio,
   IResourceComponentsProps,
   useForm,
   Select,
@@ -54,23 +55,28 @@ export const BookEdit: React.FC<IResourceComponentsProps> = () => {
           );
         }}
       >
+        <Form.Item label="ID" name="id">
+          <Input disabled={true} />
+        </Form.Item>
         <Form.Item
-          label="Owner"
-          name={["users_permissions_user", "data", "id"]}
-          rules={[{ required: true }]}
+          label="Available"
+          name="is_available"
         >
-          <Select {...selectParentProps} />
+          <Radio.Group>
+            <Radio value={true}>True</Radio>
+            <Radio value={false}>False</Radio>
+          </Radio.Group>
         </Form.Item>
         <Form.Item
           label="Title"
           name={["library", "data", "id"]}
-          /* rules={[{ required: true }]} */
+        /* rules={[{ required: true }]} */
         >
           <Select {...selectLibraryProps} disabled={true} />
         </Form.Item>
         <Form.Item
-          label="Status"
-          name="status"
+          label="State"
+          name="state"
           rules={[{ required: true }]}
         >
           <Select
@@ -105,6 +111,13 @@ export const BookEdit: React.FC<IResourceComponentsProps> = () => {
           rules={[{ required: true }]}
         >
           <Input />
+        </Form.Item>
+        <Form.Item
+          label="Owner"
+          name={["users_permissions_user", "data", "id"]}
+          rules={[{ required: true }]}
+        >
+          <Select {...selectParentProps} />
         </Form.Item>
       </Form>
     </Edit>

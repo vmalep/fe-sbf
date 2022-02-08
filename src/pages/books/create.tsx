@@ -3,6 +3,7 @@ import {
   Create,
   Form,
   Input,
+  Radio,
   IResourceComponentsProps,
   useForm,
   Select,
@@ -56,33 +57,35 @@ export const BookCreate: React.FC<IResourceComponentsProps> = () => {
         }}
       >
         <Form.Item
-          label="Owner"
-          name={["users_permissions_user", "data", "id"]}
-          rules={[{ required: true }]}
+          label="Available"
+          name="is_available"
         >
-          <Select {...selectParentProps} />
+          <Radio.Group>
+            <Radio value={true}>True</Radio>
+            <Radio value={false}>False</Radio>
+          </Radio.Group>
         </Form.Item>
         <Form.Item
           label="Title"
           name={["library", "data", "id"]}
-          rules={[{ required: true }]}
+        /* rules={[{ required: true }]} */
         >
-          <Select {...selectLibraryProps} />
+          <Select {...selectLibraryProps} disabled={true} />
         </Form.Item>
         <Form.Item
-          label="Status"
-          name="status"
+          label="State"
+          name="state"
           rules={[{ required: true }]}
         >
           <Select
             options={[
-              {label: "As new", value: "asNew"},
-              {label: "Fine", value: "fine"},
-              {label: "Very good", value: "veryGood"},
-              {label: "Good", value: "good"},
-              {label: "Fair", value: "fair"},
-              {label: "Poor", value: "poor"},
-              {label: "Binding copy", value: "bindingCopy"},
+              { label: "As new", value: "asNew" },
+              { label: "Fine", value: "fine" },
+              { label: "Very good", value: "veryGood" },
+              { label: "Good", value: "good" },
+              { label: "Fair", value: "fair" },
+              { label: "Poor", value: "poor" },
+              { label: "Binding copy", value: "bindingCopy" },
             ]}
           />
         </Form.Item>
@@ -106,6 +109,13 @@ export const BookCreate: React.FC<IResourceComponentsProps> = () => {
           rules={[{ required: true }]}
         >
           <Input />
+        </Form.Item>
+        <Form.Item
+          label="Owner"
+          name={["users_permissions_user", "data", "id"]}
+          rules={[{ required: true }]}
+        >
+          <Select {...selectParentProps} />
         </Form.Item>
       </Form>
     </Create>

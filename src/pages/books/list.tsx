@@ -31,7 +31,7 @@ import {
   IUser,
   ILibrary,
   ICourse,
-  ISchoolYear,
+  //ISchoolYear,
   IBookFilterVariables,
 } from "interfaces";
 
@@ -132,6 +132,12 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
               )}
             /> */}
             <Table.Column
+              key="is_available"
+              dataIndex="is_available"
+              title="Available"
+              render={(value) => <BooleanField value={value} />}
+            />
+            <Table.Column
               key="[course][id]"
               dataIndex={["library", "data", "attributes", "course", "data", "attributes", "title"]}
               title="Course"
@@ -184,18 +190,18 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
               )}
             />
             <Table.Column
+              key="state"
+              dataIndex="state"
+              title="State"
+              sorter
+            />
+            <Table.Column
               dataIndex="price"
               key="price"
               title="Price"
               render={(value) => <NumberField value={value} />}
               defaultSortOrder={getDefaultSortOrder("title", sorter)}
               sorter
-            />
-            <Table.Column
-              key="is_available"
-              dataIndex="is_available"
-              title="Available"
-              render={(value) => <BooleanField value={value} />}
             />
             <Table.Column<IBook>
               title="Actions"
@@ -217,11 +223,11 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
 
 const Filter: React.FC<{ formProps: FormProps }> = ({ formProps }) => {
 
-  const { selectProps } = useSelect<ISchoolYear>({
-    resource: "school-years",
-    optionLabel: "title",
-    optionValue: "id",
-  });
+  /*   const { selectProps } = useSelect<ISchoolYear>({
+      resource: "school-years",
+      optionLabel: "title",
+      optionValue: "id",
+    }); */
 
   return (
     <Form layout="horizontal" {...formProps}>

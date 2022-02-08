@@ -6,6 +6,8 @@ import { DataProvider, AuthHelper } from "@pankod/refine-strapi-v4";
 
 import GetUserRole from "./helpers/getUserRole";
 
+import SchoolYearProvider from "context/SchoolYearContext";
+
 import { UserList, UserCreate, UserEdit, UserShow } from "pages/users";
 //import { ParentList, ParentCreate, ParentEdit, ParentShow } from "pages/parents";
 import { SchoolYearList, SchoolYearCreate, SchoolYearEdit, SchoolYearShow } from "pages/school-years";
@@ -29,10 +31,10 @@ const App: React.FC = () => {
   const strapiAuthHelper = AuthHelper(API_URL + "/api");
   const getCurrentRole = GetUserRole(API_URL + "/api");
   const [role, setRole] = useState("public");
- 
+
   localStorage.setItem("currSchoolYearId", "0")
 
-  
+
   const authProvider: AuthProvider = {
     login: async ({ username, password }) => {
       const { data, status } = await strapiAuthHelper.login(
@@ -65,7 +67,7 @@ const App: React.FC = () => {
         };
         return Promise.resolve();
       }
-      
+
       return Promise.reject();
     },
     getPermissions: () => Promise.resolve(),
@@ -74,7 +76,7 @@ const App: React.FC = () => {
       if (!token) {
         return Promise.reject();
       }
-      
+
       const { data, status } = await strapiAuthHelper.me(token);
       if (status === 200) {
         const { id, username, email } = data;
@@ -101,76 +103,78 @@ const App: React.FC = () => {
   console.log('role: ', role)
 
   return (
-    <Refine
-      authProvider={authProvider}
-      dataProvider={DataProvider(API_URL + "/api", axiosInstance)}
-/*       accessControlProvider={{
-        can: async ({ resource, action, params }) => {
-            const enforcer = await newEnforcer(model, adapter);
-            if (
-                action === "delete" ||
-                action === "edit" ||
-                action === "show"
-            ) {
-                const can = await enforcer.enforce(
-                    role,
-                    `${resource}/${params.id}`,
-                    action,
-                );
-                return Promise.resolve({ can });
-            }
-
-            const can = await enforcer.enforce(role, resource, action);
-            return Promise.resolve({ can });
-        },
-    }} */
-      routerProvider={routerProvider}
-      resources={[
-        {
-          name: "books",
-          list: BookList,
-          create: BookCreate,
-          edit: BookEdit,
-          show: BookShow,
-        },
-        {
-          name: "libraries",
-          list: LibraryList,
-          create: LibraryCreate,
-          edit: LibraryEdit,
-          show: LibraryShow,
-        },
-        {
-          name: "courses",
-          list: CourseList,
-          create: CourseCreate,
-          edit: CourseEdit,
-          show: CourseShow,
-        },
-        {
-          name: "school-years",
-          list: SchoolYearList,
-          create: SchoolYearCreate,
-          edit: SchoolYearEdit,
-          show: SchoolYearShow,
-        },
-        {
-          name: "users",
-          list: UserList,
-          create: UserCreate,
-          edit: UserEdit,
-          show: UserShow,
-        },
-      ]}
-      Title={Title}
-      Header={Header}
-      //Header={() => <Header currSchoolYear={currSchoolYear} setCurrSchoolYear={setCurrSchoolYear} />}
-      Sider={Sider}
-      Footer={Footer}
-      Layout={Layout}
-      OffLayoutArea={OffLayoutArea}
-      i18nProvider={i18nProvider}
-    ></Refine>
+    <SchoolYearProvider>
+      <Refine
+        authProvider={authProvider}
+        dataProvider={DataProvider(API_URL + "/api", axiosInstance)}
+        /*       accessControlProvider={{
+                can: async ({ resource, action, params }) => {
+                    const enforcer = await newEnforcer(model, adapter);
+                    if (
+                        action === "delete" ||
+                        action === "edit" ||
+                        action === "show"
+                    ) {
+                        const can = await enforcer.enforce(
+                            role,
+                            `${resource}/${params.id}`,
+                            action,
+                        );
+                        return Promise.resolve({ can });
+                    }
+        
+                    const can = await enforcer.enforce(role, resource, action);
+                    return Promise.resolve({ can });
+                },
+            }} */
+        routerProvider={routerProvider}
+        resources={[
+          {
+            name: "books",
+            list: BookList,
+            create: BookCreate,
+            edit: BookEdit,
+            show: BookShow,
+          },
+          {
+            name: "libraries",
+            list: LibraryList,
+            create: LibraryCreate,
+            edit: LibraryEdit,
+            show: LibraryShow,
+          },
+          {
+            name: "courses",
+            list: CourseList,
+            create: CourseCreate,
+            edit: CourseEdit,
+            show: CourseShow,
+          },
+          {
+            name: "school-years",
+            list: SchoolYearList,
+            create: SchoolYearCreate,
+            edit: SchoolYearEdit,
+            show: SchoolYearShow,
+          },
+          {
+            name: "users",
+            list: UserList,
+            create: UserCreate,
+            edit: UserEdit,
+            show: UserShow,
+          },
+        ]}
+        Title={Title}
+        Header={Header}
+        //Header={() => <Header currSchoolYear={currSchoolYear} setCurrSchoolYear={setCurrSchoolYear} />}
+        Sider={Sider}
+        Footer={Footer}
+        Layout={Layout}
+        OffLayoutArea={OffLayoutArea}
+        i18nProvider={i18nProvider}
+      ></Refine>
+    </SchoolYearProvider>
   );
 }
 
