@@ -18,6 +18,8 @@ import { useTranslation } from "react-i18next";
 import NormalizeData from "helpers/normalizeData";
 
 import { ISchoolYear } from "interfaces";
+import GetSchoolYearTitle from "helpers/getSchoolYearTitle";
+import { isConstructorDeclaration } from "typescript";
 
 const { DownOutlined } = Icons;
 const { Text } = Typography;
@@ -35,15 +37,10 @@ export const Header: React.FC = () => {
 
   const currentLocale = locale();
 
-  // Todo: add a selection box for the school year that applies to all the records as prefilter
-  const schoolYearListQueryResult = useList<ISchoolYearListQueryResult>({ resource: "school-years" });
-
-  //console.log('school year selectProps: ', schoolYearListQueryResult);
-
+  const schoolYearListQueryResult = useList<ISchoolYearListQueryResult>({ resource: "school-years" });  
   const schoolYearList = NormalizeData(schoolYearListQueryResult).data;
   console.log('schoolYearSelect: ', schoolYearList);
-  //console.log(schoolYearList.find((obj: any) => obj.id === "1"));
-
+  
   const schoolYearMenu = (
     <Menu selectedKeys={[currSchoolYear]}>
       {[...(schoolYearList || [])].sort().map((schoolYear: ISchoolYear) => (
@@ -80,6 +77,10 @@ export const Header: React.FC = () => {
     // storing input name
     localStorage.setItem("selectedSchoolYearId", JSON.stringify(currSchoolYear));
   }, [currSchoolYear]);
+
+  //const currSchoolYearTitle = GetSchoolYearTitle(currSchoolYear);
+  console.log(GetSchoolYearTitle(currSchoolYear));
+  //console.log(currSchoolYearTitle);
 
   return (
     <AntdLayout.Header
