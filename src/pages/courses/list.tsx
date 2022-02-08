@@ -26,6 +26,13 @@ export const CourseList: React.FC<IResourceComponentsProps> = () => {
     metaData: {
       populate: ["school_year"],
     },
+    initialFilter: [
+      {
+          field: "school_year_id",
+          operator: "eq",
+          value: localStorage.getItem("selectedSchoolYearId"),
+      },
+    ],
   });
 
   const { selectProps } = useSelect<ISchoolYear>({
@@ -33,6 +40,9 @@ export const CourseList: React.FC<IResourceComponentsProps> = () => {
     optionLabel: "title",
     optionValue: "id",
   });
+
+  console.log('getting selected school year id: ', localStorage.getItem("selectedSchoolYearId"));
+  console.log(tableProps);
 
   return (
     <List>
