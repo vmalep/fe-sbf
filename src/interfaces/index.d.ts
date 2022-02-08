@@ -59,6 +59,10 @@ export interface ISchoolYear {
   id: string;
   title: string;
 }
+export interface ISchoolYearContext {
+  schoolYearContext: ISchoolYear;
+  changeSchoolYearContext: (name: ISchoolYear) => void;
+}
 export interface IUser { // Todo: add geo location
   id: string;
   username: string;
