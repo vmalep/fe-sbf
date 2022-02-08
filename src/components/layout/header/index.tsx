@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import {
   AntdLayout,
   Space,
@@ -17,6 +17,8 @@ import { useTranslation } from "react-i18next";
 
 import NormalizeData from "helpers/normalizeData";
 
+import { SchoolYearContext } from "context/SchoolYearContet";
+
 import { ISchoolYear } from "interfaces";
 import GetSchoolYearTitle from "helpers/getSchoolYearTitle";
 //import { isConstructorDeclaration } from "typescript";
@@ -33,7 +35,10 @@ export const Header: React.FC = () => {
   const locale = useGetLocale();
   const changeLanguage = useSetLocale();
   const { data: user } = useGetIdentity();
-  const [currSchoolYear, setCurrSchoolYear] = useState(["1","Select a school year"]);
+
+  const { schoolYearId, changeSchoolYearId } = useContext(SchoolYearContext);
+
+  //const [currSchoolYear, setCurrSchoolYear] = useState(["1","Select a school year"]);
 
   const currentLocale = locale();
 
@@ -42,13 +47,14 @@ export const Header: React.FC = () => {
   console.log('schoolYearSelect: ', schoolYearList);
   
   const schoolYearMenu = (
-    <Menu selectedKeys={[currSchoolYear[0]]}>
+    <Menu selectedKeys={[schoolYearId]}>
       {[...(schoolYearList || [])].sort().map((schoolYear: ISchoolYear) => (
         <Menu.Item
           key={schoolYear.id}
           onClick={() => {
+            changeSchoolYearId(schoolYear.id);
             GetSchoolYearTitle(schoolYear.id)
-            .then(res => setCurrSchoolYear([schoolYear.id, res]))
+            .then(res => console.log('new school year: ', res))
           }}
         >
           {schoolYear.title}
@@ -75,13 +81,13 @@ export const Header: React.FC = () => {
     </Menu>
   );
 
-  useEffect(() => {
+/*   useEffect(() => {
     // storing input name
     localStorage.setItem("selectedSchoolYearId", JSON.stringify(currSchoolYear[0]));
-  }, [currSchoolYear]);
+  }, [currSchoolYear]); */
 
   //const currSchoolYearTitle = GetSchoolYearTitle(currSchoolYear);
-  GetSchoolYearTitle(currSchoolYear).then(res => console.log('title in header: ', res))
+  //GetSchoolYearTitle(currSchoolYear).then(res => console.log('title in header: ', res))
   //console.log(currSchoolYearTitle);
 
   return (
@@ -98,7 +104,7 @@ export const Header: React.FC = () => {
       <Dropdown overlay={schoolYearMenu}>
         <Button type="link">
           <Space>
-            {currSchoolYear[1]}
+            {schoolYearId}
             <DownOutlined />
           </Space>
         </Button>
