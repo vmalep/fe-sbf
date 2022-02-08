@@ -30,12 +30,14 @@ export const CourseEdit: React.FC<IResourceComponentsProps> = () => {
     <Edit saveButtonProps={saveButtonProps}>
       <Form {...formProps} layout="vertical"
         onFinish={(values: any) => {
+          console.log('onFinish: ', values.school_year?.data.id);
           return (
             formProps.onFinish &&
             formProps.onFinish(
               mediaUploadMapper({
                 ...values,
                 school_year: values.school_year?.data.id,
+                school_year_id: values.school_year?.data.id.toString(),
               }),
             )
           );

@@ -29,7 +29,8 @@ const App: React.FC = () => {
   const strapiAuthHelper = AuthHelper(API_URL + "/api");
   const getCurrentRole = GetUserRole(API_URL + "/api");
   const [role, setRole] = useState("public");
-  const [currSchoolYear, setCurrSchoolYear] = useState("1");
+ 
+  localStorage.setItem("currSchoolYearId", "0")
 
   
   const authProvider: AuthProvider = {
@@ -162,8 +163,8 @@ const App: React.FC = () => {
         },
       ]}
       Title={Title}
-      //Header={Header}
-      Header={() => <Header currSchoolYear={currSchoolYear} setCurrSchoolYear={setCurrSchoolYear} />}
+      Header={Header}
+      //Header={() => <Header currSchoolYear={currSchoolYear} setCurrSchoolYear={setCurrSchoolYear} />}
       Sider={Sider}
       Footer={Footer}
       Layout={Layout}

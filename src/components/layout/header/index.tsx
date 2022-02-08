@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import {
   AntdLayout,
   Space,
@@ -21,20 +22,16 @@ import { ISchoolYear } from "interfaces";
 const { DownOutlined } = Icons;
 const { Text } = Typography;
 
-interface HeaderProps {
-  currSchoolYear: string;
-  setCurrSchoolYear: React.Dispatch<React.SetStateAction<string>>;
-}
-
 type ISchoolYearListQueryResult = {
   options: ISchoolYear;
 };
 
-export const Header: React.FC<HeaderProps> = ({ currSchoolYear, setCurrSchoolYear }) => {
+export const Header: React.FC = () => {
   const { i18n } = useTranslation();
   const locale = useGetLocale();
   const changeLanguage = useSetLocale();
   const { data: user } = useGetIdentity();
+  const [currSchoolYear, setCurrSchoolYear] = useState("1");
 
   const currentLocale = locale();
 
@@ -78,6 +75,11 @@ export const Header: React.FC<HeaderProps> = ({ currSchoolYear, setCurrSchoolYea
       ))}
     </Menu>
   );
+
+  useEffect(() => {
+    // storing input name
+    localStorage.setItem("selectedSchoolYearId", JSON.stringify(currSchoolYear));
+  }, [currSchoolYear]);
 
   return (
     <AntdLayout.Header
