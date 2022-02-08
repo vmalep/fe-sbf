@@ -24,7 +24,7 @@ import GetSchoolYearTitle from "helpers/getSchoolYearTitle";
 //import { isConstructorDeclaration } from "typescript";
 
 const { DownOutlined } = Icons;
-const { Text } = Typography;
+const { Title, Text } = Typography;
 
 type ISchoolYearListQueryResult = {
   options: ISchoolYear;
@@ -101,6 +101,7 @@ export const Header: React.FC = () => {
         backgroundColor: "#FFF",
       }}
     >
+      <Title level={5} >Select the school year</Title>
       <Dropdown overlay={schoolYearMenu}>
         <Button type="link">
           <Space>

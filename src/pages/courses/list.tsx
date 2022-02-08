@@ -31,7 +31,7 @@ export const CourseList: React.FC<IResourceComponentsProps> = () => {
     metaData: {
       populate: ["school_year"],
     },
-    initialFilter: [
+    permanentFilter: [
       {
           field: "school_year_id",
           operator: "eq",
