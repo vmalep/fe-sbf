@@ -19,7 +19,7 @@ import NormalizeData from "helpers/normalizeData";
 
 import { ISchoolYear } from "interfaces";
 import GetSchoolYearTitle from "helpers/getSchoolYearTitle";
-import { isConstructorDeclaration } from "typescript";
+//import { isConstructorDeclaration } from "typescript";
 
 const { DownOutlined } = Icons;
 const { Text } = Typography;
