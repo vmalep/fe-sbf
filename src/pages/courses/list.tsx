@@ -41,8 +41,8 @@ export const CourseList: React.FC<IResourceComponentsProps> = () => {
     optionValue: "id",
   });
 
-  //console.log('getting selected school year id: ', localStorage.getItem("selectedSchoolYearId"));
-  //console.log(tableProps);
+  console.log('getting selected school year id: ', localStorage.getItem("selectedSchoolYearId"));
+  console.log(tableProps);
 
   return (
     <List>

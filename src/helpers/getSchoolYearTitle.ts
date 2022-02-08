@@ -13,7 +13,7 @@ const GetSchoolYearTitle = async (id: any) => {
     const data = await axios.get(`${API_URL}/api/school-years/${id}/?${query}`, {
     });
     const title: string = data?.data.data.attributes.title;
-    console.log('title: ', title);
+    //console.log('title: ', title);
     return title ? title : "";
 };
 
