@@ -60,8 +60,8 @@ export interface ISchoolYear {
   title: string;
 }
 export interface ISchoolYearContext {
-  schoolYearId: string;
-  changeSchoolYearId: (name: string) => void;
+  schoolYearContext: ISchoolYear;
+  changeSchoolYearContext: (name: ISchoolYear) => void;
 }
 export interface IUser { // Todo: add geo location
   id: string;

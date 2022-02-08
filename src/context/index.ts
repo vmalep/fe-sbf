@@ -1,1 +1,1 @@
-export { SchoolYearContext, default } from "./SchoolYearContet";
+export { SchoolYearContext, default } from "./SchoolYearContext";

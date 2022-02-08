@@ -6,7 +6,7 @@ import { DataProvider, AuthHelper } from "@pankod/refine-strapi-v4";
 
 import GetUserRole from "./helpers/getUserRole";
 
-import SchoolYearProvider from "context/SchoolYearContet";
+import SchoolYearProvider from "context/SchoolYearContext";
 
 import { UserList, UserCreate, UserEdit, UserShow } from "pages/users";
 //import { ParentList, ParentCreate, ParentEdit, ParentShow } from "pages/parents";

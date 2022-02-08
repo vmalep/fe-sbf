@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import {
   AntdLayout,
   Space,
@@ -17,7 +17,7 @@ import { useTranslation } from "react-i18next";
 
 import NormalizeData from "helpers/normalizeData";
 
-import { SchoolYearContext } from "context/SchoolYearContet";
+import { SchoolYearContext } from "context/SchoolYearContext";
 
 import { ISchoolYear } from "interfaces";
 import GetSchoolYearTitle from "helpers/getSchoolYearTitle";
@@ -36,7 +36,7 @@ export const Header: React.FC = () => {
   const changeLanguage = useSetLocale();
   const { data: user } = useGetIdentity();
 
-  const { schoolYearId, changeSchoolYearId } = useContext(SchoolYearContext);
+  const { schoolYearContext, changeSchoolYearContext } = useContext(SchoolYearContext);
 
   //const [currSchoolYear, setCurrSchoolYear] = useState(["1","Select a school year"]);
 
@@ -47,14 +47,14 @@ export const Header: React.FC = () => {
   console.log('schoolYearSelect: ', schoolYearList);
   
   const schoolYearMenu = (
-    <Menu selectedKeys={[schoolYearId]}>
+    <Menu selectedKeys={[schoolYearContext.id]}>
       {[...(schoolYearList || [])].sort().map((schoolYear: ISchoolYear) => (
         <Menu.Item
           key={schoolYear.id}
           onClick={() => {
-            changeSchoolYearId(schoolYear.id);
             GetSchoolYearTitle(schoolYear.id)
-            .then(res => console.log('new school year: ', res))
+            .then(res => changeSchoolYearContext({id: schoolYear.id, title: res}));
+            console.log('elected school year: ', schoolYear);
           }}
         >
           {schoolYear.title}
@@ -104,7 +104,7 @@ export const Header: React.FC = () => {
       <Dropdown overlay={schoolYearMenu}>
         <Button type="link">
           <Space>
-            {schoolYearId}
+            {schoolYearContext.title}
             <DownOutlined />
           </Space>
         </Button>
