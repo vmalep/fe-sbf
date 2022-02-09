@@ -1,18 +1,6 @@
 import { useContext } from "react";
-import {
-  AntdLayout,
-  Space,
-  Menu,
-  Button,
-  Icons,
-  Dropdown,
-  Avatar,
-  Typography,
-  useGetLocale,
-  useSetLocale,
-  useGetIdentity,
-  useList,
-} from "@pankod/refine";
+import { useGetLocale, useSetLocale, useGetIdentity, useList } from "@pankod/refine-core";
+import { AntdLayout, Space, Menu, Button, Icons, Dropdown, Avatar, Typography } from "@pankod/refine-antd";
 import { useTranslation } from "react-i18next";
 
 import NormalizeData from "helpers/normalizeData";

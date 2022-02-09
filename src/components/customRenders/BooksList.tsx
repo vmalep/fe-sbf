@@ -1,16 +1,9 @@
+import { useNavigation, useDelete, useTranslate } from "@pankod/refine-core";
+
 import {
-  Card,
-  Table,
-  TextField,
-  useNavigation,
-  Dropdown,
-  Icons,
-  Menu,
-  useDelete,
-  useTranslate,
-  FilterDropdown,
-  //useTable
-} from "@pankod/refine";
+Card, Table, TextField, Dropdown, Icons, Menu, //useTable
+FilterDropdown
+} from "@pankod/refine-antd";
 
 import { IBook } from "interfaces";
 

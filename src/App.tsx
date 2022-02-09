@@ -1,7 +1,8 @@
-import { Refine, AuthProvider } from "@pankod/refine";
+import { Refine, AuthProvider } from "@pankod/refine-core";
+import { notificationProvider, LoginPage, ErrorComponent } from "@pankod/refine-antd";
 import routerProvider from "@pankod/refine-react-router";
 import axios from "axios";
-import "@pankod/refine/dist/styles.min.css";
+import "@pankod/refine-antd/dist/styles.min.css";
 import { DataProvider, AuthHelper } from "@pankod/refine-strapi-v4";
 
 import GetUserRole from "./helpers/getUserRole";
@@ -179,7 +180,9 @@ const App: React.FC = () => {
       Layout={Layout}
       OffLayoutArea={OffLayoutArea}
       i18nProvider={i18nProvider}
-    ></Refine>
+      notificationProvider={notificationProvider}
+      LoginPage={LoginPage}
+      catchAll={<ErrorComponent />}></Refine>
   );
 }
 

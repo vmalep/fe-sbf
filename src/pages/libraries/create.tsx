@@ -1,13 +1,8 @@
 import {
-  Create,
-  Form,
-  Input,
-  IResourceComponentsProps,
-  useForm,
-  Select,
-  //useSelect,
-  useList,
-} from "@pankod/refine";
+IResourceComponentsProps, //useSelect,
+useList
+} from "@pankod/refine-core";
+import { Create, Form, Input, useForm, Select } from "@pankod/refine-antd";
 import { mediaUploadMapper } from "@pankod/refine-strapi-v4";
 
 import "react-mde/lib/styles/css/react-mde-all.css";

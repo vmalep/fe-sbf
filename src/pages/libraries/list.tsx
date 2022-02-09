@@ -1,9 +1,10 @@
+import { IResourceComponentsProps, useExport } from "@pankod/refine-core";
+
 import {
   List,
   Table,
   TextField,
   useTable,
-  IResourceComponentsProps,
   getDefaultSortOrder,
   Space,
   EditButton,
@@ -14,10 +15,10 @@ import {
   FilterDropdown,
   useImport,
   ImportButton,
-  useExport,
   ExportButton,
   CreateButton,
-} from "@pankod/refine";
+} from "@pankod/refine-antd";
+
 import { ICourse, ILibrary, ISchoolYear } from "interfaces";
 
 export const LibraryList: React.FC<IResourceComponentsProps> = () => {

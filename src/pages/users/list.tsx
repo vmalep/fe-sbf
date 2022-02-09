@@ -1,15 +1,17 @@
+import { IResourceComponentsProps } from "@pankod/refine-core";
+
 import {
   List,
   Table,
   TextField,
   useTable,
-  IResourceComponentsProps,
   getDefaultSortOrder,
   Space,
-/*   EditButton,
-  DeleteButton, */
+  /*   EditButton,
+    DeleteButton, */
   ShowButton,
-} from "@pankod/refine";
+} from "@pankod/refine-antd";
+
 import { IUser } from "interfaces";
 
 export const UserList: React.FC<IResourceComponentsProps> = () => {

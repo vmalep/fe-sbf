@@ -1,15 +1,9 @@
 import {
-  Card,
-  Table,
-  TextField,
-  useNavigation,
-  Dropdown,
-  Icons,
-  Menu,
-  useDelete,
-  useTranslate,
-  //useTable
-} from "@pankod/refine";
+useNavigation, useDelete, //useTable
+useTranslate
+} from "@pankod/refine-core";
+
+import { Card, Table, TextField, Dropdown, Icons, Menu } from "@pankod/refine-antd";
 
 import { ILibrary } from "interfaces";
 

@@ -1,19 +1,12 @@
 import React, { useState } from "react";
 
-import {
-  AntdLayout,
-  Menu,
-  Grid,
-  Icons,
-  useTranslate,
-  useMenu,
-  useLogout,
-  useTitle,
-  useNavigation,
-} from "@pankod/refine";
+import { useTranslate, useLogout, useTitle, useNavigation } from "@pankod/refine-core";
+import { AntdLayout, Menu, Grid, Icons, useMenu, Typography } from "@pankod/refine-antd";
 import { antLayoutSider, antLayoutSiderMobile } from "./styles";
 
 const { RightOutlined, LogoutOutlined } = Icons;
+
+const { Title } = Typography;
 
 export const Sider: React.FC = () => {
   const [collapsed, setCollapsed] = useState<boolean>(false);

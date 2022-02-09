@@ -1,14 +1,6 @@
 import React, { useState } from "react";
-import {
-  Edit,
-  Form,
-  Input,
-  Radio,
-  IResourceComponentsProps,
-  useForm,
-  Select,
-  useSelect,
-} from "@pankod/refine";
+import { IResourceComponentsProps } from "@pankod/refine-core";
+import { Edit, Form, Input, Radio, useForm, Select, useSelect } from "@pankod/refine-antd";
 import { mediaUploadMapper } from "@pankod/refine-strapi-v4";
 
 import ReactMarkdown from "react-markdown";
