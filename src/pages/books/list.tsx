@@ -216,7 +216,9 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
             <Table.Column
               dataIndex="price"
               key="price"
-              title="Price"
+              title="Price (€)"
+              align="right"
+              //render={(value) => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, '.')}
               render={(value) => <NumberField value={value} />}
               defaultSortOrder={getDefaultSortOrder("title", sorter)}
               sorter
