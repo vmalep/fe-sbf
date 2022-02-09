@@ -18,7 +18,7 @@ export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
 
   const { formProps, saveButtonProps, queryResult } = useForm<ILibrary>({
     metaData: {
-      populate: ["course", "course.school_year"],
+      populate: ["course"],
     },
   });
   console.log(queryResult);

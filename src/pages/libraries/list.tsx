@@ -34,13 +34,13 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
         'course.school_year',
       ],
     },
-    initialFilter: [
+/*     initialFilter: [
       {
           field: "school_year",
           operator: "eq",
           value: localStorage.getItem("selectedSchoolYearId"),
       },
-  ],
+  ], */
   });
 
   console.log('selected school year id: ', localStorage.getItem("selectedSchoolYearId"));
