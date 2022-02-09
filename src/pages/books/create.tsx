@@ -8,6 +8,7 @@ import {
   useForm,
   Select,
   useSelect,
+  useList,
 } from "@pankod/refine";
 import { mediaUploadMapper } from "@pankod/refine-strapi-v4";
 
@@ -33,10 +34,18 @@ export const BookCreate: React.FC<IResourceComponentsProps> = () => {
     optionValue: "id",
   });
 
-  const { selectProps: selectLibraryProps } = useSelect<ILibrary>({
+  const librarySelect = useList<ILibrary>({
     resource: "libraries",
-    defaultValue: queryResult?.data?.data?.library?.data?.id,
+    //defaultValue: queryResult?.data?.data?.library?.data?.id,
+    config: {
+      pagination: { pageSize: 500 },
+    },
+    metaData: {
+      populate: ["course, course.school_year"],
+    },
   });
+  
+    const { Option } = Select;
 
   const [selectedTab, setSelectedTab] = useState<"write" | "preview">("write");
 
@@ -68,9 +77,24 @@ export const BookCreate: React.FC<IResourceComponentsProps> = () => {
         <Form.Item
           label="Title"
           name={["library", "data", "id"]}
-        /* rules={[{ required: true }]} */
+          rules={[{ required: true }]}
         >
-          <Select {...selectLibraryProps} disabled={true} />
+          <Select
+            defaultValue={
+              queryResult?.data?.data?.library?.data?.id
+            }
+          >
+            {(librarySelect?.data?.data || []).map(
+              (library: ILibrary) => {
+                //console.log('library: ', library);
+                return (
+                  <Option key={library.id}>
+                    {library.title} - {library.course.data.attributes.title} - {library.course.data.attributes.school_year.data.attributes.title}
+                  </Option>
+                );
+              }
+            )}
+          </Select>
         </Form.Item>
         <Form.Item
           label="State"

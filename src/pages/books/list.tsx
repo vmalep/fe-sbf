@@ -132,10 +132,22 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
               )}
             /> */}
             <Table.Column
-              key="is_available"
-              dataIndex="is_available"
-              title="Available"
-              render={(value) => <BooleanField value={value} />}
+              key="[school_year][id]"
+              dataIndex={["library", "data", "attributes", "course", "data", "attributes", "school_year", "data", "attributes", "title"]}
+              title="School year"
+              render={(value) => <TextField value={value} />}
+              sorter
+              filterDropdown={(props) => (
+                <FilterDropdown {...props}>
+                  <Select
+                    allowClear
+                    style={{ minWidth: 200 }}
+                    mode="multiple"
+                    placeholder="Select Courses"
+                    {...courseSelectProps}
+                  />
+                </FilterDropdown>
+              )}
             />
             <Table.Column
               key="[course][id]"
@@ -171,6 +183,12 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
                   />
                 </FilterDropdown>
               )}
+            />
+            <Table.Column
+              key="is_available"
+              dataIndex="is_available"
+              title="Available"
+              render={(value) => <BooleanField value={value} />}
             />
             <Table.Column
               key="[user][id]"

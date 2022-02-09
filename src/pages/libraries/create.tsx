@@ -5,7 +5,7 @@ import {
   IResourceComponentsProps,
   useForm,
   Select,
-  useSelect,
+  //useSelect,
   useList,
 } from "@pankod/refine";
 import { mediaUploadMapper } from "@pankod/refine-strapi-v4";
@@ -83,7 +83,7 @@ export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
           >
             {(courseSelect?.data?.data || []).map(
               (course: ICourse) => {
-                console.log('course: ', course);
+                //console.log('course: ', course);
                 return (
                   <Option key={course.id}>
                     {course.title} - {course.school_year.data.attributes.title}
