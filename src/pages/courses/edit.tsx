@@ -37,7 +37,7 @@ export const CourseEdit: React.FC<IResourceComponentsProps> = () => {
               mediaUploadMapper({
                 ...values,
                 school_year: values.school_year?.data.id,
-                school_year_id: values.school_year?.data.id.toString(),
+                //school_year_id: values.school_year?.data.id.toString(),
               }),
             )
           );

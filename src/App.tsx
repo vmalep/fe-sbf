@@ -12,6 +12,8 @@ import { SchoolYearList, SchoolYearCreate, SchoolYearEdit, SchoolYearShow } from
 import { CourseList, CourseCreate, CourseEdit, CourseShow } from "pages/courses";
 import { LibraryList, LibraryCreate, LibraryEdit, LibraryShow } from "pages/libraries";
 import { BookList, BookCreate, BookEdit, BookShow } from "pages/books";
+import { ReservationList, ReservationCreate, ReservationEdit, ReservationShow } from "pages/reservations";
+
 import { Title, Header, Sider, Footer, Layout, OffLayoutArea } from "components/layout";
 
 /* import { newEnforcer } from "casbin.js";
@@ -160,6 +162,13 @@ const App: React.FC = () => {
           create: UserCreate,
           edit: UserEdit,
           show: UserShow,
+        },
+        {
+          name: "reservations",
+          list: ReservationList,
+          create: ReservationCreate,
+          edit: ReservationEdit,
+          show: ReservationShow,
         },
       ]}
       Title={Title}

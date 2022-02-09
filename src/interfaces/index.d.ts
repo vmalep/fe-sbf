@@ -17,7 +17,19 @@ export interface IBook { // Todo: add picture, status ("as new", "used", etc.)
   comment: string;
   state: "asNew" | "fine" | "veryGood" | "good" | "fair" | "poor" | "bindingCopy";
   img_url: string;
-  school_year_id: string;
+  //school_year_id: string; //To be deleted
+  course: {
+    data: {
+      id: string;
+      attributes: ICourse;
+    };
+  };
+  school_year: {
+    data: {
+      id: string;
+      attributes: ISchoolYear;
+    };
+  };
 }
 export interface ILibrary {
   id: string;
@@ -53,7 +65,7 @@ export interface ICourse{
       attributes: ILibrary;
     };
   };
-  school_year_id: string;
+  //school_year_id: string;
 }
 export interface ISchoolYear {
   id: string;
@@ -78,6 +90,43 @@ export interface IUser { // Todo: add geo location
       };
     };
   };
+  books: {
+    data: {
+      id: string;
+      attributes: IBook;
+    };
+  };
+  school_years: {
+    data: {
+      id: string;
+      attributes: ISchoolYear;
+    };
+  };
+  latitude: string;
+  longitude: string;
+  reservations: {
+    data: {
+      id: string;
+      attributes: IReservation;
+    };
+  };
+}
+export interface IReservation {
+  id: string;
+  book: {
+    data: {
+      id: string;
+      attributes: IBook;
+    };
+  };
+  users_permissions_user: {
+    data: {
+      id: string;
+      attributes: IUser;
+    };
+  };
+  status: "proposed" | "confirmed" | "rejected";
+  comment: string;
 }
 export interface IBookFilterVariables {
   q: string;

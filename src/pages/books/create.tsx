@@ -27,7 +27,7 @@ export const BookCreate: React.FC<IResourceComponentsProps> = () => {
     },
   });
 
-  const { selectProps: selectParentProps } = useSelect<IUser>({
+  const { selectProps: selectUserProps } = useSelect<IUser>({
     resource: "users",
     defaultValue: queryResult?.data?.data?.users_permissions_user?.data?.id,
     optionLabel: "username",
@@ -139,7 +139,7 @@ export const BookCreate: React.FC<IResourceComponentsProps> = () => {
           name={["users_permissions_user", "data", "id"]}
           rules={[{ required: true }]}
         >
-          <Select {...selectParentProps} />
+          <Select {...selectUserProps} />
         </Form.Item>
       </Form>
     </Create>
