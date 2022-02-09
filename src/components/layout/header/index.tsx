@@ -17,8 +17,6 @@ import { useTranslation } from "react-i18next";
 
 import NormalizeData from "helpers/normalizeData";
 
-import { SchoolYearContext } from "context/SchoolYearContext";
-
 import { ISchoolYear } from "interfaces";
 import GetSchoolYearTitle from "helpers/getSchoolYearTitle";
 //import { isConstructorDeclaration } from "typescript";
@@ -36,33 +34,12 @@ export const Header: React.FC = () => {
   const changeLanguage = useSetLocale();
   const { data: user } = useGetIdentity();
 
-  const { schoolYearContext, changeSchoolYearContext } = useContext(SchoolYearContext);
-
-  //const [currSchoolYear, setCurrSchoolYear] = useState(["1","Select a school year"]);
-
   const currentLocale = locale();
 
   const schoolYearListQueryResult = useList<ISchoolYearListQueryResult>({ resource: "school-years" });  
   const schoolYearList = NormalizeData(schoolYearListQueryResult).data;
   console.log('schoolYearSelect: ', schoolYearList);
   
-  const schoolYearMenu = (
-    <Menu selectedKeys={[schoolYearContext.id]}>
-      {[...(schoolYearList || [])].sort().map((schoolYear: ISchoolYear) => (
-        <Menu.Item
-          key={schoolYear.id}
-          onClick={() => {
-            GetSchoolYearTitle(schoolYear.id)
-            .then(res => changeSchoolYearContext({id: schoolYear.id, title: res}));
-            console.log('elected school year: ', schoolYear);
-          }}
-        >
-          {schoolYear.title}
-        </Menu.Item>
-      ))}
-    </Menu>
-  );
-
   const languageMenu = (
     <Menu selectedKeys={[currentLocale]}>
       {[...(i18n.languages || [])].sort().map((lang: string) => (
@@ -81,15 +58,6 @@ export const Header: React.FC = () => {
     </Menu>
   );
 
-/*   useEffect(() => {
-    // storing input name
-    localStorage.setItem("selectedSchoolYearId", JSON.stringify(currSchoolYear[0]));
-  }, [currSchoolYear]); */
-
-  //const currSchoolYearTitle = GetSchoolYearTitle(currSchoolYear);
-  //GetSchoolYearTitle(currSchoolYear).then(res => console.log('title in header: ', res))
-  //console.log(currSchoolYearTitle);
-
   return (
     <AntdLayout.Header
       style={{
@@ -101,16 +69,6 @@ export const Header: React.FC = () => {
         backgroundColor: "#FFF",
       }}
     >
-      <Title level={5} >Select the school year</Title>
-      <Dropdown overlay={schoolYearMenu}>
-        <Button type="link">
-          <Space>
-            {schoolYearContext.title}
-            <DownOutlined />
-          </Space>
-        </Button>
-      </Dropdown>
-
       <Dropdown overlay={languageMenu}>
         <Button type="link">
           <Space>
