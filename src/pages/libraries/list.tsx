@@ -1,4 +1,9 @@
-import { IResourceComponentsProps, useExport, CrudFilters, HttpError } from "@pankod/refine-core";
+import {
+  IResourceComponentsProps,
+  useExport,
+  CrudFilters,
+  HttpError,
+} from "@pankod/refine-core";
 
 import {
   List,
@@ -30,11 +35,14 @@ import {
   ICourse,
   ISchoolYear,
   ILibraryFilterVariables,
-
 } from "interfaces";
 
 export const LibraryList: React.FC<IResourceComponentsProps> = () => {
-  const { tableProps, sorter, searchFormProps } = useTable<ILibrary, HttpError, ILibraryFilterVariables>({
+  const { tableProps, sorter, searchFormProps } = useTable<
+    ILibrary,
+    HttpError,
+    ILibraryFilterVariables
+  >({
     initialSorter: [
       {
         field: "id",
@@ -43,32 +51,32 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
     ],
     onSearch: (params) => {
       const filters: CrudFilters = [];
-      const { course/* , school_year */ } = params;
+      const { course, school_year } = params;
+      console.log("course", course);
 
-      filters.push(
-        {
-          field: "[course][id]",
+      if (course) {
+        filters.push({
+          field: "course.id",
           operator: "eq",
           value: course,
-        },
-        /*         {
-                  field: "course.data.attributes.school_year",
-                  operator: "eq",
-                  value: school_year,
-                }, */
-      );
-      console.log('filters: ', filters);
+        });
+      }
+      if (school_year) {
+        filters.push({
+          field: "course.school_year.id",
+          operator: "eq",
+          value: school_year,
+        });
+      }
+      console.log("filters: ", filters);
       return filters;
     },
     metaData: {
-      populate: [
-        'course',
-        'course.school_year',
-      ],
+      populate: ["course", "course.school_year"],
     },
   });
 
-  console.log("tableProps: ", tableProps);
+  // console.log("tableProps: ", tableProps);
 
   const { selectProps: selectCourseProps } = useSelect<ICourse>({
     resource: "courses",
@@ -98,6 +106,7 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
             ),
           }}
         >
+          {console.log("tableProps", tableProps)}
           <Table
             {...tableProps}
             rowKey="id"
@@ -116,7 +125,15 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
             />
             <Table.Column
               key="[school_year][id]"
-              dataIndex={["course", "data", "attributes", "school_year", "data", "attributes", "title"]}
+              dataIndex={[
+                "course",
+                "data",
+                "attributes",
+                "school_year",
+                "data",
+                "attributes",
+                "title",
+              ]}
               title="School year"
               render={(value) => <TextField value={value} />}
               sorter
@@ -172,7 +189,11 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
                 <Space>
                   <ShowButton hideText size="small" recordItemId={record.id} />
                   <EditButton hideText size="small" recordItemId={record.id} />
-                  <DeleteButton hideText size="small" recordItemId={record.id} />
+                  <DeleteButton
+                    hideText
+                    size="small"
+                    recordItemId={record.id}
+                  />
                 </Space>
               )}
             />
@@ -184,7 +205,6 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
 };
 
 const Filter: React.FC<{ formProps: FormProps }> = ({ formProps }) => {
-
   /*   const { selectProps: schoolYearSelect } = useSelect<ISchoolYear>({
       resource: "school-years",
       optionLabel: "title",
@@ -192,7 +212,7 @@ const Filter: React.FC<{ formProps: FormProps }> = ({ formProps }) => {
     }); */
 
   const { selectProps: courseSelect } = useSelect<ICourse>({
-    resource: "courses"
+    resource: "courses",
   });
 
   return (
@@ -213,7 +233,7 @@ const Filter: React.FC<{ formProps: FormProps }> = ({ formProps }) => {
           </Form.Item>
         </Col> */}
         <Col flex="1 0 auto">
-          <Form.Item label="Course" name="course" >
+          <Form.Item label="Course" name="course">
             <Select
               {...courseSelect}
               allowClear
