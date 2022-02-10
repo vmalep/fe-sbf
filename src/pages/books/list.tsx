@@ -88,6 +88,7 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
 
   const { selectProps: courseSelectProps } = useSelect<ICourse>({
     resource: "courses",
+    optionValue: "title",
   });
 
   const { selectProps: userSelectProps } = useSelect<IUser>({
@@ -131,7 +132,7 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
               )}
             />
             <Table.Column
-              key="[course][id]"
+              key="[course][data][attributes][title]"
               dataIndex={["library", "data", "attributes", "course", "data", "attributes", "title"]}
               title="Course"
               render={(value) => <TextField value={value} />}

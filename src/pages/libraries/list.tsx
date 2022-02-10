@@ -47,7 +47,7 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
 
       filters.push(
         {
-          field: "[course][id]",
+          field: "[course][title]",
           operator: "eq",
           value: course,
         },
@@ -72,6 +72,7 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
 
   const { selectProps: selectCourseProps } = useSelect<ICourse>({
     resource: "courses",
+    optionValue: "title",
   });
 
   const { selectProps: SchoolYearSelectProps } = useSelect<ISchoolYear>({
@@ -119,7 +120,6 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
               dataIndex={["course", "data", "attributes", "school_year", "data", "attributes", "title"]}
               title="School year"
               render={(value) => <TextField value={value} />}
-              sorter
               filterDropdown={(props) => (
                 <FilterDropdown {...props}>
                   <Select
@@ -133,11 +133,10 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
               )}
             />
             <Table.Column
-              key="[course][id]"
+              key="[course][data][attributes][title]"
               dataIndex={["course", "data", "attributes", "title"]}
               title="Course"
               render={(value) => <TextField value={value} />}
-              sorter
               filterDropdown={(props) => (
                 <FilterDropdown {...props}>
                   <Select
@@ -192,7 +191,8 @@ const Filter: React.FC<{ formProps: FormProps }> = ({ formProps }) => {
     }); */
 
   const { selectProps: courseSelect } = useSelect<ICourse>({
-    resource: "courses"
+    resource: "courses",
+    optionValue: "title"
   });
 
   return (
