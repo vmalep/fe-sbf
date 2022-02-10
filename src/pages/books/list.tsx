@@ -30,7 +30,7 @@ import {
   IUser,
   ILibrary,
   ICourse,
-  //ISchoolYear,
+  ISchoolYear,
   IBookFilterVariables,
 } from "interfaces";
 
@@ -63,7 +63,7 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
           value: maxprice ? maxprice : undefined,
         },
       );
-
+      console.log('filters: ', filters);
       return filters;
     },
     metaData: {
@@ -76,13 +76,13 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
     },
   });
 
-  //console.log(tableProps);
+  console.log("tableProps: ", tableProps);
 
   const { selectProps: librarySelectProps } = useSelect<ILibrary>({
     resource: "libraries",
   });
 
-  const { selectProps: SchoolYearSelectProps } = useSelect<ICourse>({
+  const { selectProps: SchoolYearSelectProps } = useSelect<ISchoolYear>({
     resource: "school-years",
   });
 

@@ -43,21 +43,21 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
     ],
     onSearch: (params) => {
       const filters: CrudFilters = [];
-      const { course, school_year } = params;
+      const { course/* , school_year */ } = params;
 
       filters.push(
         {
-          field: "course",
+          field: "[course][id]",
           operator: "eq",
           value: course,
         },
-        {
-          field: "course.data.attributes.school_year",
-          operator: "eq",
-          value: school_year,
-        },
+        /*         {
+                  field: "course.data.attributes.school_year",
+                  operator: "eq",
+                  value: school_year,
+                }, */
       );
-
+      console.log('filters: ', filters);
       return filters;
     },
     metaData: {
@@ -68,18 +68,14 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
     },
   });
 
-  console.log(tableProps);
+  console.log("tableProps: ", tableProps);
 
   const { selectProps: selectCourseProps } = useSelect<ICourse>({
     resource: "courses",
-    optionLabel: "title",
-    optionValue: "id",
   });
 
-  const { selectProps: selectSchoolYearProps } = useSelect<ISchoolYear>({
+  const { selectProps: SchoolYearSelectProps } = useSelect<ISchoolYear>({
     resource: "school-years",
-    optionLabel: "title",
-    optionValue: "id",
   });
 
   const importProps = useImport<ILibrary>();
@@ -119,20 +115,22 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
               sorter
             />
             <Table.Column
-              dataIndex="title"
-              key="title"
-              title="Title"
+              key="[school_year][id]"
+              dataIndex={["course", "data", "attributes", "school_year", "data", "attributes", "title"]}
+              title="School year"
               render={(value) => <TextField value={value} />}
-              defaultSortOrder={getDefaultSortOrder("title", sorter)}
               sorter
-            />
-            <Table.Column
-              dataIndex="author"
-              key="author"
-              title="Author"
-              render={(value) => <TextField value={value} />}
-              defaultSortOrder={getDefaultSortOrder("author", sorter)}
-              sorter
+              filterDropdown={(props) => (
+                <FilterDropdown {...props}>
+                  <Select
+                    allowClear
+                    style={{ minWidth: 200 }}
+                    mode="multiple"
+                    placeholder="Select Courses"
+                    {...SchoolYearSelectProps}
+                  />
+                </FilterDropdown>
+              )}
             />
             <Table.Column
               key="[course][id]"
@@ -151,20 +149,22 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
               )}
             />
             <Table.Column
-              key="[school_year][id]"
-              dataIndex={["course", "data", "attributes", "school_year", "data", "attributes", "title"]}
-              title="School year"
+              dataIndex="title"
+              key="title"
+              title="Title"
               render={(value) => <TextField value={value} />}
+              defaultSortOrder={getDefaultSortOrder("title", sorter)}
               sorter
-              filterDropdown={(props) => (
-                <FilterDropdown {...props}>
-                  <Select
-                    placeholder="Select School year"
-                    {...selectSchoolYearProps}
-                  />
-                </FilterDropdown>
-              )}
             />
+            <Table.Column
+              dataIndex="author"
+              key="author"
+              title="Author"
+              render={(value) => <TextField value={value} />}
+              defaultSortOrder={getDefaultSortOrder("author", sorter)}
+              sorter
+            />
+
             <Table.Column<ILibrary>
               title="Actions"
               dataIndex="actions"
@@ -185,46 +185,40 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
 
 const Filter: React.FC<{ formProps: FormProps }> = ({ formProps }) => {
 
-  const { selectProps: schoolYearSelect } = useSelect<ISchoolYear>({
-    resource: "school-years",
-    optionLabel: "title",
-    optionValue: "id",
-  });
+  /*   const { selectProps: schoolYearSelect } = useSelect<ISchoolYear>({
+      resource: "school-years",
+      optionLabel: "title",
+      optionValue: "id",
+    }); */
 
   const { selectProps: courseSelect } = useSelect<ICourse>({
-    resource: "courses",
-    optionLabel: "title",
-    optionValue: "id",
+    resource: "courses"
   });
 
   return (
     <Form layout="horizontal" {...formProps}>
       <Row>
-      <Col flex="1 0 auto">
+        {/*       <Col flex="1 0 auto">
           <Form.Item
             label="School year"
-            name={["course", "data", "school_year", "data", "id"]}
+            name={["course", "data", "school_year"]}
           >
             <Select
               allowClear
               style={{ minWidth: 200 }}
               mode="multiple"
-              placeholder="Select Courses"
+              placeholder="Select School year"
               {...schoolYearSelect}
             />
           </Form.Item>
-        </Col>
+        </Col> */}
         <Col flex="1 0 auto">
-          <Form.Item
-            label="Course"
-            name={["course", "data", "id"]}
-          >
+          <Form.Item label="Course" name="course" >
             <Select
+              {...courseSelect}
               allowClear
               style={{ minWidth: 200 }}
-              mode="multiple"
-              placeholder="Select Courses"
-              {...courseSelect}
+              placeholder="Select Course"
             />
           </Form.Item>
         </Col>
