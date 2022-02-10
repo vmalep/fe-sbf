@@ -1,5 +1,5 @@
-import { Refine, AuthProvider } from "@pankod/refine-core";
-import { notificationProvider, LoginPage, ErrorComponent } from "@pankod/refine-antd";
+import { Refine, AuthProvider, LayoutWrapper } from "@pankod/refine-core";
+import { notificationProvider, /* LoginPage, */ ErrorComponent } from "@pankod/refine-antd";
 import routerProvider from "@pankod/refine-react-router";
 import axios from "axios";
 import "@pankod/refine-antd/dist/styles.min.css";
@@ -15,6 +15,8 @@ import { LibraryList, LibraryCreate, LibraryEdit, LibraryShow } from "pages/libr
 import { BookList, BookCreate, BookEdit, BookShow } from "pages/books";
 import { ReservationList, ReservationCreate, ReservationEdit, ReservationShow } from "pages/reservations";
 
+import { Login/* , ForgotPassword, ResetPassword */ } from "pages/login";
+
 import { Title, Header, Sider, Footer, Layout, OffLayoutArea } from "components/layout";
 
 /* import { newEnforcer } from "casbin.js";
@@ -24,6 +26,14 @@ import { API_URL, TOKEN_KEY } from "./constants";
 
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+
+const LoginPage = () => {
+  return (
+      <LayoutWrapper>
+        <Login />
+      </LayoutWrapper>
+  );
+};
 
 const App: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -105,7 +115,7 @@ const App: React.FC = () => {
 
   return (
     <Refine
-      authProvider={authProvider}
+      //authProvider={authProvider}
       dataProvider={DataProvider(API_URL + "/api", axiosInstance)}
       /*       accessControlProvider={{
               can: async ({ resource, action, params }) => {
@@ -127,7 +137,16 @@ const App: React.FC = () => {
                   return Promise.resolve({ can });
               },
           }} */
-      routerProvider={routerProvider}
+      routerProvider={{
+        ...routerProvider,
+        routes: [
+          {
+            exact: true,
+            component: LoginPage,
+            path: "/login",
+          },
+        ],
+      }}
       resources={[
         {
           name: "books",
@@ -180,7 +199,7 @@ const App: React.FC = () => {
       OffLayoutArea={OffLayoutArea}
       i18nProvider={i18nProvider}
       notificationProvider={notificationProvider}
-      LoginPage={LoginPage}
+      LoginPage={Login}
       catchAll={<ErrorComponent />}>
     </Refine>
   );
