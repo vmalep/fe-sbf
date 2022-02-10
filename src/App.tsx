@@ -174,7 +174,6 @@ const App: React.FC = () => {
       ]}
       Title={Title}
       Header={Header}
-      //Header={() => <Header currSchoolYear={currSchoolYear} setCurrSchoolYear={setCurrSchoolYear} />}
       Sider={Sider}
       Footer={Footer}
       Layout={Layout}
@@ -182,7 +181,8 @@ const App: React.FC = () => {
       i18nProvider={i18nProvider}
       notificationProvider={notificationProvider}
       LoginPage={LoginPage}
-      catchAll={<ErrorComponent />}></Refine>
+      catchAll={<ErrorComponent />}>
+    </Refine>
   );
 }
 

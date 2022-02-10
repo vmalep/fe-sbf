@@ -14,9 +14,9 @@ export const Layout: React.FC<LayoutProps> = ({
   const breakpoint = Grid.useBreakpoint();
   return (
     <AntdLayout style={{ minHeight: "100vh", flexDirection: "row" }}>
-      <Sider />
+      {Sider && <Sider/>}
       <AntdLayout>
-        <Header />
+        {Header && <Header />}
         <AntdLayout.Content>
           <div
             style={{
@@ -26,9 +26,9 @@ export const Layout: React.FC<LayoutProps> = ({
           >
             {children}
           </div>
-          <OffLayoutArea />
+          {OffLayoutArea && <OffLayoutArea />}
         </AntdLayout.Content>
-        <Footer />
+        {Footer && <Footer />}
       </AntdLayout>
     </AntdLayout>
   );
