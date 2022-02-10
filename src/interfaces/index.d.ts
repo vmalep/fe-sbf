@@ -129,9 +129,21 @@ export interface IReservation {
   comment: string;
 }
 export interface IBookFilterVariables {
-  q: string;
   is_available: boolean;
   minprice: number;
   maxprice: number;
-  //createdAt: [Dayjs, Dayjs];
+}
+export interface ILibraryFilterVariables {
+  course: {
+    data: {
+      id: string;
+      attributes: ICourse;
+    };
+  };
+  school_year: {
+    data: {
+      id: string;
+      attributes: ISchoolYear;
+    };
+  };
 }

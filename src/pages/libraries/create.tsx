@@ -70,7 +70,6 @@ export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
           name={["course", "data", "id"]}
           rules={[{ required: true }]}
         >
-          {/* <Select {...selectProps} /> */}
           <Select
             defaultValue={
               queryResult?.data?.data?.course?.data?.id
@@ -78,7 +77,6 @@ export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
           >
             {(courseSelect?.data?.data || []).map(
               (course: ICourse) => {
-                //console.log('course: ', course);
                 return (
                   <Option key={course.id}>
                     {course.title} - {course.school_year.data.attributes.title}

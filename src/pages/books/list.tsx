@@ -44,14 +44,9 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
     ],
     onSearch: (params) => {
       const filters: CrudFilters = [];
-      const { /* q,  */is_available, minprice, maxprice } = params;
+      const { is_available, minprice, maxprice } = params;
 
       filters.push(
-        /*         {
-                  field: "q",
-                  operator: "eq",
-                  value: q,
-                }, */
         {
           field: "is_available",
           operator: "eq",
@@ -87,6 +82,10 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
     resource: "libraries",
   });
 
+  const { selectProps: SchoolYearSelectProps } = useSelect<ICourse>({
+    resource: "school-years",
+  });
+
   const { selectProps: courseSelectProps } = useSelect<ICourse>({
     resource: "courses",
   });
@@ -113,23 +112,6 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
               defaultSortOrder={getDefaultSortOrder("id", sorter)}
               sorter
             />
-            {/*             <Table.Column
-              key="[school_year][id]"
-              dataIndex={["library", "data", "attributes", "course", "data", "attributes", "school_year", "data", "attributes", "title"]}
-              title="School year"
-              render={(value) => <TextField value={value} />}
-              sorter
-              filterDropdown={(props) => (
-                <FilterDropdown {...props}>
-                  <Select
-                    style={{ minWidth: 200 }}
-                    mode="multiple"
-                    placeholder="Select Courses"
-                    {...selectSchoolYearProps}
-                  />
-                </FilterDropdown>
-              )}
-            /> */}
             <Table.Column
               key="[school_year][id]"
               dataIndex={["library", "data", "attributes", "course", "data", "attributes", "school_year", "data", "attributes", "title"]}
@@ -143,7 +125,7 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
                     style={{ minWidth: 200 }}
                     mode="multiple"
                     placeholder="Select Courses"
-                    {...courseSelectProps}
+                    {...SchoolYearSelectProps}
                   />
                 </FilterDropdown>
               )}
@@ -241,12 +223,6 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
 };
 
 const Filter: React.FC<{ formProps: FormProps }> = ({ formProps }) => {
-
-  /*   const { selectProps } = useSelect<ISchoolYear>({
-      resource: "school-years",
-      optionLabel: "title",
-      optionValue: "id",
-    }); */
 
   return (
     <Form layout="horizontal" {...formProps}>
