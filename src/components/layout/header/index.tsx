@@ -1,28 +1,14 @@
-import { useContext } from "react";
-import {
-  AntdLayout,
-  Space,
-  Menu,
-  Button,
-  Icons,
-  Dropdown,
-  Avatar,
-  Typography,
-  useGetLocale,
-  useSetLocale,
-  useGetIdentity,
-  useList,
-} from "@pankod/refine";
+import { useGetLocale, useSetLocale, useGetIdentity, useList } from "@pankod/refine-core";
+import { AntdLayout, Space, Menu, Button, Icons, Dropdown, Avatar, Typography } from "@pankod/refine-antd";
 import { useTranslation } from "react-i18next";
 
 import NormalizeData from "helpers/normalizeData";
 
 import { ISchoolYear } from "interfaces";
-import GetSchoolYearTitle from "helpers/getSchoolYearTitle";
 //import { isConstructorDeclaration } from "typescript";
 
 const { DownOutlined } = Icons;
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 type ISchoolYearListQueryResult = {
   options: ISchoolYear;

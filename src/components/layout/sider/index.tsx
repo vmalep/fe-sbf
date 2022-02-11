@@ -1,16 +1,7 @@
 import React, { useState } from "react";
 
-import {
-  AntdLayout,
-  Menu,
-  Grid,
-  Icons,
-  useTranslate,
-  useMenu,
-  useLogout,
-  useTitle,
-  useNavigation,
-} from "@pankod/refine";
+import { useTranslate, useLogout, useTitle, useNavigation } from "@pankod/refine-core";
+import { AntdLayout, Menu, Grid, Icons, useMenu } from "@pankod/refine-antd";
 import { antLayoutSider, antLayoutSiderMobile } from "./styles";
 
 const { RightOutlined, LogoutOutlined } = Icons;
@@ -35,7 +26,7 @@ export const Sider: React.FC = () => {
       breakpoint="lg"
       style={isMobile ? antLayoutSiderMobile : antLayoutSider}
     >
-      <Title collapsed={collapsed} />
+      {Title && <Title collapsed={collapsed} />}
       <Menu
         selectedKeys={[selectedKey]}
         mode="inline"

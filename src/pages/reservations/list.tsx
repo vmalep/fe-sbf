@@ -1,15 +1,17 @@
+import { IResourceComponentsProps } from "@pankod/refine-core";
+
 import {
   List,
   Table,
   TextField,
   useTable,
-  IResourceComponentsProps,
   getDefaultSortOrder,
   Space,
   EditButton,
   DeleteButton,
   ShowButton,
-} from "@pankod/refine";
+} from "@pankod/refine-antd";
+
 import { IReservation } from "interfaces";
 
 export const ReservationList: React.FC<IResourceComponentsProps> = () => {

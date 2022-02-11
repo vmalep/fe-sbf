@@ -1,10 +1,11 @@
 import { useContext } from "react";
+import { IResourceComponentsProps } from "@pankod/refine-core";
+
 import {
   List,
   Table,
   TextField,
   useTable,
-  IResourceComponentsProps,
   getDefaultSortOrder,
   Space,
   EditButton,
@@ -13,7 +14,8 @@ import {
   Select,
   useSelect,
   FilterDropdown,
-} from "@pankod/refine";
+} from "@pankod/refine-antd";
+
 import { ICourse, ISchoolYear } from "interfaces";
 
 export const CourseList: React.FC<IResourceComponentsProps> = () => {

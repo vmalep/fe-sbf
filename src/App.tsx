@@ -1,20 +1,53 @@
-import { Refine, AuthProvider } from "@pankod/refine";
+import { Refine, AuthProvider } from "@pankod/refine-core";
+import {
+  notificationProvider,
+  LoginPage,
+  ErrorComponent,
+} from "@pankod/refine-antd";
 import routerProvider from "@pankod/refine-react-router";
 import axios from "axios";
-import "@pankod/refine/dist/styles.min.css";
-import { DataProvider, AuthHelper } from "@pankod/refine-strapi-v4";
+import "@pankod/refine-antd/dist/styles.min.css";
+import { AuthHelper } from "@pankod/refine-strapi-v4";
+import { DataProvider } from "./custom/strapi-4";
 
 import GetUserRole from "./helpers/getUserRole";
 
 import { UserList, UserCreate, UserEdit, UserShow } from "pages/users";
 //import { ParentList, ParentCreate, ParentEdit, ParentShow } from "pages/parents";
-import { SchoolYearList, SchoolYearCreate, SchoolYearEdit, SchoolYearShow } from "pages/school-years";
-import { CourseList, CourseCreate, CourseEdit, CourseShow } from "pages/courses";
-import { LibraryList, LibraryCreate, LibraryEdit, LibraryShow } from "pages/libraries";
+import {
+  SchoolYearList,
+  SchoolYearCreate,
+  SchoolYearEdit,
+  SchoolYearShow,
+} from "pages/school-years";
+import {
+  CourseList,
+  CourseCreate,
+  CourseEdit,
+  CourseShow,
+} from "pages/courses";
+import {
+  LibraryList,
+  LibraryCreate,
+  LibraryEdit,
+  LibraryShow,
+} from "pages/libraries";
 import { BookList, BookCreate, BookEdit, BookShow } from "pages/books";
-import { ReservationList, ReservationCreate, ReservationEdit, ReservationShow } from "pages/reservations";
+import {
+  ReservationList,
+  ReservationCreate,
+  ReservationEdit,
+  ReservationShow,
+} from "pages/reservations";
 
-import { Title, Header, Sider, Footer, Layout, OffLayoutArea } from "components/layout";
+import {
+  Title,
+  Header,
+  Sider,
+  Footer,
+  Layout,
+  OffLayoutArea,
+} from "components/layout";
 
 /* import { newEnforcer } from "casbin.js";
 import { model, adapter } from "./accessControl"; */
@@ -32,15 +65,11 @@ const App: React.FC = () => {
   const getCurrentRole = GetUserRole(API_URL + "/api");
   const [role, setRole] = useState("public");
 
-  localStorage.setItem("currSchoolYearId", "0")
-
+  localStorage.setItem("currSchoolYearId", "0");
 
   const authProvider: AuthProvider = {
     login: async ({ username, password }) => {
-      const { data, status } = await strapiAuthHelper.login(
-        username,
-        password,
-      );
+      const { data, status } = await strapiAuthHelper.login(username, password);
       console.log(username, password);
       if (status === 200) {
         localStorage.setItem(TOKEN_KEY, data.jwt);
@@ -100,7 +129,7 @@ const App: React.FC = () => {
     getLocale: () => i18n.language,
   };
 
-  console.log('role: ', role)
+  console.log("role: ", role);
 
   return (
     <Refine
@@ -173,14 +202,16 @@ const App: React.FC = () => {
       ]}
       Title={Title}
       Header={Header}
-      //Header={() => <Header currSchoolYear={currSchoolYear} setCurrSchoolYear={setCurrSchoolYear} />}
       Sider={Sider}
       Footer={Footer}
       Layout={Layout}
       OffLayoutArea={OffLayoutArea}
       i18nProvider={i18nProvider}
+      notificationProvider={notificationProvider}
+      LoginPage={LoginPage}
+      catchAll={<ErrorComponent />}
     ></Refine>
   );
-}
+};
 
 export default App;

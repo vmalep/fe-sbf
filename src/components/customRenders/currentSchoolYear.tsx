@@ -1,13 +1,9 @@
 import {
-  Button,
-  Space,
-  useList,
-  Dropdown,
-  Icons,
-  Menu,
-  useTranslate,
-  //useTable
-} from "@pankod/refine";
+useList, //useTable
+useTranslate
+} from "@pankod/refine-core";
+
+import { Button, Space, Dropdown, Icons, Menu } from "@pankod/refine-antd";
 
 import { useState } from "react";
 import { ISchoolYear } from "interfaces";
