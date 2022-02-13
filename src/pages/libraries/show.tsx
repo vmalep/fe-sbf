@@ -1,7 +1,7 @@
 import { useShow, IResourceComponentsProps } from "@pankod/refine-core";
 import { Show, Typography } from "@pankod/refine-antd";
 //import { RenderLibraries } from "components/customRenders";
-import { RenderBooks } from "components/customRenders/BooksList";
+import { RenderBooks } from "components/customRenders";
 
 import { ILibrary } from "interfaces";
 

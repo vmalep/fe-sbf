@@ -75,6 +75,12 @@ export interface ICourse{
 export interface ISchoolYear {
   id: string;
   title: string;
+  courses: {
+    data: {
+      id: string;
+      attributes: ICourse;
+    };
+  };
 }
 export interface ISchoolYearContext {
   schoolYearContext: ISchoolYear;
