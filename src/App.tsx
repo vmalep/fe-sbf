@@ -1,4 +1,4 @@
-import { Refine, AuthProvider } from "@pankod/refine-core";
+import { Refine, AuthProvider, LayoutWrapper } from "@pankod/refine-core";
 import {
   notificationProvider,
   LoginPage,
@@ -13,7 +13,9 @@ import { DataProvider } from "./custom/strapi-4";
 import GetUserRole from "./helpers/getUserRole";
 
 import { UserList, UserCreate, UserEdit, UserShow } from "pages/users";
-//import { ParentList, ParentCreate, ParentEdit, ParentShow } from "pages/parents";
+
+import { AvailableBooks } from "pages/custom";
+
 import {
   SchoolYearList,
   SchoolYearCreate,
@@ -56,6 +58,14 @@ import { API_URL, TOKEN_KEY } from "./constants";
 
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+
+const AvailableBooksPage = () => {
+  return (
+    <LayoutWrapper>
+      <AvailableBooks />
+    </LayoutWrapper>
+  );
+};
 
 const App: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -135,6 +145,16 @@ const App: React.FC = () => {
     <Refine
       authProvider={authProvider}
       dataProvider={DataProvider(API_URL + "/api", axiosInstance)}
+      routerProvider={{
+        ...routerProvider,
+        routes: [
+          {
+            exact: true,
+            component: AvailableBooksPage,
+            path: "/available-books",
+          },
+        ],
+      }}
       /*       accessControlProvider={{
               can: async ({ resource, action, params }) => {
                   const enforcer = await newEnforcer(model, adapter);
@@ -155,7 +175,6 @@ const App: React.FC = () => {
                   return Promise.resolve({ can });
               },
           }} */
-      routerProvider={routerProvider}
       resources={[
         {
           name: "books",
