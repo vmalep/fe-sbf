@@ -7,6 +7,18 @@ export interface IBook { // Todo: add picture, status ("as new", "used", etc.)
       attributes: IUser;
     };
   };
+  school_year: {
+    data: {
+      id: string;
+      attributes: ISchoolYear;
+    };
+  };
+  course: {
+    data: {
+      id: string;
+      attributes: ICourse;
+    };
+  };
   library: {
     data: {
       id: string;
@@ -17,23 +29,16 @@ export interface IBook { // Todo: add picture, status ("as new", "used", etc.)
   comment: string;
   state: "asNew" | "fine" | "veryGood" | "good" | "fair" | "poor" | "bindingCopy";
   img_url: string;
-  //school_year_id: string; //To be deleted
-  course: {
-    data: {
-      id: string;
-      attributes: ICourse;
-    };
-  };
-  school_year: {
-    data: {
-      id: string;
-      attributes: ISchoolYear;
-    };
-  };
 }
 export interface ILibrary {
   id: string;
   title: string;
+  library: {
+    data: {
+      id: string;
+      attributes: ILibrary;
+    };
+  };
   course: {
     data: {
       id: string;

@@ -8,7 +8,7 @@ import ReactMde from "react-mde";
 
 import "react-mde/lib/styles/css/react-mde-all.css";
 
-import { IBook, ILibrary, IUser } from "interfaces";
+import { IBook, ILibrary, ICourse, ISchoolYear, IUser } from "interfaces";
 
 export const BookCreate: React.FC<IResourceComponentsProps> = () => {
 
@@ -20,23 +20,33 @@ export const BookCreate: React.FC<IResourceComponentsProps> = () => {
 
   const { selectProps: selectUserProps } = useSelect<IUser>({
     resource: "users",
-    defaultValue: queryResult?.data?.data?.users_permissions_user?.data?.id,
+/*     defaultValue: queryResult?.data?.data?.users_permissions_user?.data?.id,
     optionLabel: "username",
-    optionValue: "id",
+    optionValue: "id", */
+  });
+
+  const schoolYearSelect = useList<ISchoolYear>({
+    resource: "school-years",
+    config: {
+      pagination: { pageSize: 500 },
+    },
+  });
+
+  const courseSelect = useList<ICourse>({
+    resource: "courses",
+    config: {
+      pagination: { pageSize: 500 },
+    },
   });
 
   const librarySelect = useList<ILibrary>({
     resource: "libraries",
-    //defaultValue: queryResult?.data?.data?.library?.data?.id,
     config: {
       pagination: { pageSize: 500 },
     },
-    metaData: {
-      populate: ["course, course.school_year"],
-    },
   });
-  
-    const { Option } = Select;
+
+  const { Option } = Select;
 
   const [selectedTab, setSelectedTab] = useState<"write" | "preview">("write");
 
@@ -49,8 +59,8 @@ export const BookCreate: React.FC<IResourceComponentsProps> = () => {
             formProps.onFinish(
               mediaUploadMapper({
                 ...values,
-                users_permissions_user: values.users_permissions_user?.data.id,
                 library: values.library?.data.id,
+                users_permissions_user: values.users_permissions_user?.data.id,
               }),
             )
           );
@@ -64,6 +74,44 @@ export const BookCreate: React.FC<IResourceComponentsProps> = () => {
             <Radio value={true}>True</Radio>
             <Radio value={false}>False</Radio>
           </Radio.Group>
+        </Form.Item>
+        <Form.Item
+          label="School year"
+          name={["school_year", "data", "id"]}
+          rules={[{ required: true }]}
+        >
+          <Select
+            defaultValue={queryResult?.data?.data?.school_year?.data?.id}
+          >
+            {(schoolYearSelect?.data?.data || []).map(
+              (school_year: ISchoolYear) => {
+                return (
+                  <Option key={school_year.id}>
+                    {school_year.title}
+                  </Option>
+                );
+              }
+            )}
+          </Select>
+        </Form.Item>
+        <Form.Item
+          label="Course"
+          name={["course", "data", "id"]}
+          rules={[{ required: true }]}
+        >
+          <Select
+            defaultValue={queryResult?.data?.data?.course?.data?.id}
+          >
+            {(courseSelect?.data?.data || []).map(
+              (course: ICourse) => {
+                return (
+                  <Option key={course.id}>
+                    {course.title}
+                  </Option>
+                );
+              }
+            )}
+          </Select>
         </Form.Item>
         <Form.Item
           label="Title"
@@ -80,7 +128,7 @@ export const BookCreate: React.FC<IResourceComponentsProps> = () => {
                 //console.log('library: ', library);
                 return (
                   <Option key={library.id}>
-                    {library.title} - {library.course.data.attributes.title} - {library.course.data.attributes.school_year.data.attributes.title}
+                    {library.title}{/*  - {library.course.data.attributes.title} - {library.course.data.attributes.school_year.data.attributes.title} */}
                   </Option>
                 );
               }

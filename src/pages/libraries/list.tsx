@@ -143,7 +143,7 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
                     allowClear
                     style={{ minWidth: 200 }}
                     mode="multiple"
-                    placeholder="Select Courses"
+                    placeholder="Select school year"
                     {...SchoolYearSelectProps}
                   />
                 </FilterDropdown>
@@ -159,7 +159,7 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
                 <FilterDropdown {...props}>
                   <Select
                     style={{ minWidth: 200 }}
-                    placeholder="Select Course"
+                    placeholder="Select course"
                     {...selectCourseProps}
                   />
                 </FilterDropdown>
