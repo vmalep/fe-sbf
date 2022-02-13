@@ -1,11 +1,11 @@
 import { useOne, IResourceComponentsProps } from "@pankod/refine-core";
 
 import {
-  Show,
   Card,
   Typography,
   Select,
   useSelect,
+  Row, Col, Space,
 } from "@pankod/refine-antd";
 
 import NormalizeData from "helpers/normalizeData";
@@ -28,11 +28,12 @@ export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
       populate: [
         "courses",
         "courses.libraries",
-        "courses.libraries.books"
+        "courses.libraries.books",
+        "courses.libraries.books.users_permissions_user",
       ],
     },
   });
-  const { data, isLoading } = schoolYearQueryResult;
+  const { data } = schoolYearQueryResult;
   const record = data?.data;
 
   console.log('avail books: record: ', record);
@@ -44,27 +45,28 @@ export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
   });
 
   function onChange(value: any) {
-    console.log(`selected ${value}`);
     setCurrSchoolYear(value);
-    console.log(currSchoolYear);
   }
 
   return (
     <>
       <Card>
-        <Select
-          style={{ minWidth: 200 }}
-          placeholder="Select School year"
-          {...schoolYearSelect}
-          onChange={onChange}
-        />
+        <Row>
+          <Col flex={1}>
+            <Space align="baseline" ><Title level={5}>School year:</Title><Text strong >{record?.title}</Text></Space>
+          </Col>
+          <Col flex={1}>
+            <Space align="baseline" ><Text>Select school year</Text>
+              <Select
+                style={{ minWidth: 200 }}
+                placeholder={record?.title}
+                {...schoolYearSelect}
+                onChange={onChange}
+              />
+            </Space>
+          </Col>
+        </Row>
       </Card>
-      <Show isLoading={isLoading}>
-        <Title level={5}>Id</Title>
-        <Text>{record?.id}</Text>
-        <Title level={5}>Title</Title>
-        <Text>{record?.title}</Text>
-      </Show>
       {RenderCourses(normalizedRecord?.courses)}
     </>
   );

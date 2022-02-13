@@ -27,35 +27,33 @@ export const RenderLibraries = (props: any) => {
   };
 
   return (
-    <Card>
-      <Table
-        dataSource={dataSource}
-        expandable={{ expandedRowRender }}
-        rowKey="id"
-        scroll={{ x: 400 }}
-      >
-        <Table.Column
-          dataIndex="id"
-          key="id"
-          title="ID"
-          render={(value) => <TextField value={value} />}
-          sorter
-        />
-        <Table.Column
-          dataIndex="title"
-          key="title"
-          title="Title"
-          render={(value) => <TextField value={value} />}
-          sorter
-        />
-        <Table.Column
-          dataIndex="isdn"
-          key="isdn"
-          title="ISDN"
-          render={(value) => <TextField value={value} />}
-          sorter
-        />
-      </Table>
-    </Card>
+    <Table
+      dataSource={dataSource}
+      expandable={{ expandedRowRender }}
+      rowKey="id"
+      scroll={{ x: 400 }}
+    >
+      <Table.Column
+        dataIndex="id"
+        key="id"
+        title="ID"
+        render={(value) => <TextField value={value} />}
+        sorter
+      />
+      <Table.Column
+        dataIndex="title"
+        key="title"
+        title="Title"
+        render={(value) => <TextField value={value} />}
+        sorter
+      />
+      <Table.Column
+        dataIndex="isdn"
+        key="isdn"
+        title="ISDN"
+        render={(value) => <TextField value={value} />}
+        sorter
+      />
+    </Table>
   );
 }

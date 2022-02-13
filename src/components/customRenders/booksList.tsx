@@ -11,32 +11,30 @@ export const RenderBooks = (props: any) => {
   console.log("books data source: ", dataSource);
 
   return (
-    <Card>
-      <Table
-        dataSource={dataSource}
-        rowKey="id"
-      >
-        <Table.Column
-          dataIndex="id"
-          key="id"
-          title="ID"
-          render={(value) => <TextField value={value} />}
-          sorter
-        />
-        <Table.Column
-          key="[user][id]"
-          dataIndex={["users_permissions_user", "username"]}
-          title="Owner"
-          sorter
-        />
-        <Table.Column
-          dataIndex="price"
-          key="price"
-          title="Price"
-          render={(value) => <TextField value={value} />}
-          sorter
-        />
-      </Table>
-    </Card>
+    <Table
+      dataSource={dataSource}
+      rowKey="id"
+    >
+      <Table.Column
+        dataIndex="id"
+        key="id"
+        title="ID"
+        render={(value) => <TextField value={value} />}
+        sorter
+      />
+      <Table.Column
+        key="[user][id]"
+        dataIndex={["users_permissions_user", "username"]}
+        title="Owner"
+        sorter
+      />
+      <Table.Column
+        dataIndex="price"
+        key="price"
+        title="Price"
+        render={(value) => <TextField value={value} />}
+        sorter
+      />
+    </Table>
   );
 }
