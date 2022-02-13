@@ -2,7 +2,9 @@ import { useShow, IResourceComponentsProps } from "@pankod/refine-core";
 
 import { Show, Typography } from "@pankod/refine-antd";
 
-import { RenderCourses } from "components/customRenders"
+import NormalizeData from "helpers/normalizeData";
+
+import { RenderCourses } from "components/customRenders";
 
 import { ISchoolYear } from "interfaces";
 
@@ -11,15 +13,18 @@ const { Title, Text } = Typography;
 export const SchoolYearShow: React.FC<IResourceComponentsProps> = () => {
   const { queryResult } = useShow<ISchoolYear>({
     metaData: {
-      populate: ["courses", "courses.libraries"],
+      populate: [
+        "courses",
+        "courses.libraries",
+        "courses.libraries.books",
+        "courses.libraries.books.users_permissions_user"],
     }
   });
   const { data, isLoading } = queryResult;
   const record = data?.data;
 
-  console.log('record: ', record);
+  const normalizedRecord = NormalizeData(record);
 
-  //const renderSchoolYear = () => (
   return (
     <>
       <Show isLoading={isLoading}>
@@ -28,7 +33,7 @@ export const SchoolYearShow: React.FC<IResourceComponentsProps> = () => {
         <Title level={5}>Title</Title>
         <Text>{record?.title}</Text>
       </Show>
-      {RenderCourses(record?.courses)}
+      {RenderCourses(normalizedRecord?.courses)}
     </>
   );
 };

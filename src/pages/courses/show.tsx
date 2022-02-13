@@ -13,30 +13,30 @@ const { Title, Text } = Typography;
 export const CourseShow: React.FC<IResourceComponentsProps> = () => {
   const { queryResult } = useShow<ICourse>({
     metaData: {
-      populate: "*",
+      populate: [
+        "school_year",
+        "libraries",
+        "libraries.books",
+        "libraries.books.users_permissions_user"],
     },
   });
   const { data, isLoading } = queryResult;
   const record = data?.data;
   const school_year = record?.school_year.data?.attributes;
 
-  const libraries = NormalizeData(record?.libraries);
-
-  const renderCourse = () => (
-    <Show isLoading={isLoading}>
-      <Title level={5}>Id</Title>
-      <Text>{record?.id}</Text>
-      <Title level={5}>Title</Title>
-      <Text>{record?.title}</Text>
-      <Title level={5}>School year</Title>
-      <Text>{school_year?.title}</Text>
-    </Show>
-  );
+  const normalizedRecord = NormalizeData(record);
 
   return (
     <>
-      {renderCourse()}
-      {RenderLibraries(libraries)}
+      <Show isLoading={isLoading}>
+        <Title level={5}>Id</Title>
+        <Text>{record?.id}</Text>
+        <Title level={5}>Title</Title>
+        <Text>{record?.title}</Text>
+        <Title level={5}>School year</Title>
+        <Text>{school_year?.title}</Text>
+      </Show>
+      {RenderLibraries(normalizedRecord?.libraries)}
     </>
-  )
+  );
 };
