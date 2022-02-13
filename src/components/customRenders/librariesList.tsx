@@ -32,13 +32,13 @@ export const RenderLibraries = (props: any) => {
       expandable={{ expandedRowRender }}
       rowKey="id"
       scroll={{ x: 400 }}
+      pagination={{ pageSizeOptions: ['20', '40', '60', '80'] }}
     >
       <Table.Column
-        dataIndex="id"
-        key="id"
-        title="ID"
+        key="[course][id]"
+        dataIndex={["course", "title"]}
+        title="Course"
         render={(value) => <TextField value={value} />}
-        sorter
       />
       <Table.Column
         dataIndex="title"

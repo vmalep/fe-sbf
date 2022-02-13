@@ -9,8 +9,9 @@ import {
 } from "@pankod/refine-antd";
 
 import NormalizeData from "helpers/normalizeData";
+import MergeLibraries from "helpers/mergeLibraries";
 
-import { RenderCourses } from "components/customRenders";
+import { RenderLibraries } from "components/customRenders";
 
 import { ISchoolYear } from "interfaces";
 import { useState } from "react";
@@ -29,6 +30,7 @@ export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
         "courses",
         "courses.libraries",
         "courses.libraries.books",
+        "courses.libraries.course",
         "courses.libraries.books.users_permissions_user",
       ],
     },
@@ -36,9 +38,10 @@ export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
   const { data } = schoolYearQueryResult;
   const record = data?.data;
 
-  console.log('avail books: record: ', record);
-
   const normalizedRecord = NormalizeData(record);
+
+  const libraries = MergeLibraries(normalizedRecord);
+  console.log('libraries: ', libraries);
 
   const { selectProps: schoolYearSelect } = useSelect<ISchoolYear>({
     resource: "school-years",
@@ -67,7 +70,7 @@ export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
           </Col>
         </Row>
       </Card>
-      {RenderCourses(normalizedRecord?.courses)}
+      {RenderLibraries(libraries)}
     </>
   );
 };
