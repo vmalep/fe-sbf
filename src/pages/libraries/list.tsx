@@ -52,7 +52,6 @@ export const LibraryList: React.FC<IResourceComponentsProps> = () => {
     onSearch: (params) => {
       const filters: CrudFilters = [];
       const { course, school_year } = params;
-      console.log("course", course);
 
       if (course) {
         filters.push({
