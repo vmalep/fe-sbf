@@ -6,41 +6,22 @@ export const RenderCourses = (props: any) => {
 
   const dataSource = props;
 
-  const expandedRowRender = (record: any) => {
-    if (record.libraries.length > 0) {
-      return (
-        <>
-          {RenderLibraries(record?.libraries)}
-        </>
-      );
-    }
-    else {
-      return (
-        <>No library</>
-      )
-    }
-  };
-
   return (
     <Table
       dataSource={dataSource}
-      expandable={{ expandedRowRender }}
       rowKey="id"
       scroll={{ x: 400 }}
     >
       <Table.Column
-        dataIndex="id"
-        key="id"
-        title="ID"
-        render={(value) => <TextField value={value} />}
-        sorter
-      />
-      <Table.Column
         dataIndex="title"
         key="title"
-        title="Title"
+        title="Course"
         render={(value) => <TextField value={value} />}
-        sorter
+      />
+      <Table.Column
+        render={(record) => {
+          return <Card>{RenderLibraries(record?.libraries)}</Card> 
+        }}
       />
     </Table>
   );

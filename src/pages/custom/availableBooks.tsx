@@ -36,8 +36,6 @@ export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
   const { data } = schoolYearQueryResult;
   const record = data?.data;
 
-  console.log('avail books: record: ', record);
-
   const normalizedRecord = NormalizeData(record);
 
   const { selectProps: schoolYearSelect } = useSelect<ISchoolYear>({

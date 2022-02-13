@@ -1,5 +1,4 @@
 import {
-  Card,
   Table,
   TextField,
 } from "@pankod/refine-antd";
@@ -8,24 +7,16 @@ export const RenderBooks = (props: any) => {
 
   const dataSource = props;
 
-  console.log("books data source: ", dataSource);
-
   return (
     <Table
       dataSource={dataSource}
       rowKey="id"
+      pagination={false}
     >
       <Table.Column
-        dataIndex="id"
-        key="id"
-        title="ID"
-        render={(value) => <TextField value={value} />}
-        sorter
-      />
-      <Table.Column
-        key="[user][id]"
-        dataIndex={["users_permissions_user", "username"]}
-        title="Owner"
+        key="state"
+        dataIndex="state"
+        title="State"
         sorter
       />
       <Table.Column
@@ -33,7 +24,11 @@ export const RenderBooks = (props: any) => {
         key="price"
         title="Price"
         render={(value) => <TextField value={value} />}
-        sorter
+      />
+      <Table.Column
+        key="[user][id]"
+        dataIndex={["users_permissions_user", "username"]}
+        title="Owner"
       />
     </Table>
   );
