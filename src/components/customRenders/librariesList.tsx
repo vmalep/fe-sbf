@@ -6,18 +6,21 @@ export const RenderLibraries = (props: any) => {
 
   const dataSource = props;
 
+  
   const expandedRowRender = (record: any) => {
-    if (record.books.length > 0) {
-      return (
-        <>
-          {RenderBooks(record?.books)}
-        </>
-      );
-    }
-    else {
+    console.log('rec: ', record.books);
+    if (record.books.length === 0) {
       return (
         <>No book</>
       )
+    }
+    else {
+      const availableBooks = record.books.filter((book: any) => book.is_available === true);
+      return (
+        <>
+          {RenderBooks(availableBooks)}
+        </>
+      );
     }
   };
 
