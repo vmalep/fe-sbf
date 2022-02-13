@@ -25,7 +25,7 @@ export const RenderCurrSchoolYear = () => {
   const schoolYearListQueryResult = useList<ISchoolYearListQueryResult>({ resource: "school-years" });
 
   const schoolYearList = NormalizeData(schoolYearListQueryResult).data;
-  console.log('schoolYearSelect: ', schoolYearList);
+  console.log('currentSchoolYearSelect: ', schoolYearList);
   
   const schoolYearMenu = (
     <Menu selectedKeys={[currSchoolYear]}>
