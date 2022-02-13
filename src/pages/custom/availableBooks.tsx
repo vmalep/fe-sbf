@@ -1,4 +1,4 @@
-import { useShow, IResourceComponentsProps } from "@pankod/refine-core";
+import { useOne, IResourceComponentsProps } from "@pankod/refine-core";
 
 import {
   Show,
@@ -21,10 +21,9 @@ export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
 
   const [currSchoolYear, setCurrSchoolYear] = useState("1");
 
-  const { queryResult } = useShow<ISchoolYear>({
+  const schoolYearQueryResult = useOne<ISchoolYear>({
     resource: "school-years",
     id: currSchoolYear,
-    liveMode: "auto",
     metaData: {
       populate: [
         "courses",
@@ -33,7 +32,7 @@ export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
       ],
     },
   });
-  const { data, isLoading } = queryResult;
+  const { data, isLoading } = schoolYearQueryResult;
   const record = data?.data;
 
   console.log('avail books: record: ', record);
