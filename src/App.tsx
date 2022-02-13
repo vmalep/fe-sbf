@@ -144,7 +144,6 @@ const App: React.FC = () => {
   return (
     <Refine
       authProvider={authProvider}
-      dataProvider={DataProvider(API_URL + "/api", axiosInstance)}
       routerProvider={{
         ...routerProvider,
         routes: [
@@ -155,26 +154,8 @@ const App: React.FC = () => {
           },
         ],
       }}
-      /*       accessControlProvider={{
-              can: async ({ resource, action, params }) => {
-                  const enforcer = await newEnforcer(model, adapter);
-                  if (
-                      action === "delete" ||
-                      action === "edit" ||
-                      action === "show"
-                  ) {
-                      const can = await enforcer.enforce(
-                          role,
-                          `${resource}/${params.id}`,
-                          action,
-                      );
-                      return Promise.resolve({ can });
-                  }
-      
-                  const can = await enforcer.enforce(role, resource, action);
-                  return Promise.resolve({ can });
-              },
-          }} */
+
+      dataProvider={DataProvider(API_URL + "/api", axiosInstance)}
       resources={[
         {
           name: "books",
