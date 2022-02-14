@@ -5,7 +5,7 @@ import {
   Menu,
   Grid,
   useMenu,
-  Icons,
+  //Icons,
 } from "@pankod/refine-antd";
 import routerProvider from "@pankod/refine-react-router";
 
@@ -13,7 +13,7 @@ import {
   ReadOutlined
 } from '@ant-design/icons';
 
-const { LogoutOutlined } = Icons;
+//const { LogoutOutlined } = Icons;
 const { SubMenu } = Menu;
 
 export const CustomMenu: React.FC = () => {
@@ -64,9 +64,9 @@ export const CustomMenu: React.FC = () => {
           </Menu.Item>
         ))}
         </SubMenu>
-        <Menu.Item key="logout" icon={<LogoutOutlined />}>
+{/*         <Menu.Item key="logout" icon={<LogoutOutlined />}>
           Logout
-        </Menu.Item>
+        </Menu.Item> */}
       </Menu>
     </AntdLayout.Sider>
   );

@@ -1,5 +1,6 @@
 import { useGetLocale, useSetLocale, useGetIdentity, useLogout } from "@pankod/refine-core";
 import { AntdLayout, Space, Menu, Button, Icons, Dropdown, Avatar } from "@pankod/refine-antd";
+import routerProvider from "@pankod/refine-react-router";
 import { useTranslation } from "react-i18next";
 import { AntDesignOutlined } from "@ant-design/icons";
 
@@ -11,6 +12,7 @@ export const Header: React.FC = () => {
   const changeLanguage = useSetLocale();
   const { data: user } = useGetIdentity();
   const { mutate: logout } = useLogout();
+  const Link = routerProvider.Link;
 
   const currentLocale = locale();
 
@@ -36,7 +38,7 @@ export const Header: React.FC = () => {
     <Menu>
       <Menu.Item key={'logout'} onClick={() => {
         logout()
-        }
+      }
       }>
         Logout
       </Menu.Item>
@@ -64,20 +66,29 @@ export const Header: React.FC = () => {
         </Button>
       </Dropdown>
       <Space style={{ marginLeft: "8px" }}>
-        <Dropdown overlay={profileMenu}>
-          <Button type="link">
-            <Space>
-              {user?.avatar ? <Avatar size={30} src={user?.avatar} alt={user?.email} /> : <Avatar size={30} icon={<AntDesignOutlined />} />}
-              {user?.id
-                ? (<Button type="link" onClick={e => e.preventDefault()}>
-                  {user?.firstname ? user.firstname : user.username} <DownOutlined />
-                </Button>)
-                : <></>}
-            </Space>
-          </Button>
-        </Dropdown>
+        {user?.id
+          ? (
+            <Dropdown overlay={profileMenu}>
+              <Button type="link">
+                <Space>
+                  {user?.avatar ? <Avatar size={30} src={user?.avatar} alt={user?.email} /> : <Avatar size={30} icon={<AntDesignOutlined />} />}
+                  {user?.id
+                    ? (<Button type="link" onClick={e => e.preventDefault()}>
+                      {user?.firstname ? user.firstname : user.username} <DownOutlined />
+                    </Button>)
+                    : <></>}
+                </Space>
+              </Button>
+            </Dropdown>
+          )
+          : (
+            <Link to={"/login"}>
+            Login
+          </Link>
+          )
+        }
       </Space>
-{/*       <Space style={{ marginLeft: "8px" }}>
+      {/*       <Space style={{ marginLeft: "8px" }}>
         {user?.username && (
           <Text ellipsis strong>
             {user.username}
