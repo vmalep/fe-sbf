@@ -1,5 +1,5 @@
 import { useState, CSSProperties } from "react";
-import { useTitle, useLogout, useNavigation } from "@pankod/refine-core";
+import { useTitle, useLogout, useNavigation, useGetIdentity } from "@pankod/refine-core";
 import {
   AntdLayout,
   Menu,
@@ -27,6 +27,9 @@ export const CustomMenu: React.FC = () => {
   const isMobile = !breakpoint.lg;
   const { mutate: logout } = useLogout();
   const { push } = useNavigation();
+
+  const { data: user } = useGetIdentity();
+  console.log(user);
 
   return (
     <AntdLayout.Sider
@@ -57,14 +60,17 @@ export const CustomMenu: React.FC = () => {
         <Menu.Item key="available-books" icon={<ReadOutlined />} >
           <Link to="/available-books">Available books</Link>
         </Menu.Item>
-        <SubMenu key="sub1" title="Admin">
-        {menuItems.map(({ icon, route, label }) => (
-          <Menu.Item key={route} icon={icon}>
-            <Link to={route}>{label}</Link>
-          </Menu.Item>
-        ))}
-        </SubMenu>
-{/*         <Menu.Item key="logout" icon={<LogoutOutlined />}>
+
+        {(user?.role === "admin") && (
+          <SubMenu key="sub1" title="Admin">
+            {menuItems.map(({ icon, route, label }) => (
+              <Menu.Item key={route} icon={icon}>
+                <Link to={route}>{label}</Link>
+              </Menu.Item>
+            ))}
+          </SubMenu>
+        )}
+        {/*         <Menu.Item key="logout" icon={<LogoutOutlined />}>
           Logout
         </Menu.Item> */}
       </Menu>
