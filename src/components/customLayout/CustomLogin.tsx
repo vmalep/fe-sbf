@@ -142,7 +142,7 @@ export const LoginPage: React.FC = () => {
                                     {translate("pages.login.signin", "Sign in")}
                                 </Button>
                             </Form>
-                            <div style={{ marginTop: 8 }}>
+{/*                             <div style={{ marginTop: 8 }}>
                                 <Text style={{ fontSize: 12 }}>
                                     {translate(
                                         "pages.login.noAccount",
@@ -155,7 +155,7 @@ export const LoginPage: React.FC = () => {
                                         )}
                                     </a>
                                 </Text>
-                            </div>
+                            </div> */}
                         </Card>
                     </div>
                 </Col>
