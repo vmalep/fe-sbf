@@ -70,13 +70,6 @@ export const ReservationCreate: React.FC<IResourceComponentsProps> = () => {
           <Select {...selectUserProps} />
         </Form.Item>
         <Form.Item
-          label="Title"
-          name="title"
-          rules={[{required: true}]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
           label="Status"
           name="status"
           rules={[{ required: true }]}

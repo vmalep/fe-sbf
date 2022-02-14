@@ -1,7 +1,7 @@
-import { Refine, AuthProvider } from "@pankod/refine-core";
+import { Refine, AuthProvider, LayoutWrapper } from "@pankod/refine-core";
 import {
   notificationProvider,
-  LoginPage,
+  //LoginPage,
   ErrorComponent,
 } from "@pankod/refine-antd";
 import routerProvider from "@pankod/refine-react-router";
@@ -13,7 +13,9 @@ import { DataProvider } from "./custom/strapi-4";
 import GetUserRole from "./helpers/getUserRole";
 
 import { UserList, UserCreate, UserEdit, UserShow } from "pages/users";
-//import { ParentList, ParentCreate, ParentEdit, ParentShow } from "pages/parents";
+
+import { AvailableBooks } from "pages/custom";
+
 import {
   SchoolYearList,
   SchoolYearCreate,
@@ -43,11 +45,12 @@ import {
 import {
   Title,
   Header,
-  Sider,
   Footer,
   Layout,
   OffLayoutArea,
 } from "components/layout";
+
+import { CustomMenu, LoginPage } from "./components/customLayout";
 
 /* import { newEnforcer } from "casbin.js";
 import { model, adapter } from "./accessControl"; */
@@ -56,6 +59,14 @@ import { API_URL, TOKEN_KEY } from "./constants";
 
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
+
+const AvailableBooksPage = () => {
+  return (
+    <LayoutWrapper>
+      <AvailableBooks />
+    </LayoutWrapper>
+  );
+};
 
 const App: React.FC = () => {
   const { t, i18n } = useTranslation();
@@ -78,10 +89,10 @@ const App: React.FC = () => {
         axiosInstance.defaults.headers = {
           Authorization: `Bearer ${data.jwt}`,
         };
-
-        return Promise.resolve;
+        console.log('login resolve')
+        return Promise.resolve();
       }
-      return Promise.reject;
+      return Promise.reject();
     },
     logout: () => {
       localStorage.removeItem(TOKEN_KEY);
@@ -134,8 +145,19 @@ const App: React.FC = () => {
   return (
     <Refine
       authProvider={authProvider}
+      routerProvider={{
+        ...routerProvider,
+        routes: [
+          {
+            exact: true,
+            component: AvailableBooksPage,
+            path: "/available-books",
+          },
+        ],
+      }}
+
       dataProvider={DataProvider(API_URL + "/api", axiosInstance)}
-      routerProvider={routerProvider}
+      DashboardPage={AvailableBooks}
       resources={[
         {
           name: "books",
@@ -182,7 +204,7 @@ const App: React.FC = () => {
       ]}
       Title={Title}
       Header={Header}
-      Sider={Sider}
+      Sider={CustomMenu}
       Footer={Footer}
       Layout={Layout}
       OffLayoutArea={OffLayoutArea}
