@@ -90,9 +90,9 @@ const App: React.FC = () => {
           Authorization: `Bearer ${data.jwt}`,
         };
         console.log('login resolve')
-        return Promise.resolve("/available-books");
+        return Promise.resolve();
       }
-      return Promise.reject;
+      return Promise.reject();
     },
     logout: () => {
       localStorage.removeItem(TOKEN_KEY);
