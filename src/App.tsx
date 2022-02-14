@@ -135,26 +135,6 @@ const App: React.FC = () => {
     <Refine
       authProvider={authProvider}
       dataProvider={DataProvider(API_URL + "/api", axiosInstance)}
-      /*       accessControlProvider={{
-              can: async ({ resource, action, params }) => {
-                  const enforcer = await newEnforcer(model, adapter);
-                  if (
-                      action === "delete" ||
-                      action === "edit" ||
-                      action === "show"
-                  ) {
-                      const can = await enforcer.enforce(
-                          role,
-                          `${resource}/${params.id}`,
-                          action,
-                      );
-                      return Promise.resolve({ can });
-                  }
-      
-                  const can = await enforcer.enforce(role, resource, action);
-                  return Promise.resolve({ can });
-              },
-          }} */
       routerProvider={routerProvider}
       resources={[
         {
