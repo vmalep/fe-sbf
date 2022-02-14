@@ -68,14 +68,6 @@ const AvailableBooksPage = () => {
   );
 };
 
-const CustomLoginPage = () => {
-  return (
-    <LayoutWrapper>
-      <AvailableBooks />
-    </LayoutWrapper>
-  );
-};
-
 const App: React.FC = () => {
   const { t, i18n } = useTranslation();
   const axiosInstance = axios.create();
@@ -97,8 +89,8 @@ const App: React.FC = () => {
         axiosInstance.defaults.headers = {
           Authorization: `Bearer ${data.jwt}`,
         };
-
-        return Promise.resolve;
+        console.log('login resolve')
+        return Promise.resolve("/available-books");
       }
       return Promise.reject;
     },
@@ -165,6 +157,7 @@ const App: React.FC = () => {
       }}
 
       dataProvider={DataProvider(API_URL + "/api", axiosInstance)}
+      DashboardPage={AvailableBooks}
       resources={[
         {
           name: "books",
