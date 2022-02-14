@@ -1,7 +1,7 @@
 import { Refine, AuthProvider, LayoutWrapper } from "@pankod/refine-core";
 import {
   notificationProvider,
-  LoginPage,
+  //LoginPage,
   ErrorComponent,
 } from "@pankod/refine-antd";
 import routerProvider from "@pankod/refine-react-router";
@@ -45,13 +45,12 @@ import {
 import {
   Title,
   Header,
-  Sider,
   Footer,
   Layout,
   OffLayoutArea,
 } from "components/layout";
 
-import { CustomMenu } from "./CustomMenu";
+import { CustomMenu, LoginPage } from "./components/customLayout";
 
 /* import { newEnforcer } from "casbin.js";
 import { model, adapter } from "./accessControl"; */
@@ -62,6 +61,14 @@ import { useTranslation } from "react-i18next";
 import { useState } from "react";
 
 const AvailableBooksPage = () => {
+  return (
+    <LayoutWrapper>
+      <AvailableBooks />
+    </LayoutWrapper>
+  );
+};
+
+const CustomLoginPage = () => {
   return (
     <LayoutWrapper>
       <AvailableBooks />
