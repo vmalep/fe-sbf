@@ -4,7 +4,8 @@ import {
   //LoginPage,
   ErrorComponent,
 } from "@pankod/refine-antd";
-import routerProvider from "@pankod/refine-react-router";
+//import routerProvider from "@pankod/refine-react-router";
+import routerProvider from "./custom/routerProvider";
 import axios from "axios";
 import "@pankod/refine-antd/dist/styles.min.css";
 import { AuthHelper } from "@pankod/refine-strapi-v4";
