@@ -10,7 +10,9 @@ import {
 import routerProvider from "@pankod/refine-react-router";
 
 import {
-  ReadOutlined
+  ReadOutlined,
+  FileAddOutlined,
+  SolutionOutlined,
 } from '@ant-design/icons';
 
 //const { LogoutOutlined } = Icons;
@@ -29,7 +31,7 @@ export const CustomMenu: React.FC = () => {
   const { push } = useNavigation();
 
   const { data: user } = useGetIdentity();
-  console.log(user);
+  console.log('user: ', user);
 
   return (
     <AntdLayout.Sider
@@ -60,6 +62,17 @@ export const CustomMenu: React.FC = () => {
         <Menu.Item key="available-books" icon={<ReadOutlined />} >
           <Link to="/available-books">Available books</Link>
         </Menu.Item>
+
+        {((user?.role === "admin") || (user?.role === "authenticated")) && (
+          <SubMenu key="sub1" title="Menu">
+            <Menu.Item key="my-books" icon={<SolutionOutlined />}>
+              <Link to="/my-books">My books</Link>
+            </Menu.Item>
+            <Menu.Item key="reservations" icon={<FileAddOutlined />}>
+              <Link to="/reservations">Reservationss</Link>
+            </Menu.Item>
+          </SubMenu>
+        )}
 
         {(user?.role === "admin") && (
           <SubMenu key="sub1" title="Admin">
