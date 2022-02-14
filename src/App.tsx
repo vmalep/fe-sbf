@@ -51,6 +51,8 @@ import {
   OffLayoutArea,
 } from "components/layout";
 
+import { CustomMenu } from "./CustomMenu";
+
 /* import { newEnforcer } from "casbin.js";
 import { model, adapter } from "./accessControl"; */
 
@@ -202,7 +204,7 @@ const App: React.FC = () => {
       ]}
       Title={Title}
       Header={Header}
-      Sider={Sider}
+      Sider={CustomMenu}
       Footer={Footer}
       Layout={Layout}
       OffLayoutArea={OffLayoutArea}
