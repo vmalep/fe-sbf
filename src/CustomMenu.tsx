@@ -14,6 +14,7 @@ import {
 } from '@ant-design/icons';
 
 const { LogoutOutlined } = Icons;
+const { SubMenu } = Menu;
 
 export const CustomMenu: React.FC = () => {
   const Link = routerProvider.Link;
@@ -56,12 +57,13 @@ export const CustomMenu: React.FC = () => {
         <Menu.Item key="available-books" icon={<ReadOutlined />} >
           <Link to="/available-books">Available books</Link>
         </Menu.Item>
+        <SubMenu key="sub1" title="Admin">
         {menuItems.map(({ icon, route, label }) => (
           <Menu.Item key={route} icon={icon}>
             <Link to={route}>{label}</Link>
           </Menu.Item>
         ))}
-
+        </SubMenu>
         <Menu.Item key="logout" icon={<LogoutOutlined />}>
           Logout
         </Menu.Item>
