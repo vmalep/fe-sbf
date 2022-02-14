@@ -1,15 +1,16 @@
-import { useGetLocale, useSetLocale, useGetIdentity } from "@pankod/refine-core";
-import { AntdLayout, Space, Menu, Button, Icons, Dropdown, Avatar, Typography } from "@pankod/refine-antd";
+import { useGetLocale, useSetLocale, useGetIdentity, useLogout } from "@pankod/refine-core";
+import { AntdLayout, Space, Menu, Button, Icons, Dropdown, Avatar } from "@pankod/refine-antd";
 import { useTranslation } from "react-i18next";
+import { AntDesignOutlined } from "@ant-design/icons";
 
 const { DownOutlined } = Icons;
-const { Text } = Typography;
 
 export const Header: React.FC = () => {
   const { i18n } = useTranslation();
   const locale = useGetLocale();
   const changeLanguage = useSetLocale();
   const { data: user } = useGetIdentity();
+  const { mutate: logout } = useLogout();
 
   const currentLocale = locale();
 
@@ -28,6 +29,17 @@ export const Header: React.FC = () => {
           {lang === "en" ? "English" : "German"}
         </Menu.Item>
       ))}
+    </Menu>
+  );
+
+  const profileMenu = (
+    <Menu>
+      <Menu.Item key={'logout'} onClick={() => {
+        logout()
+        }
+      }>
+        Logout
+      </Menu.Item>
     </Menu>
   );
 
@@ -52,13 +64,27 @@ export const Header: React.FC = () => {
         </Button>
       </Dropdown>
       <Space style={{ marginLeft: "8px" }}>
+        <Dropdown overlay={profileMenu}>
+          <Button type="link">
+            <Space>
+              {user?.avatar ? <Avatar size={30} src={user?.avatar} alt={user?.email} /> : <Avatar size={30} icon={<AntDesignOutlined />} />}
+              {user?.id
+                ? (<Button type="link" onClick={e => e.preventDefault()}>
+                  {user?.firstname ? user.firstname : user.username} <DownOutlined />
+                </Button>)
+                : <></>}
+            </Space>
+          </Button>
+        </Dropdown>
+      </Space>
+{/*       <Space style={{ marginLeft: "8px" }}>
         {user?.username && (
           <Text ellipsis strong>
             {user.username}
           </Text>
         )}
         {user?.avatar && <Avatar src={user?.avatar} alt={user?.name} />}
-      </Space>
+      </Space> */}
     </AntdLayout.Header>
   );
 };
