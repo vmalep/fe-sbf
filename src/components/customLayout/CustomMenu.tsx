@@ -75,7 +75,7 @@ export const CustomMenu: React.FC = () => {
         )}
 
         {(user?.role === "admin") && (
-          <SubMenu key="sub1" title="Admin">
+          <SubMenu key="sub2" title="Admin">
             {menuItems.map(({ icon, route, label }) => (
               <Menu.Item key={route} icon={icon}>
                 <Link to={route}>{label}</Link>
