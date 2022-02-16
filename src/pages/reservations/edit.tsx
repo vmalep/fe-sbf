@@ -34,7 +34,6 @@ export const ReservationEdit: React.FC<IResourceComponentsProps> = () => {
 
   const bookSelect = useList<IBook>({
     resource: "books",
-    //defaultValue: queryResult?.data?.data?.library?.data?.id,
     config: {
       pagination: { pageSize: 500 },
     },
@@ -72,11 +71,8 @@ export const ReservationEdit: React.FC<IResourceComponentsProps> = () => {
           name={["book", "data", "id"]}
           rules={[{ required: true }]}
         >
-          <Select
-            defaultValue={
-              queryResult?.data?.data?.book?.data?.id
-            }
-          >
+          <Select>
+            defaultValue={["book?.data?.attributes.library.data.attributes.title"]},
             {(bookSelect?.data?.data || []).map(
               (book: IBook) => {
                 return (

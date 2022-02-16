@@ -45,7 +45,7 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
         />
         <Table.Column
           key="[book][id]"
-          dataIndex={["book", "data", "id"]}
+          dataIndex={["book", "data", "attributes", "library", "data", "attributes", "title"]}
           title="Book"
           sorter
         />

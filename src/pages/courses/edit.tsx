@@ -8,7 +8,7 @@ import { ICourse, ISchoolYear } from "interfaces";
 
 export const CourseEdit: React.FC<IResourceComponentsProps> = () => {
 
-  const { formProps, saveButtonProps, queryResult } = useForm<ICourse>({
+  const { formProps, saveButtonProps } = useForm<ICourse>({
     metaData: {
       populate: ["school_year"],
     },
@@ -16,7 +16,6 @@ export const CourseEdit: React.FC<IResourceComponentsProps> = () => {
 
   const { selectProps } = useSelect<ISchoolYear>({
     resource: "school-years",
-    defaultValue: queryResult?.data?.data?.school_year?.data?.id,
   });
 
   return (
@@ -30,7 +29,6 @@ export const CourseEdit: React.FC<IResourceComponentsProps> = () => {
               mediaUploadMapper({
                 ...values,
                 school_year: values.school_year?.data.id,
-                //school_year_id: values.school_year?.data.id.toString(),
               }),
             )
           );
