@@ -25,6 +25,12 @@ export interface IBook { // Todo: add picture, status ("as new", "used", etc.)
       attributes: ILibrary;
     };
   };
+  reservations: {
+    data: {
+      id: string;
+      attributes: IReservation;
+    };
+  };
   is_available: boolean;
   comment: string;
   state: "asNew" | "fine" | "veryGood" | "good" | "fair" | "poor" | "bindingCopy";

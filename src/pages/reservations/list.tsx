@@ -37,6 +37,18 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
           sorter
         />
         <Table.Column
+          key="[user][id]"
+          dataIndex={["users_permissions_user", "data", "attributes", "username"]}
+          title="Owner"
+          sorter
+        />
+        <Table.Column
+          key="status"
+          dataIndex="status"
+          title="Status"
+          sorter
+        />
+        <Table.Column
           dataIndex="comment"
           key="comment"
           title="Comment"

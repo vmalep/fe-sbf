@@ -2,6 +2,8 @@ import { useShow, IResourceComponentsProps } from "@pankod/refine-core";
 
 import { Show, Typography } from "@pankod/refine-antd";
 
+import { RenderReservations } from "components/customRenders/reservationsList";
+
 import { IBook } from "interfaces";
 
 const { Title, Text } = Typography;
@@ -14,11 +16,11 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
   });
   const { data, isLoading } = queryResult;
   const record = data?.data;
-  console.log(record);
+  console.log('rec book show: ', record);
   const library = record?.library.data?.attributes;
   const user = record?.users_permissions_user.data?.attributes;
 
-  return (
+  const renderBook = () => (
     <Show isLoading={isLoading}>
       <Title level={5}>Id</Title>
       <Text>{record?.id}</Text>
@@ -30,4 +32,11 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
       <Text>{record?.price}</Text>
     </Show>
   );
+
+  return (
+    <>
+      {renderBook()}
+      {RenderReservations(record?.reservations)}
+    </>
+  )
 };
