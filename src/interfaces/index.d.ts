@@ -158,3 +158,6 @@ export interface ILibraryFilterVariables {
     };
   };
 }
+export interface IId {
+  id: string;
+}

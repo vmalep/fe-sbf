@@ -9,19 +9,19 @@ import {
   //useNavigation,
 } from "@pankod/refine-core";
 import {
-  EyeOutlined,
+  //EyeOutlined,
   FileAddOutlined,
 } from "@ant-design/icons";
 
+import HandleReservation from "helpers/handleReservation";
+
 import { IBook } from "interfaces";
 
-import CreateReservation from "../../helpers/createReservation";
-
 export const RenderBooks = (props: any) => {
-  const dataSource = props;
   //const { show } = useNavigation();
+  const dataSource = props;
 
-  console.log('ds book: ', dataSource);
+  const handleReservation = HandleReservation
 
   return (
     <Table
@@ -54,7 +54,7 @@ export const RenderBooks = (props: any) => {
           <Space>
             <Button
               icon={<FileAddOutlined/>}
-              onClick={() => CreateReservation(record?.id)}
+              onClick={() => handleReservation(record?.id)}
             />
             <ShowButton
               hideText
@@ -65,10 +65,10 @@ export const RenderBooks = (props: any) => {
 {/*             <Button
               icon={<EyeOutlined />}
               onClick={(): void =>
-                console.log("books", `${record?.id}`)
+                show("books", `${record?.id}`)
               }
-            />
- */}          </Space>
+            /> */}
+          </Space>
         )}
       />
     </Table>
