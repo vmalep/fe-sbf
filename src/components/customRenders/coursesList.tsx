@@ -4,8 +4,9 @@ import { RenderLibraries } from "components/customRenders";
 
 export const RenderCourses = (props: any) => {
 
-  const dataSource = props;
+  const {normalizedCourses: dataSource, currUser } = props;
 
+  console.log('curruser: ', currUser);
   return (
     <Table
       dataSource={dataSource}

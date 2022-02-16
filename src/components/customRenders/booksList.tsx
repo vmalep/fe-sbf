@@ -5,9 +5,7 @@ import {
   Space,
   Button,
 } from "@pankod/refine-antd";
-import {
-  //useNavigation,
-} from "@pankod/refine-core";
+
 import {
   //EyeOutlined,
   FileAddOutlined,
@@ -46,7 +44,6 @@ export const RenderBooks = (props: any) => {
         dataIndex={["users_permissions_user", "username"]}
         title="Owner"
       />
-
       <Table.Column<IBook>
         title="Actions"
         dataIndex="actions"
