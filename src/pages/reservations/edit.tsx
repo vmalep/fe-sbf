@@ -13,7 +13,17 @@ import { IReservation, IBook, IUser } from "interfaces";
 
 export const ReservationEdit: React.FC<IResourceComponentsProps> = () => {
 
-  const { formProps, saveButtonProps, queryResult } = useForm<IReservation>();
+  const { formProps, saveButtonProps, queryResult } = useForm<IReservation>({
+    metaData: {
+      populate: [
+        "book",
+        "book.library",
+        "users_permissions_user",
+      ],
+    },
+  });
+
+  console.log('edit res query res: ', queryResult);
 
   const { selectProps: selectUserProps } = useSelect<IUser>({
     resource: "users",
