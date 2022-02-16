@@ -4,17 +4,19 @@ import { RenderBooks } from "components/customRenders";
 
 export const RenderLibraries = (props: any) => {
 
-  const dataSource = props;
+  const { libraries: dataSource, currUser } = props;
   
   return (
     <Table
       dataSource={dataSource}
       expandable={{
-        expandedRowRender: record => (
-          <>
-          {RenderBooks(record.books.filter((book: any) => book.is_available === true))}
-        </>
-        ),
+        expandedRowRender: record => {
+          const books = record.books.filter((book: any) => book.is_available === true);
+          return (
+            <>
+              {RenderBooks({ books, currUser })}
+            </>
+          )},
         rowExpandable: record => record.books.length > 0
       }}
       rowKey="id"

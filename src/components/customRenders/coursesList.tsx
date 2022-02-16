@@ -6,7 +6,6 @@ export const RenderCourses = (props: any) => {
 
   const {normalizedCourses: dataSource, currUser } = props;
 
-  console.log('curruser: ', currUser);
   return (
     <Table
       dataSource={dataSource}
@@ -21,7 +20,8 @@ export const RenderCourses = (props: any) => {
       />
       <Table.Column
         render={(record) => {
-          return <Card>{RenderLibraries(record?.libraries)}</Card> 
+          const libraries = record.libraries
+          return <Card>{RenderLibraries({libraries, currUser})}</Card> 
         }}
       />
     </Table>
