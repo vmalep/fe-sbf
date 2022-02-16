@@ -1,7 +1,8 @@
 import axios from "axios";
 //import { IUser } from "interfaces";
+import { API_URL } from "../constants";
 
-const GetUserRole = (API_URL: string) => ({
+const GetUserRole = () => ({
 
   role: async (id: any, token: string) => {
 
