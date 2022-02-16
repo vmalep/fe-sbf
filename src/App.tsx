@@ -169,7 +169,6 @@ const App: React.FC = () => {
         ],
       }}
       dataProvider={DataProvider(API_URL + "/api", axiosInstance)}
-      DashboardPage={AvailableBooks}
       resources={[
         {
           name: "books",

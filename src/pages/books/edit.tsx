@@ -61,10 +61,10 @@ export const BookEdit: React.FC<IResourceComponentsProps> = () => {
         </Form.Item>
         <Form.Item
           label="Title"
-          name={["library", "data", "id"]}
+          name={["library", "data", "attributes", "title"]}
         /* rules={[{ required: true }]} */
         >
-          <Select {...selectLibraryProps} disabled={true} />
+          <Input disabled={true} />
         </Form.Item>
         <Form.Item
           label="State"

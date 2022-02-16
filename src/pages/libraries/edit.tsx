@@ -54,14 +54,12 @@ export const LibraryEdit: React.FC<IResourceComponentsProps> = () => {
         <Form.Item
           label="Author"
           name="author"
-          rules={[{ required: true }]}
         >
           <Input />
         </Form.Item>
         <Form.Item
           label="ISDN"
           name="isdn"
-          rules={[{ required: true }]}
         >
           <Input />
         </Form.Item>
