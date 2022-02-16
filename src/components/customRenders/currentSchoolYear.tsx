@@ -1,7 +1,7 @@
 // Probably to be deleted
 import {
 useList, //useTable
-useTranslate
+//useTranslate
 } from "@pankod/refine-core";
 
 import { Button, Space, Dropdown, Icons, Menu } from "@pankod/refine-antd";
@@ -20,7 +20,7 @@ export const RenderCurrSchoolYear = () => {
   
   const [currSchoolYear, setCurrSchoolYear] = useState("1");
   
-  const t = useTranslate();
+  //const t = useTranslate();
 
   const schoolYearListQueryResult = useList<ISchoolYearListQueryResult>({ resource: "school-years" });
 
