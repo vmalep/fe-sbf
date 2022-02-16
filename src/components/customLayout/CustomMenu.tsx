@@ -31,7 +31,7 @@ export const CustomMenu: React.FC = () => {
   const { push } = useNavigation();
 
   const { data: user } = useGetIdentity();
-  console.log('user: ', user);
+  //console.log('user: ', user);
 
   return (
     <AntdLayout.Sider

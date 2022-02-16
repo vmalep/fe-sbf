@@ -148,7 +148,7 @@ const App: React.FC = () => {
     getLocale: () => i18n.language,
   };
 
-  console.log("role: ", role);
+  //console.log("role: ", role);
 
   return (
     <Refine

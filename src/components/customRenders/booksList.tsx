@@ -5,9 +5,7 @@ import {
   Space,
   Button,
 } from "@pankod/refine-antd";
-import {
-  //useNavigation,
-} from "@pankod/refine-core";
+
 import {
   //EyeOutlined,
   FileAddOutlined,
@@ -18,9 +16,10 @@ import HandleReservation from "helpers/handleReservation";
 import { IBook } from "interfaces";
 
 export const RenderBooks = (props: any) => {
-  //const { show } = useNavigation();
-  const dataSource = props;
 
+  const { books: dataSource, currUser } = props;
+
+  const currRole = currUser?.role;
   const handleReservation = HandleReservation
 
   return (
@@ -41,36 +40,41 @@ export const RenderBooks = (props: any) => {
         title="Price"
         render={(value) => <TextField value={value} />}
       />
-      <Table.Column
-        key="[users_permissions_user][id]"
-        dataIndex={["users_permissions_user", "username"]}
-        title="Owner"
-      />
 
-      <Table.Column<IBook>
-        title="Actions"
-        dataIndex="actions"
-        render={(_, record) => (
-          <Space>
-            <Button
-              icon={<FileAddOutlined/>}
-              onClick={() => handleReservation(record?.id)}
-            />
-            <ShowButton
-              hideText
-              size="small"
-              resourceName="books"
-              recordItemId={record.id}
-            />
-{/*             <Button
-              icon={<EyeOutlined />}
-              onClick={(): void =>
-                show("books", `${record?.id}`)
-              }
-            /> */}
-          </Space>
-        )}
-      />
+      {currRole && (
+        <>
+          <Table.Column
+            key="[users_permissions_user][id]"
+            dataIndex={["users_permissions_user", "username"]}
+            title="Owner"
+          />
+          <Table.Column<IBook>
+            title="Actions"
+            dataIndex="actions"
+            render={(_, record) => (
+              <Space>
+                {<Button
+                  icon={<FileAddOutlined />}
+                  onClick={() => handleReservation(record?.id)}
+                />}
+                <ShowButton
+                  hideText
+                  size="small"
+                  resourceName="books"
+                  recordItemId={record.id}
+                />
+                {/*             <Button
+                icon={<EyeOutlined />}
+                onClick={(): void =>
+                  show("books", `${record?.id}`)
+                }
+              /> */}
+              </Space>
+            )}
+          />
+        </>
+      )}
+
     </Table>
   );
 }

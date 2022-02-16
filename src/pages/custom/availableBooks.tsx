@@ -1,4 +1,8 @@
-import { useOne, IResourceComponentsProps } from "@pankod/refine-core";
+import {
+  useOne,
+  IResourceComponentsProps,
+  useGetIdentity,
+} from "@pankod/refine-core";
 
 import {
   Card,
@@ -12,15 +16,16 @@ import NormalizeData from "helpers/normalizeData";
 
 import { RenderCourses } from "components/customRenders";
 
-import { ISchoolYear } from "interfaces";
-import { useState } from "react";
+import { ISchoolYear, IUser } from "interfaces";
+import { useEffect, useState } from "react";
 
 const { Title, Text } = Typography;
 
 export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
 
   const [currSchoolYear, setCurrSchoolYear] = useState("1");
-
+  const currUser = useGetIdentity<IUser>().data;
+  
   const schoolYearQueryResult = useOne<ISchoolYear>({
     resource: "school-years",
     id: currSchoolYear,
@@ -36,7 +41,7 @@ export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
   const { data } = schoolYearQueryResult;
   const record = data?.data;
 
-  const normalizedRecord = NormalizeData(record);
+  const normalizedCourses = NormalizeData(record)?.courses;
 
   const { selectProps: schoolYearSelect } = useSelect<ISchoolYear>({
     resource: "school-years",
@@ -65,7 +70,7 @@ export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
           </Col>
         </Row>
       </Card>
-      {RenderCourses(normalizedRecord?.courses)}
+      {RenderCourses({normalizedCourses, currUser})}
     </>
   );
 };
