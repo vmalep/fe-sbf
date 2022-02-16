@@ -23,8 +23,9 @@ const { Title, Text } = Typography;
 
 export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
 
-  const [currSchoolYear, setCurrSchoolYear] = useState("1");
   const currUser = useGetIdentity<IUser>().data;
+  const [currSchoolYear, setCurrSchoolYear] = useState("1");
+  const [normalizedCourses, setNormalizedCourses] = useState();
   
   const schoolYearQueryResult = useOne<ISchoolYear>({
     resource: "school-years",
@@ -38,10 +39,13 @@ export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
       ],
     },
   });
-  const { data } = schoolYearQueryResult;
-  const record = data?.data;
+  
+  //const { data } = schoolYearQueryResult;
+  const record = schoolYearQueryResult?.data?.data;
 
-  const normalizedCourses = NormalizeData(record)?.courses;
+  useEffect(() => {
+    setNormalizedCourses(NormalizeData(record)?.courses);
+  }, [record])
 
   const { selectProps: schoolYearSelect } = useSelect<ISchoolYear>({
     resource: "school-years",
