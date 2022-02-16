@@ -1,64 +1,30 @@
-import { Refine, AuthProvider, LayoutWrapper } from "@pankod/refine-core";
+import { Refine, LayoutWrapper } from "@pankod/refine-core";
 import {
   notificationProvider,
-  //LoginPage,
   ErrorComponent,
 } from "@pankod/refine-antd";
 import routerProvider from "@pankod/refine-react-router";
 import axios from "axios";
 import "@pankod/refine-antd/dist/styles.min.css";
-import { AuthHelper } from "@pankod/refine-strapi-v4";
 import { DataProvider } from "./custom/strapi-4";
+import { customAuthProvider } from "authProvider";
+import { useState } from "react";
 
-import GetUserRole from "./helpers/getUserRole";
-
-import { UserList, UserCreate, UserEdit, UserShow } from "pages/users";
-
-
-import {
-  SchoolYearList,
-  SchoolYearCreate,
-  SchoolYearEdit,
-  SchoolYearShow,
-} from "pages/school-years";
-import {
-  CourseList,
-  CourseCreate,
-  CourseEdit,
-  CourseShow,
-} from "pages/courses";
-import {
-  LibraryList,
-  LibraryCreate,
-  LibraryEdit,
-  LibraryShow,
-} from "pages/libraries";
+import {UserList, UserCreate, UserEdit, UserShow } from "pages/users";
+import {SchoolYearList, SchoolYearCreate, SchoolYearEdit, SchoolYearShow} from "pages/school-years";
+import {CourseList, CourseCreate, CourseEdit, CourseShow} from "pages/courses";
+import {LibraryList, LibraryCreate, LibraryEdit, LibraryShow} from "pages/libraries";
 import { BookList, BookCreate, BookEdit, BookShow } from "pages/books";
-import {
-  ReservationList,
-  ReservationCreate,
-  ReservationEdit,
-  ReservationShow,
-} from "pages/reservations";
-
-import {
-  Title,
-  Header,
-  Footer,
-  Layout,
-  OffLayoutArea,
-} from "components/layout";
+import {ReservationList, ReservationCreate, ReservationEdit, ReservationShow} from "pages/reservations";
+import {Title, Header, Footer, Layout, OffLayoutArea} from "components/layout";
 
 import { CustomMenu, LoginPage } from "./components/customLayout";
 import { AvailableBooks, MyBooksList } from "pages/custom";
 
-/* import { newEnforcer } from "casbin.js";
-import { model, adapter } from "./accessControl"; */
-
-import { API_URL, TOKEN_KEY } from "./constants";
+import { API_URL } from "./constants";
 
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import GetUserRole from "helpers/getUserRole";
 
 const AvailableBooksPage = () => {
   return (
@@ -76,71 +42,12 @@ const MyBooksPage = () => {
   );
 };
 
-const App: React.FC = () => {
+function App() {
+
+  //const [role, setRole] = useState(GetUserRole());
+  
   const { t, i18n } = useTranslation();
   const axiosInstance = axios.create();
-  //const TOKEN_KEY = process.env.REACT_APP_API_TOKEN_KEY;
-  const strapiAuthHelper = AuthHelper(API_URL + "/api");
-  const getCurrentRole = GetUserRole(API_URL + "/api");
-  const [role, setRole] = useState("public");
-
-  localStorage.setItem("currSchoolYearId", "0");
-
-  const authProvider: AuthProvider = {
-    login: async ({ username, password }) => {
-      const { data, status } = await strapiAuthHelper.login(username, password);
-      console.log(username, password);
-      if (status === 200) {
-        localStorage.setItem(TOKEN_KEY, data.jwt);
-
-        // set header axios instance
-        axiosInstance.defaults.headers = {
-          Authorization: `Bearer ${data.jwt}`,
-        };
-        console.log('login resolve')
-        return Promise.resolve();
-      }
-      return Promise.reject();
-    },
-    logout: () => {
-      localStorage.removeItem(TOKEN_KEY);
-      return Promise.resolve();
-    },
-    checkError: () => Promise.resolve(),
-    checkAuth: () => {
-      const token = localStorage.getItem(TOKEN_KEY);
-      if (token) {
-        axiosInstance.defaults.headers = {
-          Authorization: `Bearer ${token}`,
-        };
-        return Promise.resolve();
-      }
-
-      return Promise.reject();
-    },
-    getPermissions: () => Promise.resolve(),
-    getUserIdentity: async () => {
-      const token = localStorage.getItem(TOKEN_KEY);
-      if (!token) {
-        return Promise.reject();
-      }
-
-      const { data, status } = await strapiAuthHelper.me(token);
-      if (status === 200) {
-        const { id, username, email } = data;
-        const role = await getCurrentRole.role(id, token);
-        setRole(role);
-        return Promise.resolve({
-          id,
-          username,
-          email,
-          role,
-        });
-      }
-
-      return Promise.reject();
-    },
-  };
 
   const i18nProvider = {
     translate: (key: string, params: object) => t(key, params),
@@ -148,11 +55,9 @@ const App: React.FC = () => {
     getLocale: () => i18n.language,
   };
 
-  //console.log("role: ", role);
-
   return (
     <Refine
-      authProvider={authProvider}
+      authProvider={customAuthProvider}
       routerProvider={{
         ...routerProvider,
         routes: [
@@ -168,7 +73,7 @@ const App: React.FC = () => {
           },
         ],
       }}
-      dataProvider={DataProvider(API_URL + "/api", axiosInstance)}
+      dataProvider={DataProvider(API_URL, axiosInstance)}
       resources={[
         {
           name: "books",
@@ -223,7 +128,7 @@ const App: React.FC = () => {
       notificationProvider={notificationProvider}
       LoginPage={LoginPage}
       catchAll={<ErrorComponent />}
-    ></Refine>
+    />
   );
 };
 
