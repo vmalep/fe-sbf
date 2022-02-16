@@ -69,16 +69,14 @@ export const Header: React.FC = () => {
         {user?.id
           ? (
             <Dropdown overlay={profileMenu}>
-              <Button type="link">
-                <Space>
-                  {user?.avatar ? <Avatar size={30} src={user?.avatar} alt={user?.email} /> : <Avatar size={30} icon={<AntDesignOutlined />} />}
-                  {user?.id
-                    ? (<Button type="link" onClick={e => e.preventDefault()}>
-                      {user?.firstname ? user.firstname : user.username} <DownOutlined />
-                    </Button>)
-                    : <></>}
-                </Space>
-              </Button>
+              <Space>
+                {user?.avatar ? <Avatar size={30} src={user?.avatar} alt={user?.email} /> : <Avatar size={30} icon={<AntDesignOutlined />} />}
+                {user?.id
+                  ? (<Button type="link" onClick={e => e.preventDefault()}>
+                    {user?.firstname ? user.firstname : user.username} <DownOutlined />
+                  </Button>)
+                  : <></>}
+              </Space>
             </Dropdown>
           )
           : (
