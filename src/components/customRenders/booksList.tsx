@@ -52,10 +52,10 @@ export const RenderBooks = (props: any) => {
         dataIndex="actions"
         render={(_, record) => (
           <Space>
-            <Button
+{            <Button
               icon={<FileAddOutlined/>}
               onClick={() => handleReservation(record?.id)}
-            />
+            />}
             <ShowButton
               hideText
               size="small"
