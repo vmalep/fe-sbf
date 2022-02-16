@@ -76,44 +76,6 @@ export const BookCreate: React.FC<IResourceComponentsProps> = () => {
           </Radio.Group>
         </Form.Item>
         <Form.Item
-          label="School year"
-          name={["school_year", "data", "id"]}
-          rules={[{ required: true }]}
-        >
-          <Select
-            defaultValue={queryResult?.data?.data?.school_year?.data?.id}
-          >
-            {(schoolYearSelect?.data?.data || []).map(
-              (school_year: ISchoolYear) => {
-                return (
-                  <Option key={school_year.id}>
-                    {school_year.title}
-                  </Option>
-                );
-              }
-            )}
-          </Select>
-        </Form.Item>
-        <Form.Item
-          label="Course"
-          name={["course", "data", "id"]}
-          rules={[{ required: true }]}
-        >
-          <Select
-            defaultValue={queryResult?.data?.data?.course?.data?.id}
-          >
-            {(courseSelect?.data?.data || []).map(
-              (course: ICourse) => {
-                return (
-                  <Option key={course.id}>
-                    {course.title}
-                  </Option>
-                );
-              }
-            )}
-          </Select>
-        </Form.Item>
-        <Form.Item
           label="Title"
           name={["library", "data", "id"]}
           rules={[{ required: true }]}

@@ -5,6 +5,7 @@ import { Show, Typography } from "@pankod/refine-antd";
 import { RenderReservations } from "components/customRenders/reservationsList";
 
 import { IBook } from "interfaces";
+import NormalizeData from "helpers/normalizeData";
 
 const { Title, Text } = Typography;
 
@@ -19,6 +20,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
   console.log('rec book show: ', record);
   const library = record?.library.data?.attributes;
   const user = record?.users_permissions_user.data?.attributes;
+  const reservations = NormalizeData(record?.reservations);
 
   const renderBook = () => (
     <Show isLoading={isLoading}>
@@ -36,7 +38,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
   return (
     <>
       {renderBook()}
-      {RenderReservations(record?.reservations)}
+      {RenderReservations(reservations)}
     </>
   )
 };

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { IResourceComponentsProps, useList } from "@pankod/refine-core";
 
-import { Create, Form, Input, useForm, Select, useSelect } from "@pankod/refine-antd";
+import { Create, Form, /* Input,  */useForm, Select, useSelect } from "@pankod/refine-antd";
+import { mediaUploadMapper } from "@pankod/refine-strapi-v4";
 
 import ReactMarkdown from "react-markdown";
 import ReactMde from "react-mde";
@@ -39,10 +40,23 @@ export const ReservationCreate: React.FC<IResourceComponentsProps> = () => {
 
   return (
     <Create saveButtonProps={saveButtonProps}>
-      <Form {...formProps} layout="vertical">
+      <Form {...formProps} layout="vertical"
+        onFinish={(values: any) => {
+          return (
+            formProps.onFinish &&
+            formProps.onFinish(
+              mediaUploadMapper({
+                ...values,
+                book: values.book?.data.id,
+                users_permissions_user: values.users_permissions_user?.data.id,
+              }),
+            )
+          );
+        }}
+      >
       <Form.Item
-          label="Title"
-          name={["library", "data", "id"]}
+          label="Book"
+          name={["book", "data", "id"]}
           rules={[{ required: true }]}
         >
           <Select
@@ -52,7 +66,6 @@ export const ReservationCreate: React.FC<IResourceComponentsProps> = () => {
           >
             {(bookSelect?.data?.data || []).map(
               (book: IBook) => {
-                //console.log('book: ', book);
                 return (
                   <Option key={book.id}>
                     {book.library.data.attributes.title}
@@ -63,7 +76,7 @@ export const ReservationCreate: React.FC<IResourceComponentsProps> = () => {
           </Select>
         </Form.Item>
         <Form.Item
-          label="Owner"
+          label="User"
           name={["users_permissions_user", "data", "id"]}
           rules={[{ required: true }]}
         >
@@ -72,11 +85,11 @@ export const ReservationCreate: React.FC<IResourceComponentsProps> = () => {
         <Form.Item
           label="Status"
           name="status"
-          rules={[{ required: true }]}
           >
           <Select
-            defaultValue="proposed"
+            defaultValue="interested"
             options={[
+              { label: "Interested", value: "interested" },
               { label: "Proposed", value: "proposed" },
               { label: "Confirmed", value: "confirmed" },
               { label: "Rejected", value: "rejected" },
