@@ -22,8 +22,15 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
         order: "desc",
       },
     ],
+    metaData: {
+      populate: [
+        "users_permissions_user",
+        "book",
+        "book.library",
+      ],
+    },
   });
-  console.log(tableProps);
+  console.log("reserv table props: ", tableProps);
 
   return (
     <List>
@@ -34,6 +41,35 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
           title="ID"
           render={(value) => <TextField value={value} />}
           defaultSortOrder={getDefaultSortOrder("id", sorter)}
+          sorter
+        />
+        <Table.Column
+          key="[book][id]"
+          dataIndex={["book", "data", "attributes", "library", "data", "attributes", "title"]}
+          title="Book"
+          sorter
+        />
+            <Table.Column
+              key="[user][id]"
+              dataIndex={["users_permissions_user", "data", "attributes", "username"]}
+              title="User"
+              sorter
+/*               filterDropdown={(props) => (
+                <FilterDropdown {...props}>
+                  <Select
+                    allowClear
+                    style={{ minWidth: 200 }}
+                    mode="multiple"
+                    placeholder="Select Owner"
+                    {...userSelectProps}
+                  />
+                </FilterDropdown>
+              )} */
+            />
+        <Table.Column
+          key="status"
+          dataIndex="status"
+          title="Status"
           sorter
         />
         <Table.Column

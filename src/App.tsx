@@ -14,7 +14,6 @@ import GetUserRole from "./helpers/getUserRole";
 
 import { UserList, UserCreate, UserEdit, UserShow } from "pages/users";
 
-import { AvailableBooks } from "pages/custom";
 
 import {
   SchoolYearList,
@@ -51,6 +50,7 @@ import {
 } from "components/layout";
 
 import { CustomMenu, LoginPage } from "./components/customLayout";
+import { AvailableBooks, MyBooksList } from "pages/custom";
 
 /* import { newEnforcer } from "casbin.js";
 import { model, adapter } from "./accessControl"; */
@@ -64,6 +64,14 @@ const AvailableBooksPage = () => {
   return (
     <LayoutWrapper>
       <AvailableBooks />
+    </LayoutWrapper>
+  );
+};
+
+const MyBooksPage = () => {
+  return (
+    <LayoutWrapper>
+      <MyBooksList />
     </LayoutWrapper>
   );
 };
@@ -153,10 +161,14 @@ const App: React.FC = () => {
             component: AvailableBooksPage,
             path: "/available-books",
           },
+          {
+            exact: true,
+            component: MyBooksPage,
+            path: "/my-books",
+          },
         ],
       }}
       dataProvider={DataProvider(API_URL + "/api", axiosInstance)}
-      DashboardPage={AvailableBooks}
       resources={[
         {
           name: "books",

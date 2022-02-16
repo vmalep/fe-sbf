@@ -8,7 +8,7 @@ import ReactMde from "react-mde";
 
 import "react-mde/lib/styles/css/react-mde-all.css";
 
-import { IBook, ILibrary, IUser } from "interfaces";
+import { IBook, IUser } from "interfaces";
 
 export const BookEdit: React.FC<IResourceComponentsProps> = () => {
 
@@ -18,15 +18,10 @@ export const BookEdit: React.FC<IResourceComponentsProps> = () => {
     },
   });
 
-  const { selectProps: selectParentProps } = useSelect<IUser>({
+  const { selectProps: selectUserProps } = useSelect<IUser>({
     resource: "users",
     defaultValue: queryResult?.data?.data?.users_permissions_user?.data?.id,
     optionLabel: "username",
-  });
-
-  const { selectProps: selectLibraryProps } = useSelect<ILibrary>({
-    resource: "libraries",
-    defaultValue: queryResult?.data?.data?.library?.data?.id,
   });
 
   const [selectedTab, setSelectedTab] = useState<"write" | "preview">("write");
@@ -61,10 +56,10 @@ export const BookEdit: React.FC<IResourceComponentsProps> = () => {
         </Form.Item>
         <Form.Item
           label="Title"
-          name={["library", "data", "id"]}
+          name={["library", "data", "attributes", "title"]}
         /* rules={[{ required: true }]} */
         >
-          <Select {...selectLibraryProps} disabled={true} />
+          <Input disabled={true} />
         </Form.Item>
         <Form.Item
           label="State"
@@ -109,7 +104,7 @@ export const BookEdit: React.FC<IResourceComponentsProps> = () => {
           name={["users_permissions_user", "data", "id"]}
           rules={[{ required: true }]}
         >
-          <Select {...selectParentProps} />
+          <Select {...selectUserProps} />
         </Form.Item>
       </Form>
     </Edit>

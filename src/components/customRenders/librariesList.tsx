@@ -5,10 +5,8 @@ import { RenderBooks } from "components/customRenders";
 export const RenderLibraries = (props: any) => {
 
   const dataSource = props;
-
   
   const expandedRowRender = (record: any) => {
-    console.log('rec: ', record.books);
     if (record.books.length === 0) {
       return (
         <>No book</>

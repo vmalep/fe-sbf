@@ -1,13 +1,10 @@
 import {
   Table,
   TextField,
-  ShowButton,
   Space,
   Button,
 } from "@pankod/refine-antd";
-import {
-  //useNavigation,
-} from "@pankod/refine-core";
+
 import {
   //EyeOutlined,
   FileAddOutlined,
@@ -15,10 +12,10 @@ import {
 
 import HandleReservation from "helpers/handleReservation";
 
-import { IBook } from "interfaces";
+import { IReservation } from "interfaces";
 
-export const RenderBooks = (props: any) => {
-  //const { show } = useNavigation();
+export const RenderReservations = (props: any) => {
+  console.log('render res props: ', props);
   const dataSource = props;
 
   const handleReservation = HandleReservation
@@ -47,7 +44,7 @@ export const RenderBooks = (props: any) => {
         title="Owner"
       />
 
-      <Table.Column<IBook>
+      <Table.Column<IReservation>
         title="Actions"
         dataIndex="actions"
         render={(_, record) => (
@@ -56,18 +53,6 @@ export const RenderBooks = (props: any) => {
               icon={<FileAddOutlined/>}
               onClick={() => handleReservation(record?.id)}
             />
-            <ShowButton
-              hideText
-              size="small"
-              resourceName="books"
-              recordItemId={record.id}
-            />
-{/*             <Button
-              icon={<EyeOutlined />}
-              onClick={(): void =>
-                show("books", `${record?.id}`)
-              }
-            /> */}
           </Space>
         )}
       />

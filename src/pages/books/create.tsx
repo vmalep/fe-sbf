@@ -8,11 +8,11 @@ import ReactMde from "react-mde";
 
 import "react-mde/lib/styles/css/react-mde-all.css";
 
-import { IBook, ILibrary, ICourse, ISchoolYear, IUser } from "interfaces";
+import { IBook, ILibrary, IUser } from "interfaces";
 
 export const BookCreate: React.FC<IResourceComponentsProps> = () => {
 
-  const { formProps, saveButtonProps, queryResult } = useForm<IBook>({
+  const { formProps, saveButtonProps } = useForm<IBook>({
     metaData: {
       populate: "*",
     },
@@ -20,29 +20,19 @@ export const BookCreate: React.FC<IResourceComponentsProps> = () => {
 
   const { selectProps: selectUserProps } = useSelect<IUser>({
     resource: "users",
-/*     defaultValue: queryResult?.data?.data?.users_permissions_user?.data?.id,
     optionLabel: "username",
-    optionValue: "id", */
-  });
-
-  const schoolYearSelect = useList<ISchoolYear>({
-    resource: "school-years",
-    config: {
-      pagination: { pageSize: 500 },
-    },
-  });
-
-  const courseSelect = useList<ICourse>({
-    resource: "courses",
-    config: {
-      pagination: { pageSize: 500 },
-    },
   });
 
   const librarySelect = useList<ILibrary>({
     resource: "libraries",
     config: {
       pagination: { pageSize: 500 },
+    },
+    metaData: {
+      populate: [
+        "course",
+        "course.school_year",
+      ]
     },
   });
 
@@ -70,65 +60,22 @@ export const BookCreate: React.FC<IResourceComponentsProps> = () => {
           label="Available"
           name="is_available"
         >
-          <Radio.Group>
+          <Radio.Group defaultValue={true}>
             <Radio value={true}>True</Radio>
             <Radio value={false}>False</Radio>
           </Radio.Group>
-        </Form.Item>
-        <Form.Item
-          label="School year"
-          name={["school_year", "data", "id"]}
-          rules={[{ required: true }]}
-        >
-          <Select
-            defaultValue={queryResult?.data?.data?.school_year?.data?.id}
-          >
-            {(schoolYearSelect?.data?.data || []).map(
-              (school_year: ISchoolYear) => {
-                return (
-                  <Option key={school_year.id}>
-                    {school_year.title}
-                  </Option>
-                );
-              }
-            )}
-          </Select>
-        </Form.Item>
-        <Form.Item
-          label="Course"
-          name={["course", "data", "id"]}
-          rules={[{ required: true }]}
-        >
-          <Select
-            defaultValue={queryResult?.data?.data?.course?.data?.id}
-          >
-            {(courseSelect?.data?.data || []).map(
-              (course: ICourse) => {
-                return (
-                  <Option key={course.id}>
-                    {course.title}
-                  </Option>
-                );
-              }
-            )}
-          </Select>
         </Form.Item>
         <Form.Item
           label="Title"
           name={["library", "data", "id"]}
           rules={[{ required: true }]}
         >
-          <Select
-            defaultValue={
-              queryResult?.data?.data?.library?.data?.id
-            }
-          >
+          <Select>
             {(librarySelect?.data?.data || []).map(
               (library: ILibrary) => {
-                //console.log('library: ', library);
                 return (
                   <Option key={library.id}>
-                    {library.title}{/*  - {library.course.data.attributes.title} - {library.course.data.attributes.school_year.data.attributes.title} */}
+                    {library.title} - {library.course.data.attributes.title} - {library.course.data.attributes.school_year.data.attributes.title}
                   </Option>
                 );
               }

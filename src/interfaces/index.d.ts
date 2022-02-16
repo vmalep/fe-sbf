@@ -7,22 +7,16 @@ export interface IBook { // Todo: add picture, status ("as new", "used", etc.)
       attributes: IUser;
     };
   };
-  school_year: {
-    data: {
-      id: string;
-      attributes: ISchoolYear;
-    };
-  };
-  course: {
-    data: {
-      id: string;
-      attributes: ICourse;
-    };
-  };
   library: {
     data: {
       id: string;
       attributes: ILibrary;
+    };
+  };
+  reservations: {
+    data: {
+      id: string;
+      attributes: IReservation;
     };
   };
   is_available: boolean;
@@ -136,7 +130,7 @@ export interface IReservation {
       attributes: IUser;
     };
   };
-  status: "proposed" | "confirmed" | "rejected";
+  status: "interested" | "proposed" | "confirmed" | "rejected";
   comment: string;
 }
 export interface IBookFilterVariables {
@@ -157,4 +151,7 @@ export interface ILibraryFilterVariables {
       attributes: ISchoolYear;
     };
   };
+}
+export interface IId {
+  id: string;
 }
