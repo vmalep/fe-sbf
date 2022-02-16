@@ -1,13 +1,13 @@
 import {
   Table,
   TextField,
-  ShowButton,
+  //ShowButton,
   Space,
   Button,
 } from "@pankod/refine-antd";
 
 import {
-  //EyeOutlined,
+  EyeOutlined,
   FileAddOutlined,
 } from "@ant-design/icons";
 
@@ -16,8 +16,7 @@ import HandleReservation from "helpers/handleReservation";
 import { IBook } from "interfaces";
 
 export const RenderBooks = (props: any) => {
-
-  const { books: dataSource, currUser } = props;
+  const { books: dataSource, currUser, show } = props;
 
   const currRole = currUser?.role;
   const handleReservation = HandleReservation
@@ -57,18 +56,18 @@ export const RenderBooks = (props: any) => {
                   icon={<FileAddOutlined />}
                   onClick={() => handleReservation(record?.id)}
                 />}
-                <ShowButton
+                {/*                 <ShowButton
                   hideText
                   size="small"
                   resourceName="books"
                   recordItemId={record.id}
+                /> */}
+                <Button
+                  icon={<EyeOutlined />}
+                  onClick={(): void =>
+                    show("books", `${record?.id}`)
+                  }
                 />
-                {/*             <Button
-                icon={<EyeOutlined />}
-                onClick={(): void =>
-                  show("books", `${record?.id}`)
-                }
-              /> */}
               </Space>
             )}
           />

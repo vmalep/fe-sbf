@@ -2,6 +2,7 @@ import {
   useOne,
   IResourceComponentsProps,
   useGetIdentity,
+  useNavigation,
 } from "@pankod/refine-core";
 
 import {
@@ -26,6 +27,7 @@ export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
   const currUser = useGetIdentity<IUser>().data;
   const [currSchoolYear, setCurrSchoolYear] = useState("1");
   const [normalizedCourses, setNormalizedCourses] = useState();
+  const { show } = useNavigation();
   
   const schoolYearQueryResult = useOne<ISchoolYear>({
     resource: "school-years",
@@ -74,7 +76,7 @@ export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
           </Col>
         </Row>
       </Card>
-      {RenderCourses({normalizedCourses, currUser})}
+      {RenderCourses({normalizedCourses, currUser, show})}
     </>
   );
 };

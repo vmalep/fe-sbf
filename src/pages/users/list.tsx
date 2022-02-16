@@ -7,8 +7,6 @@ import {
   useTable,
   getDefaultSortOrder,
   Space,
-  /*   EditButton,
-    DeleteButton, */
   ShowButton,
 } from "@pankod/refine-antd";
 
@@ -22,11 +20,8 @@ export const UserList: React.FC<IResourceComponentsProps> = () => {
         order: "desc",
       },
     ],
-/*     metaData: {
-      populate: "*",
-    }, */
   });
-/*   console.log(tableProps); */
+  console.log(tableProps);
 
   return (
     <List>

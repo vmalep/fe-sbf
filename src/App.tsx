@@ -8,7 +8,7 @@ import axios from "axios";
 import "@pankod/refine-antd/dist/styles.min.css";
 import { DataProvider } from "./custom/strapi-4";
 import { customAuthProvider } from "authProvider";
-import { useState } from "react";
+//import { useState } from "react";
 
 import {UserList, UserCreate, UserEdit, UserShow } from "pages/users";
 import {SchoolYearList, SchoolYearCreate, SchoolYearEdit, SchoolYearShow} from "pages/school-years";
@@ -24,7 +24,7 @@ import { AvailableBooks, MyBooksList } from "pages/custom";
 import { API_URL } from "./constants";
 
 import { useTranslation } from "react-i18next";
-import GetUserRole from "helpers/getUserRole";
+//import GetUserRole from "helpers/getUserRole";
 
 const AvailableBooksPage = () => {
   return (
