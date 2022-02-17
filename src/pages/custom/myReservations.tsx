@@ -95,16 +95,10 @@ export const MyReservationsList: React.FC<IResourceComponentsProps> = () => {
                 }
               />
               <Button
-                icon={<EditOutlined />}
-                onClick={(): void =>
-                  edit("books", `${record?.id}`) /* ToDo: Returning undefined as ressource */
-                }
-              />
-              <Button
                 icon={<DeleteOutlined />}
                 onClick={() => {
                   const id = record?.id
-                  mutateDelete({        /* ToDo: Returning error 405 (not allowed) */
+                  mutateDelete({        /* ToDo: to delete the reservation */
                     resource: "books",
                     id,
                   });

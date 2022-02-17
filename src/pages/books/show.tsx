@@ -1,10 +1,10 @@
-import { useShow, IResourceComponentsProps } from "@pankod/refine-core";
+import { useShow, IResourceComponentsProps, useCreate, useGetIdentity } from "@pankod/refine-core";
 
-import { Show, Typography } from "@pankod/refine-antd";
+import { Show, Typography, Button } from "@pankod/refine-antd";
 
 import { RenderReservations } from "components/customRenders/reservationsList";
 
-import { IBook } from "interfaces";
+import { IBook, IReservation } from "interfaces";
 import NormalizeData from "helpers/normalizeData";
 
 const { Title, Text } = Typography;
@@ -19,17 +19,41 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
   const record = data?.data;
   console.log('rec book show: ', record);
   const library = record?.library.data?.attributes;
-  const user = record?.users_permissions_user.data?.attributes;
+  const owner = record?.users_permissions_user.data?.attributes;
   const reservations = NormalizeData(record?.reservations);
+  const { data: user } = useGetIdentity();
+  const { mutate } = useCreate<IReservation>();
 
   const renderBook = () => (
-    <Show isLoading={isLoading}>
+    <Show
+      isLoading={isLoading}
+      pageHeaderProps={{
+        extra: (
+          <>
+            <Button
+              onClick={() => {
+                mutate({
+                  resource: "reservations",
+                  values: {
+                    book: record?.id,
+                    users_permissions_user: user.id,
+                    status: "interested"
+                  }
+                })
+              }}
+            >
+              Sélectionner
+            </Button>
+          </>
+        ),
+      }}
+    >
       <Title level={5}>Id</Title>
       <Text>{record?.id}</Text>
       <Title level={5}>Title</Title>
       <Text>{library?.title}</Text>
       <Title level={5}>Owner</Title>
-      <Text>{user?.username}</Text>
+      <Text>{owner?.username}</Text>
       <Title level={5}>Price</Title>
       <Text>{record?.price}</Text>
     </Show>

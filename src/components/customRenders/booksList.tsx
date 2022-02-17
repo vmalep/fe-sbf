@@ -1,3 +1,5 @@
+import { useCreate } from "@pankod/refine-core";
+
 import {
   Table,
   TextField,
@@ -11,15 +13,13 @@ import {
   FileAddOutlined,
 } from "@ant-design/icons";
 
-import HandleReservation from "helpers/handleReservation";
-
-import { IBook } from "interfaces";
+import { IBook, IReservation } from "interfaces";
 
 export const RenderBooks = (props: any) => {
   const { books: dataSource, currUser, show } = props;
 
   const currRole = currUser?.role;
-  const handleReservation = HandleReservation
+  const { mutate } = useCreate<IReservation>();
 
   return (
     <Table
@@ -52,10 +52,19 @@ export const RenderBooks = (props: any) => {
             dataIndex="actions"
             render={(_, record) => (
               <Space>
-                {<Button
+                <Button
                   icon={<FileAddOutlined />}
-                  onClick={() => handleReservation(record?.id)}
-                />}
+                  onClick={() => {
+                    mutate({
+                      resource: "reservations",
+                      values: {
+                        book: record?.id,
+                        users_permissions_user: currUser.id,
+                        status: "interested"
+                      }
+                    })
+                  }}
+                />
                 <Button
                   icon={<EyeOutlined />}
                   onClick={(): void =>
