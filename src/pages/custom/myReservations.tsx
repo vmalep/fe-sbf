@@ -1,4 +1,9 @@
-import { IResourceComponentsProps, useGetIdentity } from "@pankod/refine-core";
+import {
+  IResourceComponentsProps,
+  useGetIdentity,
+  useNavigation,
+  useDelete,
+} from "@pankod/refine-core";
 
 import {
   List,
@@ -7,15 +12,22 @@ import {
   useTable,
   getDefaultSortOrder,
   Space,
-  EditButton,
-  DeleteButton,
-  ShowButton,
+  Button,
 } from "@pankod/refine-antd";
 
 import { IReservation } from "interfaces";
 
+import {
+  EyeOutlined,
+  EditOutlined,
+  DeleteOutlined,
+} from "@ant-design/icons";
+
 export const MyReservationsList: React.FC<IResourceComponentsProps> = () => {
   const { data: user } = useGetIdentity();
+  const { show, edit } = useNavigation();
+  const { mutate: mutateDelete } = useDelete();
+
   const { tableProps, sorter } = useTable<IReservation>({
     resource: "reservations",
     initialSorter: [
@@ -76,9 +88,28 @@ export const MyReservationsList: React.FC<IResourceComponentsProps> = () => {
           dataIndex="actions"
           render={(_, record) => (
             <Space>
-              <ShowButton hideText size="small" recordItemId={record.id} />
-              <EditButton hideText size="small" recordItemId={record.id} />
-              <DeleteButton hideText size="small" recordItemId={record.id} />
+              <Button
+                icon={<EyeOutlined />}
+                onClick={(): void =>
+                  show("books", `${record?.id}`) /* ToDo: Returning undefined as ressource */
+                }
+              />
+              <Button
+                icon={<EditOutlined />}
+                onClick={(): void =>
+                  edit("books", `${record?.id}`) /* ToDo: Returning undefined as ressource */
+                }
+              />
+              <Button
+                icon={<DeleteOutlined />}
+                onClick={() => {
+                  const id = record?.id
+                  mutateDelete({        /* ToDo: Returning error 405 (not allowed) */
+                    resource: "books",
+                    id,
+                  });
+                }}
+              />
             </Space>
           )}
         />

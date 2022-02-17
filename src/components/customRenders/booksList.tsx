@@ -56,12 +56,6 @@ export const RenderBooks = (props: any) => {
                   icon={<FileAddOutlined />}
                   onClick={() => handleReservation(record?.id)}
                 />}
-                {/*                 <ShowButton
-                  hideText
-                  size="small"
-                  resourceName="books"
-                  recordItemId={record.id}
-                /> */}
                 <Button
                   icon={<EyeOutlined />}
                   onClick={(): void =>
@@ -73,7 +67,6 @@ export const RenderBooks = (props: any) => {
           />
         </>
       )}
-
     </Table>
   );
 }

@@ -78,7 +78,7 @@ function App() {
           Authorization: `Bearer ${data.jwt}`,
         };
         console.log('login resolve')
-        return Promise.resolve();
+        return Promise.resolve("/available-books");
       }
       return Promise.reject();
     },
