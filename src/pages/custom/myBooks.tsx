@@ -35,6 +35,7 @@ import {
 export const MyBooksList: React.FC<IResourceComponentsProps> = () => {
   const { data: user } = useGetIdentity();
   const { tableProps, sorter } = useTable<IBook, HttpError, IBookFilterVariables>({
+    resource: "books",
     initialSorter: [
       {
         field: "id",
@@ -49,7 +50,7 @@ export const MyBooksList: React.FC<IResourceComponentsProps> = () => {
         "library.course.school_year",
       ],
     },
-    initialFilter: [
+    permanentFilter: [
       {
         field: "users_permissions_user.id",
         operator: "eq",
@@ -57,6 +58,8 @@ export const MyBooksList: React.FC<IResourceComponentsProps> = () => {
       },
     ],
   });
+
+  console.log('my books, tableProps: ', tableProps);
 
   const { selectProps: librarySelectProps } = useSelect<ILibrary>({
     resource: "libraries",
@@ -70,15 +73,9 @@ export const MyBooksList: React.FC<IResourceComponentsProps> = () => {
     resource: "courses",
   });
 
-  const { selectProps: userSelectProps } = useSelect<IUser>({
-    resource: "users",
-    optionLabel: "username",
-    optionValue: "id",
-  });
-
   return (
     <>
-      <Card>
+      <Card title="My books">
         <List>
           <Table {...tableProps} rowKey="id">
             <Table.Column
@@ -147,23 +144,6 @@ export const MyBooksList: React.FC<IResourceComponentsProps> = () => {
               dataIndex="is_available"
               title="Available"
               render={(value) => <BooleanField value={value} />}
-            />
-            <Table.Column
-              key="[user][id]"
-              dataIndex={["users_permissions_user", "data", "attributes", "username"]}
-              title="Owner"
-              sorter
-              filterDropdown={(props) => (
-                <FilterDropdown {...props}>
-                  <Select
-                    allowClear
-                    style={{ minWidth: 200 }}
-                    mode="multiple"
-                    placeholder="Select Owner"
-                    {...userSelectProps}
-                  />
-                </FilterDropdown>
-              )}
             />
             <Table.Column
               key="state"
