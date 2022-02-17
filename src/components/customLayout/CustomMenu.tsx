@@ -68,8 +68,8 @@ export const CustomMenu: React.FC = () => {
             <Menu.Item key="my-books" icon={<SolutionOutlined />}>
               <Link to="/my-books">My books</Link>
             </Menu.Item>
-            <Menu.Item key="reservations" icon={<FileAddOutlined />}>
-              <Link to="/reservations">Reservationss</Link>
+            <Menu.Item key="my-reservations" icon={<FileAddOutlined />}>
+              <Link to="/my-reservations">My reservations</Link>
             </Menu.Item>
           </SubMenu>
         )}

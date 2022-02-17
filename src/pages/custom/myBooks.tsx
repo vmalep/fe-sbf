@@ -25,7 +25,6 @@ import {
 
 import {
   IBook,
-  IUser,
   ILibrary,
   ICourse,
   ISchoolYear,

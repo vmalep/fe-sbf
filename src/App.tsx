@@ -21,7 +21,7 @@ import {ReservationList, ReservationCreate, ReservationEdit, ReservationShow} fr
 import {Title, Header, Footer, Layout, OffLayoutArea} from "components/layout";
 
 import { CustomMenu, LoginPage } from "./components/customLayout";
-import { AvailableBooks, MyBooksList } from "pages/custom";
+import { AvailableBooks, MyBooksList, MyReservationsList } from "pages/custom";
 
 import { API_URL, TOKEN_KEY } from "./constants";
 
@@ -39,6 +39,14 @@ const MyBooksPage = () => {
   return (
     <LayoutWrapper>
       <MyBooksList />
+    </LayoutWrapper>
+  );
+};
+
+const MyReservationsPage = () => {
+  return (
+    <LayoutWrapper>
+      <MyReservationsList />
     </LayoutWrapper>
   );
 };
@@ -129,6 +137,11 @@ function App() {
             exact: true,
             component: MyBooksPage,
             path: "/my-books",
+          },
+          {
+            exact: true,
+            component: MyReservationsPage,
+            path: "/my-reservations",
           },
         ],
       }}
