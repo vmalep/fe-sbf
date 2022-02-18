@@ -1,9 +1,5 @@
-# sbf-fe
 
-
-This project was generated with [superplate](https://github.com/pankod/superplate).
-
-## SchoolBookFair
+# VoilàBook
 
 This proyect started in the framework of a bootcamp checkpoint in order to develop a fullstack application in 2 days.
 
@@ -17,67 +13,11 @@ This frontend is developped with Refine (http://refine.dev) and the backed, deve
 
 The backend repo is available here: https://github.com/vmalep/be-sbf
 
-## Available Scripts
+## Authors
 
-### Running the development server.
-
-```bash
-    npm run dev
-```
-
-### Building for production.
-
-```bash
-    npm run build
-```
-
-### Running the production server.
-
-```bash
-    npm run start
-```
-
-## Learn More
-
-To learn more about **superplate**, please check out the [Documentation](https://github.com/pankod/superplate).
-
-
-### **css**
-
-
-
-[Go To Documentation]()
-
-
-### **strapi-data-provider**
-
-
-
-[Go To Documentation]()
-
-
-### **no**
-
-
-
-[Go To Documentation]()
-
-
-### **custom-layout**
-
-
-
-[Go To Documentation]()
-
-
-### **i18n**
-
-
-
-[Go To Documentation]()
-
+- Pierre van Male (https://www.github.com/vmalep)
 
 
 ## License
 
-MIT
+[MIT](https://choosealicense.com/licenses/mit/)
