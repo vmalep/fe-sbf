@@ -7,6 +7,7 @@ import {
   CrudOperators,
 } from "@pankod/refine-core";
 import { stringify, parse } from "qs";
+import { TOKEN_KEY } from "../../constants";
 
 const axiosInstance = axios.create();
 
@@ -93,6 +94,7 @@ export const DataProvider = (
   httpClient: AxiosInstance = axiosInstance
 ): IDataProvider => ({
   getList: async ({ resource, pagination, filters, sort, metaData }) => {
+    const token = localStorage.getItem(TOKEN_KEY);
     const url = `${apiUrl}/${resource}`;
 
     const current = pagination?.current || 1;
@@ -114,6 +116,11 @@ export const DataProvider = (
       populate,
       sort: quertSorters.length > 0 ? quertSorters.join(",") : undefined,
     };
+    if (token) {
+      httpClient.defaults.headers = {
+        Authorization: `Bearer ${token}`,
+      };
+    }
 
     const { data } = await httpClient.get(
       `${url}?${stringify(query, {
