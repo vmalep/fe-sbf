@@ -63,7 +63,6 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
           value: maxprice ? maxprice : undefined,
         },
       );
-      console.log('filters: ', filters);
       return filters;
     },
     metaData: {
@@ -76,7 +75,7 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
     },
   });
 
-  //console.log("tableProps: ", tableProps);
+    console.log("tableProps: ", tableProps);
 
   const { selectProps: librarySelectProps } = useSelect<ILibrary>({
     resource: "libraries",
