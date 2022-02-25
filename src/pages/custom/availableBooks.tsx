@@ -3,6 +3,7 @@ import {
   IResourceComponentsProps,
   useGetIdentity,
   useNavigation,
+  useCreate,
 } from "@pankod/refine-core";
 
 import {
@@ -17,7 +18,7 @@ import NormalizeData from "helpers/normalizeData";
 
 import { RenderCourses } from "components/customRenders";
 
-import { ISchoolYear, IUser } from "interfaces";
+import { ISchoolYear, IUser, IReservation } from "interfaces";
 import { useEffect, useState } from "react";
 
 const { Title, Text } = Typography;
@@ -28,6 +29,7 @@ export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
   const [currSchoolYear, setCurrSchoolYear] = useState("1");
   const [normalizedCourses, setNormalizedCourses] = useState();
   const { show } = useNavigation();
+  const { mutate: createReservation } = useCreate<IReservation>();
   
   const schoolYearQueryResult = useOne<ISchoolYear>({
     resource: "school-years",
@@ -76,7 +78,7 @@ export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
           </Col>
         </Row>
       </Card>
-      {RenderCourses({normalizedCourses, currUser, show})}
+      {RenderCourses({normalizedCourses, currUser, show, createReservation})}
     </>
   );
 };

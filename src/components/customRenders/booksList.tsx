@@ -1,5 +1,3 @@
-import { useCreate } from "@pankod/refine-core";
-
 import {
   Table,
   TextField,
@@ -13,13 +11,12 @@ import {
   FileAddOutlined,
 } from "@ant-design/icons";
 
-import { IBook, IReservation } from "interfaces";
+import { IBook } from "interfaces";
 
 export const RenderBooks = (props: any) => {
-  const { books: dataSource, currUser, show } = props;
+  const { books: dataSource, currUser, show, createReservation } = props;
 
   const currRole = currUser?.role;
-  const { mutate } = useCreate<IReservation>();
 
   return (
     <Table
@@ -55,7 +52,7 @@ export const RenderBooks = (props: any) => {
                 <Button
                   icon={<FileAddOutlined />}
                   onClick={() => {
-                    mutate({
+                    createReservation({
                       resource: "reservations",
                       values: {
                         book: record?.id,

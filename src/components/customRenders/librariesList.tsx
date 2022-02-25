@@ -4,7 +4,7 @@ import { RenderBooks } from "components/customRenders";
 
 export const RenderLibraries = (props: any) => {
 
-  const { libraries: dataSource, currUser, show } = props;
+  const { libraries: dataSource, currUser, show, createReservation } = props;
   
   return (
     <Table
@@ -14,7 +14,7 @@ export const RenderLibraries = (props: any) => {
           const books = record.books.filter((book: any) => book.is_available === true);
           return (
             <>
-              {RenderBooks({ books, currUser, show })}
+              {RenderBooks({ books, currUser, show, createReservation })}
             </>
           )},
         rowExpandable: record => record.books.length > 0

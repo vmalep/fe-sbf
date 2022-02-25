@@ -65,7 +65,6 @@ function App() {
     getLocale: () => i18n.language,
   };
 
-
   const authProvider: AuthProvider = {
     login: async ({ username, password }) => {
       const { data, status } = await strapiAuthHelper.login(username, password);

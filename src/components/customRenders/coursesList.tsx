@@ -4,7 +4,7 @@ import { RenderLibraries } from "components/customRenders";
 
 export const RenderCourses = (props: any) => {
 
-  const {normalizedCourses: dataSource, currUser, show } = props;
+  const {normalizedCourses: dataSource, currUser, show, createReservation } = props;
 
   return (
     <Table
@@ -16,12 +16,13 @@ export const RenderCourses = (props: any) => {
         dataIndex="title"
         key="title"
         title="Course"
+        width={"5px"}
         render={(value) => <TextField value={value} />}
       />
       <Table.Column
         render={(record) => {
           const libraries = record.libraries
-          return <Card>{RenderLibraries({libraries, currUser, show})}</Card> 
+          return <Card>{RenderLibraries({libraries, currUser, show, createReservation})}</Card> 
         }}
       />
     </Table>
