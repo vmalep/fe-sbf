@@ -1,4 +1,4 @@
-import { IResourceComponentsProps } from "@pankod/refine-core";
+import { IResourceComponentsProps, useGetIdentity } from "@pankod/refine-core";
 
 import {
   List,
@@ -8,11 +8,15 @@ import {
   getDefaultSortOrder,
   Space,
   ShowButton,
+  EditButton,
+  DeleteButton,
 } from "@pankod/refine-antd";
 
 import { IUser } from "interfaces";
 
 export const UserList: React.FC<IResourceComponentsProps> = () => {
+  const { data: user } = useGetIdentity();
+  console.log('current user: ', user);
   const { tableProps, sorter } = useTable<IUser>({
     initialSorter: [
       {
@@ -21,7 +25,7 @@ export const UserList: React.FC<IResourceComponentsProps> = () => {
       },
     ],
   });
-  console.log(tableProps);
+  //console.log(tableProps);
 
   return (
     <List>
@@ -72,8 +76,15 @@ export const UserList: React.FC<IResourceComponentsProps> = () => {
           render={(_, record) => (
             <Space>
               <ShowButton hideText size="small" recordItemId={record.id} />
-{/*               <EditButton hideText size="small" recordItemId={record.id} />
-              <DeleteButton hideText size="small" recordItemId={record.id} /> */}
+              {
+                user?.role === "admin" &&
+                (
+                  <>
+                    <EditButton hideText size="small" recordItemId={record.id} />
+                    <DeleteButton hideText size="small" recordItemId={record.id} />
+                  </>
+                )
+              }
             </Space>
           )}
         />

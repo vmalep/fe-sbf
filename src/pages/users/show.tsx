@@ -1,4 +1,4 @@
-import { useShow, IResourceComponentsProps } from "@pankod/refine-core";
+import { useShow, IResourceComponentsProps, useGetIdentity } from "@pankod/refine-core";
 
 import { Show, Typography } from "@pankod/refine-antd";
 
@@ -10,9 +10,15 @@ export const UserShow: React.FC<IResourceComponentsProps> = () => {
   const { queryResult } = useShow<IUser>();
   const { data, isLoading } = queryResult;
   const record = data?.data;
+  const { data: user } = useGetIdentity();
+  console.log('current user: ', user);
 
   return (
-    <Show isLoading={isLoading}>
+    <Show
+      isLoading={isLoading}
+/*       canDelete={user.role === "admin"}
+      canEdit={user.role === "admin"} */
+    >
       <Title level={5}>Id</Title>
       <Text>{record?.id}</Text>
       <Title level={5}>Username</Title>

@@ -26,17 +26,16 @@ export const RenderReservations = (props: any) => {
       pagination={false}
     >
       <Table.Column
+        key="id"
+        dataIndex={["users_permissions_user", "username"]}
+        title="User"
+      />
+      <Table.Column
         key="status"
         dataIndex="status"
         title="Status"
         sorter
       />
-      <Table.Column
-        key="id"
-        dataIndex={["users_permissions_user", "username"]}
-        title="User"
-      />
-
       <Table.Column<IReservation>
         title="Actions"
         dataIndex="actions"
