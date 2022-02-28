@@ -12,12 +12,16 @@ const { Title, Text } = Typography;
 export const BookShow: React.FC<IResourceComponentsProps> = () => {
   const { queryResult } = useShow<IBook>({
     metaData: {
-      populate: "*",
+      populate: [
+        "users_permissions_user",
+        "library",
+        "reservations",
+        "reservations.users_permissions_user",
+      ],
     },
   });
   const { data, isLoading } = queryResult;
   const record = data?.data;
-  console.log('rec book show: ', record);
   const library = record?.library.data?.attributes;
   const owner = record?.users_permissions_user.data?.attributes;
   const reservations = NormalizeData(record?.reservations);

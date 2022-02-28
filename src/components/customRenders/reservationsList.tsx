@@ -1,6 +1,5 @@
 import {
   Table,
-  TextField,
   Space,
   Button,
 } from "@pankod/refine-antd";
@@ -15,7 +14,7 @@ import HandleReservation from "helpers/handleReservation";
 import { IReservation } from "interfaces";
 
 export const RenderReservations = (props: any) => {
-  console.log('render res props: ', props);
+  //console.log('render res props: ', props);
   const dataSource = props;
 
   const handleReservation = HandleReservation
@@ -27,21 +26,15 @@ export const RenderReservations = (props: any) => {
       pagination={false}
     >
       <Table.Column
-        key="state"
-        dataIndex="state"
-        title="State"
+        key="status"
+        dataIndex="status"
+        title="Status"
         sorter
       />
       <Table.Column
-        dataIndex="price"
-        key="price"
-        title="Price"
-        render={(value) => <TextField value={value} />}
-      />
-      <Table.Column
-        key="[users_permissions_user][id]"
+        key="id"
         dataIndex={["users_permissions_user", "username"]}
-        title="Owner"
+        title="User"
       />
 
       <Table.Column<IReservation>
@@ -50,7 +43,7 @@ export const RenderReservations = (props: any) => {
         render={(_, record) => (
           <Space>
             <Button
-              icon={<FileAddOutlined/>}
+              icon={<FileAddOutlined />}
               onClick={() => handleReservation(record?.id)}
             />
           </Space>
