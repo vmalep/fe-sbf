@@ -1,4 +1,9 @@
-import { IResourceComponentsProps, CrudFilters, HttpError } from "@pankod/refine-core";
+import {
+  IResourceComponentsProps,
+  CrudFilters,
+  HttpError,
+  useGetIdentity,
+ } from "@pankod/refine-core";
 
 import {
   List,
@@ -22,6 +27,7 @@ import {
   Row,
   Col,
   Radio,
+  Checkbox,
   InputNumber,
 } from "@pankod/refine-antd";
 
@@ -35,6 +41,7 @@ import {
 } from "interfaces";
 
 export const BookList: React.FC<IResourceComponentsProps> = () => {
+  const { data: user } = useGetIdentity();
   const { tableProps, sorter, searchFormProps } = useTable<IBook, HttpError, IBookFilterVariables>({
     initialSorter: [
       {
@@ -42,15 +49,37 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
         order: "desc",
       },
     ],
+    metaData: {
+      populate: [
+        "users_permissions_user",
+        "library",
+        "library.course",
+        "library.course.school_year",
+      ],
+    },
+    initialFilter: [
+      {
+        field: "users_permissions_user.id",
+        operator: "eq",
+        value: user?.id,
+      }
+    ],
     onSearch: (params) => {
       const filters: CrudFilters = [];
-      const { is_available, minprice, maxprice } = params;
+      const { my_books_only, is_available, minprice, maxprice } = params;
+
+      console.log('params:', params);
 
       filters.push(
         {
+          field: "users_permissions_user.id",
+          operator: "eq",
+          value: my_books_only ? user?.id: undefined,
+        },
+        {
           field: "is_available",
           operator: "eq",
-          value: is_available,
+          value: is_available ? is_available: undefined,
         },
         {
           field: "price",
@@ -65,17 +94,13 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
       );
       return filters;
     },
-    metaData: {
-      populate: [
-        "users_permissions_user",
-        "library",
-        "library.course",
-        "library.course.school_year",
-      ],
-    },
   });
 
+<<<<<<< HEAD
+  console.log("tableProps: ", tableProps);
+=======
     console.log("tableProps: ", tableProps);
+>>>>>>> 6098390a7cb446cb0091ef54c0bca9300f6961ac
 
   const { selectProps: librarySelectProps } = useSelect<ILibrary>({
     resource: "libraries",
@@ -175,7 +200,7 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
               dataIndex={["users_permissions_user", "data", "attributes", "username"]}
               title="Owner"
               sorter
-              filterDropdown={(props) => (
+/*               filterDropdown={(props) => (
                 <FilterDropdown {...props}>
                   <Select
                     allowClear
@@ -185,7 +210,7 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
                     {...userSelectProps}
                   />
                 </FilterDropdown>
-              )}
+              )} */
             />
             <Table.Column
               key="state"
@@ -224,25 +249,31 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
 const Filter: React.FC<{ formProps: FormProps }> = ({ formProps }) => {
 
   return (
-    <Form layout="horizontal" {...formProps}>
-      {/*       <Row>
-        <Col>
-          <Form.Item label="Search" name="q">
-            <Input
-              placeholder="ID, Title, Price, etc."
-              prefix={<Icons.SearchOutlined />}
-            />
-          </Form.Item>
-        </Col>
-      </Row> */}
+    <Form
+      layout="horizontal"
+      {...formProps}
+      initialValues={{
+        is_available: false,
+        my_books_only: true,
+    }}
+/*       onFinish={(values: any) => {
+        console.log('filters values: ', values);
+        return values;
+      }} */
+    >
       <Row>
         <Col flex="1 0 auto">
-          <Form.Item label="Availability" name="is_available">
-            <Radio.Group>
+          <Form.Item label="My books only" name="my_books_only" valuePropName="checked">
+            <Checkbox />
+          </Form.Item>
+        </Col>
+        <Col flex="1 0 auto">
+          <Form.Item label="Only available" name="is_available" valuePropName="checked">
+            <Checkbox />
+{/*             <Radio.Group>
               <Radio value={true}>Only available</Radio>
-              {/* <Radio value={false}>False</Radio> // Not working (?) */}
               <Radio value={undefined}>Both</Radio>
-            </Radio.Group>
+            </Radio.Group> */}
           </Form.Item>
         </Col>
         <Col flex="1 0 auto">

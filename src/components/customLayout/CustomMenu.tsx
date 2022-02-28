@@ -65,8 +65,8 @@ export const CustomMenu: React.FC = () => {
 
         {((user?.role === "admin") || (user?.role === "authenticated")) && (
           <SubMenu key="sub1" title="Menu">
-            <Menu.Item key="my-books" icon={<SolutionOutlined />}>
-              <Link to="/my-books">My books</Link>
+            <Menu.Item key="books" icon={<SolutionOutlined />}>
+              <Link to="/books">Books</Link>
             </Menu.Item>
             <Menu.Item key="my-reservations" icon={<FileAddOutlined />}>
               <Link to="/my-reservations">My reservations</Link>
