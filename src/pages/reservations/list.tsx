@@ -1,4 +1,7 @@
-import { IResourceComponentsProps } from "@pankod/refine-core";
+import {
+  IResourceComponentsProps,
+  useGetIdentity,
+} from "@pankod/refine-core";
 
 import {
   List,
@@ -15,6 +18,7 @@ import {
 import { IReservation } from "interfaces";
 
 export const ReservationList: React.FC<IResourceComponentsProps> = () => {
+  const { data: user } = useGetIdentity();
   const { tableProps, sorter } = useTable<IReservation>({
     initialSorter: [
       {
@@ -29,6 +33,13 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
         "book.library",
       ],
     },
+    permanentFilter: [
+      {
+        field: "users_permissions_user.id",
+        operator: "eq",
+        value: user?.role !== "admin" ? user?.id : "*",
+      },
+    ],
   });
   console.log("reserv table props: ", tableProps);
 
@@ -49,23 +60,25 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
           title="Book"
           sorter
         />
-            <Table.Column
-              key="[user][id]"
-              dataIndex={["users_permissions_user", "data", "attributes", "username"]}
-              title="User"
-              sorter
-/*               filterDropdown={(props) => (
-                <FilterDropdown {...props}>
-                  <Select
-                    allowClear
-                    style={{ minWidth: 200 }}
-                    mode="multiple"
-                    placeholder="Select Owner"
-                    {...userSelectProps}
-                  />
-                </FilterDropdown>
-              )} */
+        {user?.role === "admin" && (
+          <Table.Column
+          key="[user][id]"
+          dataIndex={["users_permissions_user", "data", "attributes", "username"]}
+          title="User"
+          sorter
+          /*               filterDropdown={(props) => (
+            <FilterDropdown {...props}>
+            <Select
+            allowClear
+            style={{ minWidth: 200 }}
+            mode="multiple"
+            placeholder="Select Owner"
+            {...userSelectProps}
             />
+            </FilterDropdown>
+            )} */
+            />
+        )}
         <Table.Column
           key="status"
           dataIndex="status"
