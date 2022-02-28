@@ -7,7 +7,8 @@ import {
   CrudOperators,
 } from "@pankod/refine-core";
 import { stringify, parse } from "qs";
-import { TOKEN_KEY } from "../../constants";
+//import { TOKEN_KEY } from "../../constants";
+const TOKEN_KEY = process.env.REACT_APP_API_TOKEN_KEY!;
 
 const axiosInstance = axios.create();
 

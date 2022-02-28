@@ -1,11 +1,12 @@
 import { AuthProvider } from "@pankod/refine-core";
 import axios from "axios";
-import { API_URL, TOKEN_KEY } from "./constants";
+import { API_URL } from "./constants";
 import GetUserRole from "./helpers/getUserRole";
 
 import { AuthHelper } from "@pankod/refine-strapi-v4";
 const strapiAuthHelper = AuthHelper(API_URL);
 const getCurrentRole = GetUserRole();
+const TOKEN_KEY = process.env.REACT_APP_API_TOKEN_KEY!;
 
 export const customAuthProvider: AuthProvider = {
   
