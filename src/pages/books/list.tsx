@@ -96,11 +96,7 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
     },
   });
 
-<<<<<<< HEAD
   console.log("tableProps: ", tableProps);
-=======
-    console.log("tableProps: ", tableProps);
->>>>>>> 6098390a7cb446cb0091ef54c0bca9300f6961ac
 
   const { selectProps: librarySelectProps } = useSelect<ILibrary>({
     resource: "libraries",
@@ -114,11 +110,11 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
     resource: "courses",
   });
 
-  const { selectProps: userSelectProps } = useSelect<IUser>({
+/*   const { selectProps: userSelectProps } = useSelect<IUser>({
     resource: "users",
     optionLabel: "username",
     optionValue: "id",
-  });
+  }); */
 
   return (
     <>

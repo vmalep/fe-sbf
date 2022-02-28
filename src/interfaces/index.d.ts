@@ -134,6 +134,7 @@ export interface IReservation {
   comment: string;
 }
 export interface IBookFilterVariables {
+  my_books_only: boolean;
   is_available: boolean;
   minprice: number;
   maxprice: number;
