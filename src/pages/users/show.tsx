@@ -7,17 +7,26 @@ import { IUser } from "interfaces";
 const { Title, Text } = Typography;
 
 export const UserShow: React.FC<IResourceComponentsProps> = () => {
-  const { queryResult } = useShow<IUser>();
+  const { queryResult } = useShow<IUser>({
+    metaData: {
+      populate: [
+        "role",
+        "books",
+        "reservations",
+      ],
+    },
+  });
   const { data, isLoading } = queryResult;
   const record = data?.data;
   const { data: user } = useGetIdentity();
-  console.log('current user: ', user);
+  //console.log('current user: ', user);
+  console.log('user record: ', record);
 
   return (
     <Show
       isLoading={isLoading}
-/*       canDelete={user.role === "admin"}
-      canEdit={user.role === "admin"} */
+      canDelete={user?.role === "admin"}
+      canEdit={user?.role === "admin"}
     >
       <Title level={5}>Id</Title>
       <Text>{record?.id}</Text>
