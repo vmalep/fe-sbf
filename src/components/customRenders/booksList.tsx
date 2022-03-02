@@ -14,7 +14,7 @@ import { IBook } from "interfaces";
 
 export const RenderBooks = (props: any) => {
   const { books: dataSource, currUser, show, createReservation } = props;
-  //console.log('dataSource: ', dataSource);
+  //console.log('bookList dataSource: ', dataSource);
   const currRole = currUser?.role;
   //console.log('currRole: ', currRole);
 
@@ -43,6 +43,12 @@ export const RenderBooks = (props: any) => {
           title="Owner"
         />
       )}
+      <Table.Column
+        dataIndex="reservations"
+        key="reservationNb"
+        title="# reservation"
+        render={(value) => value.length}
+      />
       {currRole && (
         <Table.Column<IBook>
           title="Actions"

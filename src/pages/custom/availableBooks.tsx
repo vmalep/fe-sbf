@@ -40,6 +40,7 @@ export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
         "courses.libraries",
         "courses.libraries.books",
         "courses.libraries.books.users_permissions_user",
+        "courses.libraries.books.reservations",
       ],
     },
   });
