@@ -12,7 +12,7 @@ export const RenderLibraries = (props: any) => {
       expandable={{
         expandedRowRender: record => {
           const books = record.books.filter((book: any) => book.is_available === true);
-          console.log('books: ', record.books);
+          //console.log('books: ', record.books);
           return (
             <>
               {RenderBooks({ books, currUser, show, createReservation })}

@@ -14,9 +14,9 @@ import { IBook } from "interfaces";
 
 export const RenderBooks = (props: any) => {
   const { books: dataSource, currUser, show, createReservation } = props;
-  console.log('dataSource: ', dataSource);
+  //console.log('dataSource: ', dataSource);
   const currRole = currUser?.role;
-  console.log('currRole: ', currRole);
+  //console.log('currRole: ', currRole);
 
   return (
     <Table

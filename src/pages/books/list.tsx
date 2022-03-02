@@ -47,6 +47,7 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
         "library.course",
         "library.course.school_year",
         "reservations",
+        "reservations.users_permissions_user",
       ],
     },
     permanentFilter: [
