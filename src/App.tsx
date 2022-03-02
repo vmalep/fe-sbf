@@ -23,9 +23,10 @@ import {Title, Header, Footer, Layout, OffLayoutArea} from "components/layout";
 import { CustomMenu, LoginPage } from "./components/customLayout";
 import { AvailableBooks, MyBooksList, MyReservationsList } from "pages/custom";
 
-import { API_URL } from "./constants";
-
+//import { API_URL } from "./constants";
 import { useTranslation } from "react-i18next";
+
+const API_URL = process.env.REACT_APP_API_URL!;
 const TOKEN_KEY = process.env.REACT_APP_API_TOKEN_KEY!;
 
 const AvailableBooksPage = () => {

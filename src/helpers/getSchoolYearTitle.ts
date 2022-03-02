@@ -1,7 +1,9 @@
 import axios from "axios";
 //import { ISchoolYear } from "interfaces";
-import { API_URL } from "../constants";
+//import { API_URL } from "../constants";
 import qs from 'qs';
+
+const API_URL = process.env.REACT_APP_API_URL!;
 
 const GetSchoolYearTitle = async (id: any) => {
 
