@@ -87,36 +87,12 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
             dataIndex={["library", "data", "attributes", "course", "data", "attributes", "school_year", "data", "attributes", "title"]}
             title="School year"
             render={(value) => <TextField value={value} />}
-            sorter
-            filterDropdown={(props) => (
-              <FilterDropdown {...props}>
-                <Select
-                  allowClear
-                  style={{ minWidth: 200 }}
-                  mode="multiple"
-                  placeholder="Select Courses"
-                  {...SchoolYearSelectProps}
-                />
-              </FilterDropdown>
-            )}
           />
           <Table.Column
             key="[course][id]"
             dataIndex={["library", "data", "attributes", "course", "data", "attributes", "title"]}
             title="Course"
             render={(value) => <TextField value={value} />}
-            sorter
-            filterDropdown={(props) => (
-              <FilterDropdown {...props}>
-                <Select
-                  allowClear
-                  style={{ minWidth: 200 }}
-                  mode="multiple"
-                  placeholder="Select Courses"
-                  {...courseSelectProps}
-                />
-              </FilterDropdown>
-            )}
           />
           <Table.Column
             key="[library][id]"
@@ -156,7 +132,6 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
             key="[user][id]"
             dataIndex={["users_permissions_user", "data", "attributes", "username"]}
             title="Owner"
-            sorter
           />
           <Table.Column
             key="state"
