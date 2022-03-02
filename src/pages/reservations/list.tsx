@@ -37,7 +37,7 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
       {
         field: "users_permissions_user.id",
         operator: "eq",
-        value: user?.role !== "admin" ? user?.id : "*",
+        value: user?.role !== "admin" ? user?.id : undefined,
       },
     ],
   });
