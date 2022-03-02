@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { IResourceComponentsProps, useList } from "@pankod/refine-core";
+import { IResourceComponentsProps, useList, useGetIdentity } from "@pankod/refine-core";
 import { Create, Form, Input, Radio, useForm, Select, useSelect } from "@pankod/refine-antd";
 import { mediaUploadMapper } from "@pankod/refine-strapi-v4";
 
@@ -11,7 +11,7 @@ import "react-mde/lib/styles/css/react-mde-all.css";
 import { IBook, ILibrary, IUser } from "interfaces";
 
 export const BookCreate: React.FC<IResourceComponentsProps> = () => {
-
+  const { data: user } = useGetIdentity();
   const { formProps, saveButtonProps } = useForm<IBook>({
     metaData: {
       populate: "*",
@@ -50,7 +50,7 @@ export const BookCreate: React.FC<IResourceComponentsProps> = () => {
               mediaUploadMapper({
                 ...values,
                 library: values.library?.data.id,
-                users_permissions_user: values.users_permissions_user?.data.id,
+                users_permissions_user: values.users_permissions_user?.data.id ? values.users_permissions_user?.data.id : user.id,
               }),
             )
           );
@@ -120,13 +120,14 @@ export const BookCreate: React.FC<IResourceComponentsProps> = () => {
         >
           <Input />
         </Form.Item>
-        <Form.Item
-          label="Owner"
-          name={["users_permissions_user", "data", "id"]}
-          rules={[{ required: true }]}
-        >
-          <Select {...selectUserProps} />
-        </Form.Item>
+        {user?.role === "admin" && (
+          <Form.Item
+            label="Owner"
+            name={["users_permissions_user", "data", "id"]}
+          >
+            <Select {...selectUserProps} />
+          </Form.Item>
+        )}
       </Form>
     </Create>
   );
