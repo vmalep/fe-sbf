@@ -57,25 +57,20 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
         "library.course.school_year",
       ],
     },
-    initialFilter: [
+    permanentFilter: [
       {
         field: "users_permissions_user.id",
         operator: "eq",
-        value: user?.id,
+        value: user?.role !== "admin" ? user?.id : undefined,
       }
     ],
     onSearch: (params) => {
       const filters: CrudFilters = [];
-      const { my_books_only, is_available, minprice, maxprice } = params;
+      const { is_available, minprice, maxprice } = params;
 
       console.log('params:', params);
 
       filters.push(
-        {
-          field: "users_permissions_user.id",
-          operator: "eq",
-          value: my_books_only ? user?.id: undefined,
-        },
         {
           field: "is_available",
           operator: "eq",
@@ -118,9 +113,9 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
 
   return (
     <>
-      <Card>
+{/*       <Card>
         <Filter formProps={searchFormProps} />
-      </Card>
+      </Card> */}
       <Card>
         <List>
           <Table {...tableProps} rowKey="id">
@@ -190,6 +185,17 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
               dataIndex="is_available"
               title="Available"
               render={(value) => <BooleanField value={value} />}
+              filterDropdown={(props) => (
+                <FilterDropdown {...props}>
+                    <Select
+                        placeholder="Select availability"
+                        options={[
+                            { label: "Available", value: "true" },
+                            { label: "Not available", value: "false" },
+                        ]}
+                    />
+                </FilterDropdown>
+            )}
             />
             <Table.Column
               key="[user][id]"
@@ -252,24 +258,12 @@ const Filter: React.FC<{ formProps: FormProps }> = ({ formProps }) => {
         is_available: false,
         my_books_only: true,
     }}
-/*       onFinish={(values: any) => {
-        console.log('filters values: ', values);
-        return values;
-      }} */
+
     >
       <Row>
         <Col flex="1 0 auto">
-          <Form.Item label="My books only" name="my_books_only" valuePropName="checked">
-            <Checkbox />
-          </Form.Item>
-        </Col>
-        <Col flex="1 0 auto">
           <Form.Item label="Only available" name="is_available" valuePropName="checked">
             <Checkbox />
-{/*             <Radio.Group>
-              <Radio value={true}>Only available</Radio>
-              <Radio value={undefined}>Both</Radio>
-            </Radio.Group> */}
           </Form.Item>
         </Col>
         <Col flex="1 0 auto">
