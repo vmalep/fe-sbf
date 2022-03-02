@@ -1,7 +1,6 @@
 import {
   Table,
   TextField,
-  //ShowButton,
   Space,
   Button,
 } from "@pankod/refine-antd";
@@ -13,16 +12,9 @@ import {
 
 import { IBook } from "interfaces";
 
-/* import GetBookTitle from "helpers/getBookTitle";
-import { useEffect } from "react"; */
-
 export const RenderBooks = (props: any) => {
   const { books: dataSource, currUser, show, createReservation } = props;
-/*   useEffect(() => {
-    dataSource?.forEach((item: any) => item.title = GetBookTitle(item.id));
-  }, [dataSource])
-  console.log('ds: ', dataSource); */
-
+  console.log('dataSource: ', dataSource);
   const currRole = currUser?.role;
   console.log('currRole: ', currRole);
 
@@ -44,11 +36,6 @@ export const RenderBooks = (props: any) => {
         title="Price"
         render={(value) => <TextField value={value} />}
       />
-{/*       <Table.Column
-        dataIndex="id"
-        key="id"
-        render={(value) => <TextField value={GetBookTitle(value)}}
-      /> */}
       {(currRole) && ( // Todo: add a test on existing a username or nor...
         <Table.Column
           key="[users_permissions_user][id]"
