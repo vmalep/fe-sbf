@@ -25,10 +25,11 @@ import {
 import {
   IBook,
   ILibrary,
-  ICourse,
-  ISchoolYear,
   IBookFilterVariables,
 } from "interfaces";
+
+import { RenderReservations } from "components/customRenders";
+import NormalizeData from "helpers/normalizeData";
 
 export const BookList: React.FC<IResourceComponentsProps> = () => {
   const { data: user } = useGetIdentity();
@@ -62,18 +63,22 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
     resource: "libraries",
   });
 
-  const { selectProps: SchoolYearSelectProps } = useSelect<ISchoolYear>({
-    resource: "school-years",
-  });
-
-  const { selectProps: courseSelectProps } = useSelect<ICourse>({
-    resource: "courses",
-  });
-
   return (
     <Card>
       <List>
-        <Table {...tableProps} rowKey="id">
+        <Table
+          {...tableProps} rowKey="id"
+          expandable={{
+            expandedRowRender: record => {
+              const reservations = NormalizeData(record?.reservations);
+              return (
+                <>
+                  {RenderReservations(reservations)}
+                </>
+              )},
+            /* rowExpandable: record => record.reservations.length > 0 */
+          }}
+        >
           <Table.Column
             dataIndex="id"
             key="id"
@@ -124,15 +129,17 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
                     { label: "Available", value: "true" },
                     { label: "Not available", value: "false" },
                   ]}
-                />
+                  />
               </FilterDropdown>
             )}
-          />
-          <Table.Column
+            />
+          {user?.role === "admin" && (
+            <Table.Column
             key="[user][id]"
             dataIndex={["users_permissions_user", "data", "attributes", "username"]}
             title="Owner"
-          />
+            />
+          )}
           <Table.Column
             key="state"
             dataIndex="state"
