@@ -46,6 +46,7 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
         "library",
         "library.course",
         "library.course.school_year",
+        "reservations",
       ],
     },
     permanentFilter: [
@@ -70,13 +71,14 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
           {...tableProps} rowKey="id"
           expandable={{
             expandedRowRender: record => {
+              console.log('record: ', Object.entries(record?.reservations.data).length);
               const reservations = NormalizeData(record?.reservations);
               return (
                 <>
                   {RenderReservations(reservations)}
                 </>
               )},
-            /* rowExpandable: record => record.reservations.length > 0 */
+              rowExpandable: record => Object.entries(record.reservations.data).length > 0
           }}
         >
           <Table.Column
