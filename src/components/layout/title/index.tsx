@@ -5,7 +5,7 @@ import { TitleProps } from "@pankod/refine-core";
 const { Link } = routerProvider;
 
 export const Title: React.FC<TitleProps> = ({ collapsed }) => (
-  <Link to="/">
+  <Link to="/available-books">
     {collapsed ? (
       <img
         src={"/SBF-collapsed.svg"}

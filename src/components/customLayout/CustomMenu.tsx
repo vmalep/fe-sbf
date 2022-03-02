@@ -13,6 +13,8 @@ import {
   ReadOutlined,
   FileAddOutlined,
   SolutionOutlined,
+  ShoppingCartOutlined,
+  UsergroupDeleteOutlined,
 } from '@ant-design/icons';
 
 //const { LogoutOutlined } = Icons;
@@ -63,15 +65,18 @@ export const CustomMenu: React.FC = () => {
           <Link to="/available-books">Available books</Link>
         </Menu.Item>
 
-        {((user?.role === "admin") || (user?.role === "authenticated")) && (
-          <SubMenu key="sub1" title="Menu">
+        {user?.role && (
+          <>
             <Menu.Item key="books" icon={<SolutionOutlined />}>
               <Link to="/books">Books</Link>
             </Menu.Item>
-            <Menu.Item key="my-reservations" icon={<FileAddOutlined />}>
-              <Link to="/my-reservations">My reservations</Link>
+            <Menu.Item key="reservations" icon={<ShoppingCartOutlined />}>
+              <Link to="/reservations">Reservations</Link>
             </Menu.Item>
-          </SubMenu>
+            <Menu.Item key="users" icon={<UsergroupDeleteOutlined />}>
+              <Link to="/users">Users</Link>
+            </Menu.Item>
+          </>
         )}
 
         {(user?.role === "admin") && (
