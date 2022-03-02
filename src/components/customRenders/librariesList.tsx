@@ -12,12 +12,13 @@ export const RenderLibraries = (props: any) => {
       expandable={{
         expandedRowRender: record => {
           const books = record.books.filter((book: any) => book.is_available === true);
+          //console.log('books: ', record.books);
           return (
             <>
               {RenderBooks({ books, currUser, show, createReservation })}
             </>
           )},
-        rowExpandable: record => record.books.length > 0
+        rowExpandable: record => record.books.filter((book: any) => book.is_available === true).length > 0
       }}
       rowKey="id"
       scroll={{ x: 400 }}

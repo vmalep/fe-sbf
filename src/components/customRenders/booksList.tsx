@@ -1,7 +1,6 @@
 import {
   Table,
   TextField,
-  //ShowButton,
   Space,
   Button,
 } from "@pankod/refine-antd";
@@ -13,18 +12,11 @@ import {
 
 import { IBook } from "interfaces";
 
-/* import GetBookTitle from "helpers/getBookTitle";
-import { useEffect } from "react"; */
-
 export const RenderBooks = (props: any) => {
   const { books: dataSource, currUser, show, createReservation } = props;
-/*   useEffect(() => {
-    dataSource?.forEach((item: any) => item.title = GetBookTitle(item.id));
-  }, [dataSource])
-  console.log('ds: ', dataSource); */
-
+  //console.log('bookList dataSource: ', dataSource);
   const currRole = currUser?.role;
-  console.log('currRole: ', currRole);
+  //console.log('currRole: ', currRole);
 
   return (
     <Table
@@ -44,18 +36,32 @@ export const RenderBooks = (props: any) => {
         title="Price"
         render={(value) => <TextField value={value} />}
       />
-{/*       <Table.Column
-        dataIndex="id"
-        key="id"
-        render={(value) => <TextField value={GetBookTitle(value)}}
-      /> */}
       {(currRole) && ( // Todo: add a test on existing a username or nor...
-        <Table.Column
-          key="[users_permissions_user][id]"
-          dataIndex={["users_permissions_user", "username"]}
-          title="Owner"
-        />
+        <>
+          <Table.Column
+            key="[users_permissions_user][id]"
+            dataIndex={["users_permissions_user", "username"]}
+            title="Owner"
+          />
+          <Table.Column
+            dataIndex="reservations"
+            key="reservStatus"
+            title="Reservation status"
+            render={(value) => {
+              const myReservation = value.filter((reservation: any) => reservation?.users_permissions_user.id === currUser.id)[0];
+              return Object.prototype.toString.call(myReservation) === '[object Object]' ? myReservation.status : null;
+            }}
+          />
+        </>
       )}
+      {/*       <Table.Column
+        dataIndex="reservations"
+        key="reservationNb"
+        title="# reservation"
+        render={(value) => { // Todo: display each status nb with color tag (https://ant.design/components/tag/)
+          return value.length}}
+      /> */}
+
       {currRole && (
         <Table.Column<IBook>
           title="Actions"
