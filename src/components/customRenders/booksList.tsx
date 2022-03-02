@@ -43,11 +43,21 @@ export const RenderBooks = (props: any) => {
           title="Owner"
         />
       )}
-      <Table.Column
+{/*       <Table.Column
         dataIndex="reservations"
         key="reservationNb"
         title="# reservation"
-        render={(value) => value.length}
+        render={(value) => { // Todo: display each status nb with color tag (https://ant.design/components/tag/)
+          return value.length}}
+      /> */}
+      <Table.Column
+        dataIndex="reservations"
+        key="reservStatus"
+        title="Reservation status"
+        render={(value) => {
+          const myReservation = value.filter((reservation: any) => reservation?.users_permissions_user.id === currUser.id)[0];
+          return Object.prototype.toString.call(myReservation) === '[object Object]' ? myReservation.status : null;
+        }}
       />
       {currRole && (
         <Table.Column<IBook>
