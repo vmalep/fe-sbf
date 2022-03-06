@@ -138,7 +138,7 @@ export const DataProvider = (
     const url = `${apiUrl}/${resource}`;
 
     const query = ids
-      .map((item: string) => `filters[id][$in]=${item}`)
+      .map((item: any) => `filters[id][$in]=${item}`)
       .join("&");
 
     const { data } = await httpClient.get(`${url}?${query}`);

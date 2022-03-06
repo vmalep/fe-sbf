@@ -4,20 +4,20 @@ import {
   Button,
 } from "@pankod/refine-antd";
 
+import routerProvider from "@pankod/refine-react-router";
+
 import {
   //EyeOutlined,
   FileAddOutlined,
 } from "@ant-design/icons";
-
-import HandleReservation from "helpers/handleReservation";
-
+import { EditOutlined } from "@ant-design/icons";
 import { IReservation } from "interfaces";
 
 export const RenderReservations = (props: any) => {
   //console.log('render res props: ', props);
   const dataSource = props;
   console.log('dataSource: ', dataSource);
-  const handleReservation = HandleReservation
+  const Link = routerProvider.Link;
 
   return (
     <Table
@@ -31,6 +31,11 @@ export const RenderReservations = (props: any) => {
         title="User"
       />
       <Table.Column
+        key="comment"
+        dataIndex="comment"
+        title="Comment"
+      />
+      <Table.Column
         key="status"
         dataIndex="status"
         title="Status"
@@ -41,10 +46,9 @@ export const RenderReservations = (props: any) => {
         dataIndex="actions"
         render={(_, record) => (
           <Space>
-            <Button
-              icon={<FileAddOutlined />}
-              onClick={() => handleReservation(record?.id)}
-            />
+            <Link to={`/reservations/edit/${record.id}`}>
+              <Button icon={<EditOutlined/>} />
+            </Link>
           </Space>
         )}
       />
