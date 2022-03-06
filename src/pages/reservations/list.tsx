@@ -6,11 +6,15 @@ import {
 import {
   List,
   Table,
+  Form,
   TextField,
   useTable,
   getDefaultSortOrder,
   Space,
   EditButton,
+  Input,
+  Button,
+  SaveButton,
   DeleteButton,
   ShowButton,
   useEditableTable,
@@ -20,7 +24,16 @@ import { IReservation } from "interfaces";
 
 export const ReservationList: React.FC<IResourceComponentsProps> = () => {
   const { data: user } = useGetIdentity();
-  const { tableProps, sorter } = useTable<IReservation>({
+  const {
+    tableProps,
+    formProps,
+    isEditing,
+    setId: setEditId,
+    saveButtonProps,
+    cancelButtonProps,
+    editButtonProps,
+    sorter
+  } = useEditableTable<IReservation>({
     initialSorter: [
       {
         field: "id",
@@ -47,50 +60,80 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
 
   return (
     <List>
-      <Table {...tableProps} rowKey="id">
-        <Table.Column
-          dataIndex="id"
-          key="id"
-          title="ID"
-          render={(value) => <TextField value={value} />}
-          defaultSortOrder={getDefaultSortOrder("id", sorter)}
-          sorter
-        />
-        <Table.Column
-          key="[book][id]"
-          dataIndex={["book", "data", "attributes", "library", "data", "attributes", "title"]}
-          title="Book"
-          sorter
-        />
-        <Table.Column
-          key="[user][id]"
-          dataIndex={["book", "data", "attributes", "users_permissions_user", "data", "attributes", "username"]}
-          title="Onwer"
-          sorter
-        />
-        {user?.role === "admin" && (
+      <Form {...formProps}>
+        <Table
+          {...tableProps}
+          rowKey="id"
+          onRow={(record) => ({
+            onClick: (event: any) => {
+              if (event.target.nodeName === "TD") {
+                setEditId && setEditId(record.id);
+              }
+            },
+          })}
+        >
           <Table.Column
-            key="[user][id]"
-            dataIndex={["users_permissions_user", "data", "attributes", "username"]}
-            title="User"
+            dataIndex="id"
+            key="id"
+            title="ID"
+            render={(value) => <TextField value={value} />}
+            defaultSortOrder={getDefaultSortOrder("id", sorter)}
             sorter
           />
-        )}
-        <Table.Column
-          key="status"
-          dataIndex="status"
-          title="Status"
-          sorter
-        />
-        <Table.Column
-          dataIndex="comment"
-          key="comment"
-          title="Comment"
-          render={(value) => <TextField value={value} />}
-          defaultSortOrder={getDefaultSortOrder("comment", sorter)}
-          sorter
-        />
-        <Table.Column<IReservation>
+          <Table.Column
+            key="[book][id]"
+            dataIndex={["book", "data", "attributes", "library", "data", "attributes", "title"]}
+            title="Book"
+            sorter
+          />
+          <Table.Column
+            key="[user][id]"
+            dataIndex={["book", "data", "attributes", "users_permissions_user", "data", "attributes", "username"]}
+            title="Owner"
+            sorter
+          />
+          <Table.Column
+            key="[user][id]"
+            dataIndex={["book", "data", "attributes", "price"]}
+            title="Owner"
+            sorter
+          />
+          {user?.role === "admin" && (
+            <Table.Column
+              key="[user][id]"
+              dataIndex={["users_permissions_user", "data", "attributes", "username"]}
+              title="User"
+              sorter
+            />
+          )}
+          <Table.Column
+            key="status"
+            dataIndex="status"
+            title="Status"
+            sorter
+          />
+          <Table.Column
+            dataIndex="comment"
+            key="comment"
+            title="Comment"
+            //render={(value) => <TextField value={value} />}
+            render={(value, record: IReservation) => {
+              if (isEditing(record.id)) {
+                return (
+                  <Form.Item
+                    name="title"
+                    style={{ margin: 0 }}
+                  >
+                    <Input />
+                  </Form.Item>
+                );
+              }
+              return <TextField value={value} />;
+            }}
+            defaultSortOrder={getDefaultSortOrder("comment", sorter)}
+            sorter
+          />
+          {/*         <Table.Column<IReservation>
           title="Actions"
           dataIndex="actions"
           render={(_, record) => (
@@ -100,8 +143,39 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
               <DeleteButton hideText size="small" recordItemId={record.id} />
             </Space>
           )}
-        />
-      </Table>
+        /> */}
+          <Table.Column<IReservation>
+            title="Actions"
+            dataIndex="actions"
+            render={(_, record) => {
+              if (isEditing(record.id)) {
+                return (
+                  <Space>
+                    <SaveButton
+                      {...saveButtonProps}
+                      hideText
+                      size="small"
+                    />
+                    <Button
+                      {...cancelButtonProps}
+                      size="small"
+                    >
+                      Cancel
+                    </Button>
+                  </Space>
+                );
+              }
+              return (
+                <EditButton
+                  {...editButtonProps(record.id)}
+                  hideText
+                  size="small"
+                />
+              );
+            }}
+          />
+        </Table>
+      </Form>
     </List>
   );
 };
