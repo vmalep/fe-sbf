@@ -4,7 +4,7 @@ import { RenderLibraries } from "components/customRenders";
 
 export const RenderCourses = (props: any) => {
 
-  const {normalizedCourses: dataSource, currUser, show, createReservation } = props;
+  const {normalizedCourses: dataSource, currUser, show, createReservation, includesMyBooks } = props;
 
   return (
     <Table
@@ -22,7 +22,7 @@ export const RenderCourses = (props: any) => {
       <Table.Column
         render={(record) => {
           const libraries = record.libraries
-          return <Card>{RenderLibraries({libraries, currUser, show, createReservation})}</Card> 
+          return <Card>{RenderLibraries({libraries, currUser, show, createReservation, includesMyBooks})}</Card> 
         }}
       />
     </Table>
