@@ -7,6 +7,7 @@ import {
   List,
   Table,
   Form,
+  Select,
   TextField,
   useTable,
   getDefaultSortOrder,
@@ -107,9 +108,28 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
             />
           )}
           <Table.Column
-            key="status"
             dataIndex="status"
+            key="status"
             title="Status"
+            render={(value, record: IReservation) => {
+              if (isEditing(record.id)) {
+                return (
+                  <Form.Item
+                    name="status"
+                    style={{ margin: 0 }}
+                  >
+                    <Select
+                      defaultValue="interested"
+                      options={[
+                        { label: "Interested", value: "interested" },
+                        { label: "Proposed", value: "proposed" },
+                      ]}
+                    />
+                  </Form.Item>
+                );
+              }
+              return <TextField value={value} />;
+            }}
             sorter
           />
           <Table.Column
@@ -129,7 +149,6 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
               }
               return <TextField value={value} />;
             }}
-            defaultSortOrder={getDefaultSortOrder("comment", sorter)}
             sorter
           />
           <Table.Column<IReservation>
