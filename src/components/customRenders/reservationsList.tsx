@@ -31,6 +31,11 @@ export const RenderReservations = (props: any) => {
         title="User"
       />
       <Table.Column
+        key="comment"
+        dataIndex="comment"
+        title="Comment"
+      />
+      <Table.Column
         key="status"
         dataIndex="status"
         title="Status"
