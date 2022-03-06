@@ -13,6 +13,7 @@ import {
   EditButton,
   DeleteButton,
   ShowButton,
+  useEditableTable,
 } from "@pankod/refine-antd";
 
 import { IReservation } from "interfaces";
@@ -31,6 +32,7 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
         "users_permissions_user",
         "book",
         "book.library",
+        "book.users_permissions_user",
       ],
     },
     permanentFilter: [
@@ -60,24 +62,19 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
           title="Book"
           sorter
         />
+        <Table.Column
+          key="[user][id]"
+          dataIndex={["book", "data", "attributes", "users_permissions_user", "data", "attributes", "username"]}
+          title="Onwer"
+          sorter
+        />
         {user?.role === "admin" && (
           <Table.Column
-          key="[user][id]"
-          dataIndex={["users_permissions_user", "data", "attributes", "username"]}
-          title="User"
-          sorter
-          /*               filterDropdown={(props) => (
-            <FilterDropdown {...props}>
-            <Select
-            allowClear
-            style={{ minWidth: 200 }}
-            mode="multiple"
-            placeholder="Select Owner"
-            {...userSelectProps}
-            />
-            </FilterDropdown>
-            )} */
-            />
+            key="[user][id]"
+            dataIndex={["users_permissions_user", "data", "attributes", "username"]}
+            title="User"
+            sorter
+          />
         )}
         <Table.Column
           key="status"
