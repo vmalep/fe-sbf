@@ -121,7 +121,7 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
               if (isEditing(record.id)) {
                 return (
                   <Form.Item
-                    name="title"
+                    name="comment"
                     style={{ margin: 0 }}
                   >
                     <Input />
