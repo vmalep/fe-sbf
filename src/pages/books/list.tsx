@@ -7,6 +7,7 @@ import {
 import {
   List,
   Table,
+  useEditableTable,
   TextField,
   useTable,
   getDefaultSortOrder,
@@ -26,6 +27,7 @@ import {
   IBook,
   ILibrary,
   IBookFilterVariables,
+  IReservation,
 } from "interfaces";
 
 import { RenderReservations } from "components/customRenders";
@@ -33,7 +35,7 @@ import NormalizeData from "helpers/normalizeData";
 
 export const BookList: React.FC<IResourceComponentsProps> = () => {
   const { data: user } = useGetIdentity();
-  const { tableProps, sorter } = useTable<IBook, HttpError, IBookFilterVariables>({
+  const { tableProps: booksTableProps, sorter: booksSorter } = useTable<IBook, HttpError, IBookFilterVariables>({
     initialSorter: [
       {
         field: "id",
@@ -65,11 +67,44 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
     resource: "libraries",
   });
 
+  const {
+    tableProps,
+    formProps,
+    isEditing,
+    setId: setEditId,
+    saveButtonProps,
+    cancelButtonProps,
+    editButtonProps,
+    sorter
+  } = useEditableTable<IReservation>({
+    initialSorter: [
+      {
+        field: "id",
+        order: "desc",
+      },
+    ],
+    metaData: {
+      populate: [
+        "users_permissions_user",
+        "book",
+        "book.library",
+        "book.users_permissions_user",
+      ],
+    },
+/*     permanentFilter: [
+      {
+        field: "id",
+        operator: "in",
+        value: selectedReservationIds,
+      },
+    ], */
+  });
+
   return (
     <Card>
       <List>
         <Table
-          {...tableProps} rowKey="id"
+          {...booksTableProps} rowKey="id"
           expandable={{
             expandedRowRender: record => {
               //console.log('record: ', Object.entries(record?.reservations.data).length);
@@ -87,7 +122,7 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
             key="id"
             title="ID"
             render={(value) => <TextField value={value} />}
-            defaultSortOrder={getDefaultSortOrder("id", sorter)}
+            defaultSortOrder={getDefaultSortOrder("id", booksSorter)}
             sorter
           />
           <Table.Column
@@ -155,7 +190,6 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
             title="Price (€)"
             align="right"
             render={(value) => <NumberField value={value} />}
-            defaultSortOrder={getDefaultSortOrder("title", sorter)}
             sorter
           />
           <Table.Column<IBook>
