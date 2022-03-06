@@ -11,7 +11,7 @@ import {
   Typography,
   Select,
   useSelect,
-  Row, Col, Space,
+  Row, Col, Space, Checkbox,
 } from "@pankod/refine-antd";
 
 import NormalizeData from "helpers/normalizeData";
@@ -28,6 +28,7 @@ export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
   const currUser = useGetIdentity<IUser>().data;
   const [currSchoolYear, setCurrSchoolYear] = useState("1");
   const [normalizedCourses, setNormalizedCourses] = useState();
+  const [includesMyBooks, setIncludesMyBooks] = useState<boolean>(false);
   const { show } = useNavigation();
   const { mutate: createReservation } = useCreate<IReservation>();
   
@@ -61,6 +62,10 @@ export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
     setCurrSchoolYear(value);
   }
 
+  function toggleInclMyBooks(value: any) {
+    setIncludesMyBooks(!includesMyBooks);
+  }
+
   return (
     <>
       <Card>
@@ -78,9 +83,16 @@ export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
               />
             </Space>
           </Col>
+          {currUser &&
+          <Col flex={1}>
+            <Space align="baseline" ><Text>Include my books</Text>
+              <Checkbox onChange={toggleInclMyBooks} />
+            </Space>
+          </Col>
+          }
         </Row>
       </Card>
-      {RenderCourses({normalizedCourses, currUser, show, createReservation})}
+      {RenderCourses({normalizedCourses, currUser, show, createReservation, includesMyBooks})}
     </>
   );
 };
