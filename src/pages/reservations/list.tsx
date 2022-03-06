@@ -116,7 +116,6 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
             dataIndex="comment"
             key="comment"
             title="Comment"
-            //render={(value) => <TextField value={value} />}
             render={(value, record: IReservation) => {
               if (isEditing(record.id)) {
                 return (
@@ -133,17 +132,6 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
             defaultSortOrder={getDefaultSortOrder("comment", sorter)}
             sorter
           />
-          {/*         <Table.Column<IReservation>
-          title="Actions"
-          dataIndex="actions"
-          render={(_, record) => (
-            <Space>
-              <ShowButton hideText size="small" recordItemId={record.id} />
-              <EditButton hideText size="small" recordItemId={record.id} />
-              <DeleteButton hideText size="small" recordItemId={record.id} />
-            </Space>
-          )}
-        /> */}
           <Table.Column<IReservation>
             title="Actions"
             dataIndex="actions"
@@ -166,11 +154,18 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
                 );
               }
               return (
-                <EditButton
-                  {...editButtonProps(record.id)}
-                  hideText
-                  size="small"
-                />
+                <Space>
+                  <EditButton
+                    {...editButtonProps(record.id)}
+                    hideText
+                    size="small"
+                  />
+                  <DeleteButton
+                    recordItemId={record.id}
+                    hideText
+                    size="small"
+                  />
+                </Space>
               );
             }}
           />
