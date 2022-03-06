@@ -96,7 +96,7 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
           <Table.Column
             key="[user][id]"
             dataIndex={["book", "data", "attributes", "price"]}
-            title="Owner"
+            title="Price (€)"
             sorter
           />
           {user?.role === "admin" && (
