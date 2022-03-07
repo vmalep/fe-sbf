@@ -78,33 +78,17 @@ export const RenderBooks = (props: any) => {
           />
         </>
       )}
-
       {currRole && (
         <Table.Column<IBook>
           title="Actions"
           dataIndex="actions"
           render={(_, record) => (
-/*             <Space>
-              <Button
-                icon={<FileAddOutlined />}
-                onClick={() => {
-                  createReservation({
-                    resource: "reservations",
-                    values: {
-                      book: record?.id,
-                      users_permissions_user: currUser.id,
-                      status: "interested"
-                    }
-                  })
-                }}
-              /> */
               <Button
                 icon={<EyeOutlined />}
                 onClick={(): void =>
                   show("books", `${record?.id}`)
                 }
               />
-/*             </Space> */
           )}
         />
       )}
