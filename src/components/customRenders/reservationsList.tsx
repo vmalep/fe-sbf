@@ -2,6 +2,8 @@ import {
   Table,
   Space,
   Button,
+  TextField,
+  Select,
 } from "@pankod/refine-antd";
 
 import routerProvider from "@pankod/refine-react-router";
@@ -18,6 +20,10 @@ export const RenderReservations = (props: any) => {
   const dataSource = props;
   console.log('dataSource: ', dataSource);
   const Link = routerProvider.Link;
+
+  function handleChangeStatus(value: any) {
+    console.log(value);
+  }
 
   return (
     <Table
@@ -39,7 +45,26 @@ export const RenderReservations = (props: any) => {
         key="status"
         dataIndex="status"
         title="Status"
-        sorter
+        render={(value: any, record: any) => {
+          if (
+            (value === "proposed") ||
+            (value === "confirmed") ||
+            (value === "rejected")
+          ) {
+            return (
+              <Select
+                defaultValue={value}
+                options={[
+                  { label: "Proposed", value: "proposed" },
+                  { label: "Confirmed", value: "confirmed" },
+                  { label: "rejected", value: "rejected" },
+                ]}
+                onChange={handleChangeStatus}
+              />
+            )
+          }
+          return <TextField value={value} />;
+        }}
       />
       <Table.Column<IReservation>
         title="Actions"

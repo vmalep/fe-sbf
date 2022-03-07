@@ -36,6 +36,8 @@ export const ReservationShow: React.FC<IResourceComponentsProps> = () => {
       <Text>{user?.username}</Text>
       <Title level={5}>Comment</Title>
       <Text>{record?.comment}</Text>
+      <Title level={5}>Status</Title>
+      <Text>{record?.status}</Text>
     </Show>
   );
 };

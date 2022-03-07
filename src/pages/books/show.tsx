@@ -24,8 +24,9 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
   const record = data?.data;
   const library = record?.library.data?.attributes;
   const owner = record?.users_permissions_user.data?.attributes;
+  const ownerId = record?.users_permissions_user.data?.id;
   const reservations = NormalizeData(record?.reservations);
-  const { data: user } = useGetIdentity();
+  const { data: currUser } = useGetIdentity();
   const { mutate } = useCreate<IReservation>();
 
   const renderBook = () => (
@@ -40,7 +41,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
                   resource: "reservations",
                   values: {
                     book: record?.id,
-                    users_permissions_user: user.id,
+                    users_permissions_user: currUser.id,
                     status: "interested"
                   }
                 })
@@ -66,7 +67,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
   return (
     <>
       {renderBook()}
-      {RenderReservations(reservations)}
+      { (ownerId === currUser.id) && RenderReservations(reservations)}
     </>
   )
 };
