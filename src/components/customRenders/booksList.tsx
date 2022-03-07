@@ -3,6 +3,7 @@ import {
   TextField,
   Space,
   Button,
+  Select,
 } from "@pankod/refine-antd";
 
 import {
@@ -47,20 +48,36 @@ export const RenderBooks = (props: any) => {
             dataIndex="reservations"
             key="reservStatus"
             title="Reservation status"
-            render={(value) => {
+            render={(value: any, record: any) => {
+              console.log('value: ', value);
+              if (value.length === 0) {
+                return (
+                  <Select
+                    defaultValue={"Select"}
+                    style={{ width: 120 }}
+                    options={[
+                      {label: "Interested", value: "interested"},
+                    ]}
+                    onChange={() => {
+                      console.log("interested");
+                      createReservation({
+                        resource: "reservations",
+                        values: {
+                          book: record?.id,
+                          users_permissions_user: currUser.id,
+                          status: "interested"
+                        }
+                      })
+                    }}
+                  />
+                )
+              }
               const myReservation = value.filter((reservation: any) => reservation?.users_permissions_user.id === currUser.id)[0];
               return Object.prototype.toString.call(myReservation) === '[object Object]' ? myReservation.status : null;
             }}
           />
         </>
       )}
-      {/*       <Table.Column
-        dataIndex="reservations"
-        key="reservationNb"
-        title="# reservation"
-        render={(value) => { // Todo: display each status nb with color tag (https://ant.design/components/tag/)
-          return value.length}}
-      /> */}
 
       {currRole && (
         <Table.Column<IBook>
