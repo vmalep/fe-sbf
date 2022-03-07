@@ -11,14 +11,13 @@ export const RenderLibraries = (props: any) => {
       dataSource={dataSource}
       expandable={{
         expandedRowRender: record => {
-          const books = record.books.filter((book: any) => (book.is_available === true) && (includesMyBooks || (book.users_permissions_user?.id !== currUser?.id)));
-          //console.log('filtered books: ', books);
+          const books = record.books.filter((book: any) => (book.is_available === true) && (!currUser?.id || (includesMyBooks || (book.users_permissions_user?.id !== currUser?.id))));
           return (
             <>
               {RenderBooks({ books, currUser, show, createReservation })}
             </>
           )},
-        rowExpandable: record => record.books.filter((book: any) => (book.is_available === true) && (includesMyBooks || (book.users_permissions_user?.id !== currUser?.id))).length > 0
+        rowExpandable: record => record.books.filter((book: any) => (book.is_available === true) && (!currUser?.id || (includesMyBooks || (book.users_permissions_user?.id !== currUser?.id)))).length > 0
       }}
       rowKey="id"
       scroll={{ x: 400 }}
