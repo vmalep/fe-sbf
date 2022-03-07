@@ -49,8 +49,9 @@ export const RenderBooks = (props: any) => {
             key="reservStatus"
             title="Reservation status"
             render={(value: any, record: any) => {
-              console.log('value: ', value);
-              if (value.length === 0) {
+              const myReservation = value.filter((reservation: any) => reservation?.users_permissions_user.id === currUser.id)[0];
+              console.log('myReservation: ', myReservation);
+              if (!myReservation) {
                 return (
                   <Select
                     defaultValue={"Select"}
@@ -72,7 +73,6 @@ export const RenderBooks = (props: any) => {
                   />
                 )
               }
-              const myReservation = value.filter((reservation: any) => reservation?.users_permissions_user.id === currUser.id)[0];
               return Object.prototype.toString.call(myReservation) === '[object Object]' ? myReservation.status : null;
             }}
           />
@@ -84,7 +84,7 @@ export const RenderBooks = (props: any) => {
           title="Actions"
           dataIndex="actions"
           render={(_, record) => (
-            <Space>
+/*             <Space>
               <Button
                 icon={<FileAddOutlined />}
                 onClick={() => {
@@ -97,14 +97,14 @@ export const RenderBooks = (props: any) => {
                     }
                   })
                 }}
-              />
+              /> */
               <Button
                 icon={<EyeOutlined />}
                 onClick={(): void =>
                   show("books", `${record?.id}`)
                 }
               />
-            </Space>
+/*             </Space> */
           )}
         />
       )}
