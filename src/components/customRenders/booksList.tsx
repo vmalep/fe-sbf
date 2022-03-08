@@ -8,10 +8,11 @@ import {
 
 import {
   EyeOutlined,
-  FileAddOutlined,
+  CheckSquareOutlined,
+  CheckSquareFilled,
 } from "@ant-design/icons";
 
-import { IBook } from "interfaces";
+//import { IBook } from "interfaces";
 
 export const RenderBooks = (props: any) => {
   const { books: dataSource, currUser, show, createReservation } = props;
@@ -37,7 +38,7 @@ export const RenderBooks = (props: any) => {
         title="Price"
         render={(value) => <TextField value={value} />}
       />
-      {(currRole) && ( // Todo: add a test on existing a username or nor...
+{/*       {(currRole) && ( // Todo: add a test on existing a username or nor...
         <>
           <Table.Column
             key="[users_permissions_user][id]"
@@ -57,7 +58,7 @@ export const RenderBooks = (props: any) => {
                     defaultValue={"Select"}
                     style={{ width: 120 }}
                     options={[
-                      {label: "Interested", value: "interested"},
+                      { label: "Interested", value: "interested" },
                     ]}
                     onChange={() => {
                       console.log("interested");
@@ -77,19 +78,41 @@ export const RenderBooks = (props: any) => {
             }}
           />
         </>
-      )}
+      )} */}
       {currRole && (
-        <Table.Column<IBook>
+        <Table.Column
           title="Actions"
           dataIndex="actions"
-          render={(_, record) => (
-              <Button
-                icon={<EyeOutlined />}
-                onClick={(): void =>
-                  show("books", `${record?.id}`)
-                }
-              />
-          )}
+          render={(_, record: any) => {
+            console.log('record: ', record);
+            const myReservation = record.reservations.filter((reservation: any) => reservation?.users_permissions_user.id === currUser.id)[0];
+            return (
+              <Space>
+                {(!myReservation) && (
+                  <Button
+                    icon={<CheckSquareOutlined />}
+                    onClick={() => {
+                      createReservation({
+                        resource: "reservations",
+                        values: {
+                          book: record?.id,
+                          users_permissions_user: currUser.id,
+                          status: "interested"
+                        }
+                      })
+                    }}
+                  />
+                )}
+                {(myReservation) && <CheckSquareFilled style={{ fontSize: '32px' }} />}
+                <Button
+                  icon={<EyeOutlined />}
+                  onClick={(): void =>
+                    show("books", `${record?.id}`)
+                  }
+                />
+              </Space>
+            )
+          }}
         />
       )}
     </Table>
