@@ -133,6 +133,19 @@ export interface IReservation {
   status: "interested" | "proposed" | "confirmed" | "rejected";
   comment: string;
 }
+export interface IReservationNormalized {
+  id: string;
+  book: {
+      id: string;
+      attributes: IBook;
+  };
+  users_permissions_user: {
+      id: string;
+      attributes: IUser;
+  };
+  status: "interested" | "proposed" | "confirmed" | "rejected";
+  comment: string;
+}
 export interface IBookFilterVariables {
   my_books_only: boolean;
   is_available: boolean;

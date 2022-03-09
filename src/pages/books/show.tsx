@@ -5,8 +5,7 @@ import { Show, Typography, Button } from "@pankod/refine-antd";
 import { RenderReservations } from "components/customRenders/reservationsList";
 
 import { IBook, IReservation } from "interfaces";
-import NormalizeData from "helpers/normalizeData";
-import { useEffect, useState } from "react";
+//import NormalizeData from "helpers/normalizeData";
 
 const { Title, Text } = Typography;
 
@@ -16,8 +15,8 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
       populate: [
         "users_permissions_user",
         "library",
-        "reservations",
-        "reservations.users_permissions_user",
+        //"reservations",
+        //"reservations.users_permissions_user",
       ],
     },
   });
@@ -26,19 +25,10 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
   const { data, isLoading } = queryResult;
   const record = data?.data;
   const library = record?.library.data?.attributes;
-  //const owner = record?.users_permissions_user.data?.attributes;
-  //const ownerId = record?.users_permissions_user.data?.id;
-  //const [reservations, setReservations] = useState(NormalizeData(record?.reservations));
-  const reservations = NormalizeData(record?.reservations);
-  const filteredReservations = reservations?.filter((reservation: any) => (reservation.users_permissions_user.id === currUser.id))
-  console.log('reservations 1: ', reservations);
+  //const reservations = NormalizeData(record?.reservations);
+  //const filteredReservations = reservations?.filter((reservation: any) => (reservation.users_permissions_user.id === currUser.id))
+  //console.log('reservations 1: ', reservations);
   
-/*   useEffect(() => {
-    record?.users_permissions_user.data?.id !== currUser?.id &&
-      setReservations(reservations?.filter((reservation: any) => (reservation.users_permissions_user.id === currUser.id)));
-    console.log('reservations 2: ', reservations);
-  }, [record, currUser.id, reservations]); */
-
   const renderBook = () => (
     <Show
       isLoading={isLoading}
@@ -77,7 +67,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
   return (
     <>
       {renderBook()}
-      {RenderReservations(record?.users_permissions_user.data?.id === currUser?.id ? reservations : filteredReservations)}
+      {RenderReservations(record?.id!)}
     </>
   )
 };

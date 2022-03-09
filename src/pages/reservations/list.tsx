@@ -27,7 +27,7 @@ import {
 import { IReservation } from "interfaces";
 
 export const ReservationList: React.FC<IResourceComponentsProps> = () => {
-  const { data: user } = useGetIdentity();
+  const { data: currUser } = useGetIdentity();
   const {
     tableProps,
     formProps,
@@ -56,7 +56,7 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
       {
         field: "users_permissions_user.id",
         operator: "eq",
-        value: user?.role !== "admin" ? user?.id : undefined,
+        value: currUser?.role !== "admin" ? currUser?.id : undefined,
       },
     ],
   });
@@ -103,7 +103,7 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
             title="Price (€)"
             sorter
           />
-          {user?.role === "admin" && (
+          {currUser?.role === "admin" && (
             <Table.Column
               key="[user][id]"
               dataIndex={["users_permissions_user", "data", "attributes", "username"]}
@@ -123,7 +123,7 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
                     style={{ margin: 0 }}
                   >
                     <Select
-                      defaultValue="interested"
+                      defaultValue={value}
                       options={[
                         { label: "Interested", value: "interested" },
                         { label: "Proposed", value: "proposed" },
