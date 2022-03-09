@@ -3,7 +3,7 @@ import {
   TextField,
   Space,
   Button,
-  Select,
+  //Select,
 } from "@pankod/refine-antd";
 
 import {
@@ -17,8 +17,8 @@ import {
 export const RenderBooks = (props: any) => {
   const { books: dataSource, currUser, show, createReservation } = props;
   //console.log('bookList dataSource: ', dataSource);
+  console.log('currUser: ', currUser);
   const currRole = currUser?.role;
-  //console.log('currRole: ', currRole);
 
   return (
     <Table
@@ -38,14 +38,14 @@ export const RenderBooks = (props: any) => {
         title="Price"
         render={(value) => <TextField value={value} />}
       />
-{/*       {(currRole) && ( // Todo: add a test on existing a username or nor...
+      {(currRole) && ( // Todo: add a test on existing a username or nor...
         <>
           <Table.Column
             key="[users_permissions_user][id]"
             dataIndex={["users_permissions_user", "username"]}
             title="Owner"
           />
-          <Table.Column
+          {/* <Table.Column
             dataIndex="reservations"
             key="reservStatus"
             title="Reservation status"
@@ -76,9 +76,9 @@ export const RenderBooks = (props: any) => {
               }
               return Object.prototype.toString.call(myReservation) === '[object Object]' ? myReservation.status : null;
             }}
-          />
+          /> */}
         </>
-      )} */}
+      )}
       {currRole && (
         <Table.Column
           title="Actions"

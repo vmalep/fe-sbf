@@ -1,6 +1,7 @@
 import {
   IResourceComponentsProps,
   useGetIdentity,
+  useNavigation,
 } from "@pankod/refine-core";
 
 import {
@@ -9,7 +10,6 @@ import {
   Form,
   Select,
   TextField,
-  useTable,
   getDefaultSortOrder,
   Space,
   EditButton,
@@ -17,9 +17,12 @@ import {
   Button,
   SaveButton,
   DeleteButton,
-  ShowButton,
   useEditableTable,
 } from "@pankod/refine-antd";
+
+import {
+  EyeOutlined,
+} from "@ant-design/icons";
 
 import { IReservation } from "interfaces";
 
@@ -57,7 +60,8 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
       },
     ],
   });
-  console.log("reserv table props: ", tableProps);
+  //console.log("reserv table props: ", tableProps);
+  const { show } = useNavigation();
 
   return (
     <List>
@@ -183,6 +187,12 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
                     recordItemId={record.id}
                     hideText
                     size="small"
+                  />
+                  <Button
+                    icon={<EyeOutlined />}
+                    onClick={(): void =>
+                      show("books", `${record?.book.data.id}`)
+                    }
                   />
                 </Space>
               );
