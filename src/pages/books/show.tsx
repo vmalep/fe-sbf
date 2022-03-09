@@ -6,6 +6,7 @@ import { RenderReservations } from "components/customRenders/reservationsList";
 
 import { IBook, IReservation } from "interfaces";
 import NormalizeData from "helpers/normalizeData";
+import { useEffect, useState } from "react";
 
 const { Title, Text } = Typography;
 
@@ -20,14 +21,23 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
       ],
     },
   });
+  const { mutate } = useCreate<IReservation>();
+  const { data: currUser } = useGetIdentity();
   const { data, isLoading } = queryResult;
   const record = data?.data;
   const library = record?.library.data?.attributes;
-  const owner = record?.users_permissions_user.data?.attributes;
-  const ownerId = record?.users_permissions_user.data?.id;
+  //const owner = record?.users_permissions_user.data?.attributes;
+  //const ownerId = record?.users_permissions_user.data?.id;
+  //const [reservations, setReservations] = useState(NormalizeData(record?.reservations));
   const reservations = NormalizeData(record?.reservations);
-  const { data: currUser } = useGetIdentity();
-  const { mutate } = useCreate<IReservation>();
+  const filteredReservations = reservations?.filter((reservation: any) => (reservation.users_permissions_user.id === currUser.id))
+  console.log('reservations 1: ', reservations);
+  
+/*   useEffect(() => {
+    record?.users_permissions_user.data?.id !== currUser?.id &&
+      setReservations(reservations?.filter((reservation: any) => (reservation.users_permissions_user.id === currUser.id)));
+    console.log('reservations 2: ', reservations);
+  }, [record, currUser.id, reservations]); */
 
   const renderBook = () => (
     <Show
@@ -58,7 +68,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
       <Title level={5}>Title</Title>
       <Text>{library?.title}</Text>
       <Title level={5}>Owner</Title>
-      <Text>{owner?.username}</Text>
+      <Text>{record?.users_permissions_user.data?.attributes.username}</Text>
       <Title level={5}>Price</Title>
       <Text>{record?.price}</Text>
     </Show>
@@ -67,7 +77,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
   return (
     <>
       {renderBook()}
-      { (ownerId === currUser.id) && RenderReservations(reservations)}
+      {RenderReservations(record?.users_permissions_user.data?.id === currUser?.id ? reservations : filteredReservations)}
     </>
   )
 };
