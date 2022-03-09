@@ -1,155 +1,78 @@
 import {
-  useGetIdentity,
-} from "@pankod/refine-core";
-
-import {
-  List,
   Table,
-  Form,
-  Select,
-  TextField,
   Space,
-  EditButton,
-  Input,
   Button,
-  SaveButton,
-  DeleteButton,
-  useEditableTable,
+  TextField,
+  Select,
 } from "@pankod/refine-antd";
 
+import routerProvider from "@pankod/refine-react-router";
+
+import { EditOutlined } from "@ant-design/icons";
 import { IReservation } from "interfaces";
 
-export const RenderReservations = (props: string) => {
-  //console.log('props: ', props);
-  const bookId = props;
-  const { data: currUser } = useGetIdentity();
-  const {
-    tableProps,
-    formProps,
-    isEditing,
-    setId: setEditId,
-    saveButtonProps,
-    cancelButtonProps,
-    editButtonProps,
-  } = useEditableTable<IReservation>({
-    resource: "reservations",
-    permanentFilter: [
-      {
-        field: "users_permissions_user.id",
-        operator: "eq",
-        value: currUser?.id,
-      },
-      {
-        field: "book.id",
-        operator: "eq",
-        value: bookId,
-      },
-    ],
-  });
+export const RenderReservations = (props: any) => {
+  //console.log('render res props: ', props);
+  const dataSource = props;
+  console.log('dataSource: ', dataSource);
+  const Link = routerProvider.Link;
+
+  function handleChangeStatus(value: any) {
+    console.log(value);
+  }
 
   return (
-    <List title="Reservations">
-      <Form {...formProps}>
-        <Table
-          {...tableProps}
-          rowKey="id"
-          onRow={(record) => ({
-            onClick: (event: any) => {
-              if (event.target.nodeName === "TD") {
-                setEditId && setEditId(record.id);
-              }
-            },
-          })}
-        >
-          <Table.Column
-            dataIndex="id"
-            key="id"
-            title="ID"
-            render={(value) => <TextField value={value} />}
-          />
-          <Table.Column
-            dataIndex="status"
-            key="status"
-            title="Status"
-            render={(value, record: IReservation) => {
-              if (isEditing(record.id)) {
-                return (
-                  <Form.Item
-                    name="status"
-                    style={{ margin: 0 }}
-                  >
-                    <Select
-                      defaultValue={value}
-                      options={[
-                        { label: "Interested", value: "interested" },
-                        { label: "Proposed", value: "proposed" },
-                      ]}
-                    />
-                  </Form.Item>
-                );
-              }
-              return <TextField value={value} />;
-            }}
-            sorter
-          />
-          <Table.Column
-            dataIndex="comment"
-            key="comment"
-            title="Comment"
-            render={(value, record: IReservation) => {
-              if (isEditing(record.id)) {
-                return (
-                  <Form.Item
-                    name="comment"
-                    style={{ margin: 0 }}
-                  >
-                    <Input />
-                  </Form.Item>
-                );
-              }
-              return <TextField value={value} />;
-            }}
-            sorter
-          />
-          <Table.Column<IReservation>
-            title="Actions"
-            dataIndex="actions"
-            render={(_, record) => {
-              if (isEditing(record.id)) {
-                return (
-                  <Space>
-                    <SaveButton
-                      {...saveButtonProps}
-                      hideText
-                      size="small"
-                    />
-                    <Button
-                      {...cancelButtonProps}
-                      size="small"
-                    >
-                      Cancel
-                    </Button>
-                  </Space>
-                );
-              }
-              return (
-                <Space>
-                  <EditButton
-                    {...editButtonProps(record.id)}
-                    hideText
-                    size="small"
-                  />
-                  <DeleteButton
-                    recordItemId={record.id}
-                    hideText
-                    size="small"
-                  />
-                </Space>
-              );
-            }}
-          />
-        </Table>
-      </Form>
-    </List>
+    <Table
+      dataSource={dataSource}
+      rowKey="id"
+      pagination={false}
+    >
+      <Table.Column
+        key="id"
+        dataIndex={["users_permissions_user", "username"]}
+        title="User"
+      />
+      <Table.Column
+        key="comment"
+        dataIndex="comment"
+        title="Comment"
+      />
+      <Table.Column
+        key="status"
+        dataIndex="status"
+        title="Status"
+        render={(value: any, record: any) => {
+          if (
+            (value === "proposed") ||
+            (value === "confirmed") ||
+            (value === "rejected")
+          ) {
+            return (
+              <Select
+                defaultValue={value}
+                options={[
+                  { label: "Proposed", value: "proposed" },
+                  { label: "Confirmed", value: "confirmed" },
+                  { label: "rejected", value: "rejected" },
+                ]}
+                onChange={handleChangeStatus}
+              />
+            )
+          }
+          return <TextField value={value} />;
+        }}
+      />
+      <Table.Column<IReservation>
+        title="Actions"
+        dataIndex="actions"
+        render={(_, record) => (
+          <Space>
+            <Link to={`/reservations/edit/${record.id}`}>
+              <Button icon={<EditOutlined/>} />
+            </Link>
+          </Space>
+        )}
+      />
+    </Table>
   );
-};
+}
