@@ -2,10 +2,10 @@ import { useShow, IResourceComponentsProps, useCreate, useGetIdentity } from "@p
 
 import { Show, Typography, Button } from "@pankod/refine-antd";
 
-import { RenderReservations } from "components/customRenders/reservationsList";
+import { RenderReservations } from "components/customRenders";
 
 import { IBook, IReservation } from "interfaces";
-//import NormalizeData from "helpers/normalizeData";
+import NormalizeData from "helpers/normalizeData";
 
 const { Title, Text } = Typography;
 
@@ -15,8 +15,8 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
       populate: [
         "users_permissions_user",
         "library",
-        //"reservations",
-        //"reservations.users_permissions_user",
+        "reservations",
+        "reservations.users_permissions_user",
       ],
     },
   });
@@ -25,9 +25,9 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
   const { data, isLoading } = queryResult;
   const record = data?.data;
   const library = record?.library.data?.attributes;
-  //const reservations = NormalizeData(record?.reservations);
+  const reservations = NormalizeData(record?.reservations);
   //const filteredReservations = reservations?.filter((reservation: any) => (reservation.users_permissions_user.id === currUser.id))
-  //console.log('reservations 1: ', reservations);
+  console.log('reservations 1: ', reservations);
   
   const renderBook = () => (
     <Show
@@ -67,7 +67,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
   return (
     <>
       {renderBook()}
-      {RenderReservations(record?.id!)}
+      {RenderReservations(reservations)}
     </>
   )
 };
