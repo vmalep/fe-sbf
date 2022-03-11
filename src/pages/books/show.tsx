@@ -24,6 +24,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
   const { data: currUser } = useGetIdentity();
   const { data, isLoading } = queryResult;
   const record = data?.data;
+  const owner = record?.users_permissions_user;
   const library = record?.library.data?.attributes;
   const reservations = NormalizeData(record?.reservations);
   //const filteredReservations = reservations?.filter((reservation: any) => (reservation.users_permissions_user.id === currUser.id))
@@ -58,7 +59,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
       <Title level={5}>Title</Title>
       <Text>{library?.title}</Text>
       <Title level={5}>Owner</Title>
-      <Text>{record?.users_permissions_user.data?.attributes.username}</Text>
+      <Text>{owner?.data?.attributes.username}</Text>
       <Title level={5}>Price</Title>
       <Text>{record?.price}</Text>
     </Show>
@@ -67,7 +68,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
   return (
     <>
       {renderBook()}
-      {RenderReservations(reservations)}
+      {(currUser.id === owner?.data.id) && RenderReservations(reservations)}
     </>
   )
 };
