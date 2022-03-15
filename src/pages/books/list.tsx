@@ -74,7 +74,7 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
         <Table
           {...tableProps} rowKey="id"
           expandable={{
-            expandedRowRender: record => {
+            expandedRowRender: (record: { reservations: any; }) => {
               //console.log('record: ', Object.entries(record?.reservations.data).length);
               const reservations = NormalizeData(record?.reservations);
               return (
@@ -82,14 +82,14 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
                   {RenderReservations({reservations, updateReservation})}
                 </>
               )},
-              rowExpandable: record => Object.entries(record?.reservations.data).length > 0
+              rowExpandable: (record: { reservations: { data: { [s: string]: unknown; } | ArrayLike<unknown>; }; }) => Object.entries(record?.reservations.data).length > 0
           }}
         >
           <Table.Column
             dataIndex="id"
             key="id"
             title="ID"
-            render={(value) => <TextField value={value} />}
+            render={(value: any) => <TextField value={value} />}
             defaultSortOrder={getDefaultSortOrder("id", sorter)}
             sorter
           />
@@ -97,20 +97,20 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
             key="[school_year][id]"
             dataIndex={["library", "data", "attributes", "course", "data", "attributes", "school_year", "data", "attributes", "title"]}
             title="School year"
-            render={(value) => <TextField value={value} />}
+            render={(value: any) => <TextField value={value} />}
           />
           <Table.Column
             key="[course][id]"
             dataIndex={["library", "data", "attributes", "course", "data", "attributes", "title"]}
             title="Course"
-            render={(value) => <TextField value={value} />}
+            render={(value: any) => <TextField value={value} />}
           />
           <Table.Column
             key="[library][id]"
             dataIndex={["library", "data", "attributes", "title"]}
             title="Title"
             sorter
-            filterDropdown={(props) => (
+            filterDropdown={(props: any) => (
               <FilterDropdown {...props}>
                 <Select
                   allowClear
@@ -126,8 +126,8 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
             key="is_available"
             dataIndex="is_available"
             title="Available"
-            render={(value) => <BooleanField value={value} />}
-            filterDropdown={(props) => (
+            render={(value: any) => <BooleanField value={value} />}
+            filterDropdown={(props: any) => (
               <FilterDropdown {...props}>
                 <Select
                   placeholder="Select availability"
@@ -157,14 +157,14 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
             key="price"
             title="Price (€)"
             align="right"
-            render={(value) => <NumberField value={value} />}
+            render={(value: any) => <NumberField value={value} />}
             defaultSortOrder={getDefaultSortOrder("title", sorter)}
             sorter
           />
           <Table.Column<IBook>
             title="Actions"
             dataIndex="actions"
-            render={(_, record) => (
+            render={(_: any, record: { id: any; }) => (
               <Space>
                 <ShowButton hideText size="small" recordItemId={record.id} />
                 <EditButton hideText size="small" recordItemId={record.id} />
