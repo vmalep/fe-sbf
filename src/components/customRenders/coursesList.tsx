@@ -3,7 +3,7 @@ import { Card, Table, TextField } from "@pankod/refine-antd";
 import { RenderLibraries } from "components/customRenders";
 
 export const RenderCourses = (props: any) => {
-
+  //console.log(props);
   const {normalizedCourses: dataSource, currUser, show, createReservation, includesMyBooks } = props;
 
   return (

@@ -2,6 +2,7 @@ import {
   IResourceComponentsProps,
   HttpError,
   useGetIdentity,
+  useUpdate,
 } from "@pankod/refine-core";
 
 import {
@@ -26,6 +27,7 @@ import {
   IBook,
   ILibrary,
   IBookFilterVariables,
+  IReservation,
 } from "interfaces";
 
 import { RenderReservations } from "components/customRenders";
@@ -33,6 +35,7 @@ import NormalizeData from "helpers/normalizeData";
 
 export const BookList: React.FC<IResourceComponentsProps> = () => {
   const { data: user } = useGetIdentity();
+  const { mutate: updateReservation } = useUpdate<IReservation>();
   const { tableProps, sorter } = useTable<IBook, HttpError, IBookFilterVariables>({
     initialSorter: [
       {
@@ -76,7 +79,7 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
               const reservations = NormalizeData(record?.reservations);
               return (
                 <>
-                  {RenderReservations(reservations)}
+                  {RenderReservations({reservations, updateReservation})}
                 </>
               )},
               rowExpandable: record => Object.entries(record?.reservations.data).length > 0

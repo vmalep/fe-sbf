@@ -1,29 +1,25 @@
 import {
   Table,
-  Space,
-  Button,
+  //Space,
+  //Button,
   TextField,
   Select,
 } from "@pankod/refine-antd";
 
-import routerProvider from "@pankod/refine-react-router";
+//import routerProvider from "@pankod/refine-react-router";
 
-import { EditOutlined } from "@ant-design/icons";
-import { IReservation } from "interfaces";
+//import { EditOutlined } from "@ant-design/icons";
+//import { IReservation } from "interfaces";
 
 export const RenderReservations = (props: any) => {
   //console.log('render res props: ', props);
-  const dataSource = props;
-  console.log('dataSource: ', dataSource);
-  const Link = routerProvider.Link;
-
-  function handleChangeStatus(value: any) {
-    console.log(value);
-  }
+  const { reservations, updateReservation } = props;
+  //console.log('dataSource: ', reservations);
+  //const Link = routerProvider.Link;
 
   return (
     <Table
-      dataSource={dataSource}
+      dataSource={reservations}
       rowKey="id"
       pagination={false}
     >
@@ -53,26 +49,24 @@ export const RenderReservations = (props: any) => {
                 options={[
                   { label: "Proposed", value: "proposed" },
                   { label: "Confirmed", value: "confirmed" },
-                  { label: "rejected", value: "rejected" },
+                  { label: "Rejected", value: "rejected" },
                 ]}
-                onChange={handleChangeStatus}
+                onChange={() => {
+                  console.log('handleChange:');
+                  console.log('value: ', value);
+                  console.log('record: ', record);
+                  updateReservation({
+                    resource: "reservations",
+                    id: record.id,
+                    values: { status: value },
+                  })
+                }}
               />
             )
           }
           return <TextField value={value} />;
         }}
       />
-{/*       <Table.Column<IReservation>
-        title="Actions"
-        dataIndex="actions"
-        render={(_, record) => (
-          <Space>
-            <Link to={`/reservations/edit/${record.id}`}>
-              <Button icon={<EditOutlined/>} />
-            </Link>
-          </Space>
-        )}
-      /> */}
     </Table>
   );
 }

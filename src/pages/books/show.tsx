@@ -1,4 +1,9 @@
-import { useShow, IResourceComponentsProps, useCreate, useGetIdentity } from "@pankod/refine-core";
+import {
+  useShow,
+  IResourceComponentsProps,
+  useUpdate,
+  useGetIdentity
+} from "@pankod/refine-core";
 
 import { Show, Typography, Button, EditButton, DeleteButton } from "@pankod/refine-antd";
 
@@ -20,7 +25,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
       ],
     },
   });
-  const { mutate } = useCreate<IReservation>();
+  const { mutate: updateReservation } = useUpdate<IReservation>();
   const { data: currUser } = useGetIdentity();
   const { data, isLoading } = queryResult;
   const record = data?.data;
@@ -28,7 +33,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
   const library = record?.library.data?.attributes;
   const reservations = NormalizeData(record?.reservations);
   //const filteredReservations = reservations?.filter((reservation: any) => (reservation.users_permissions_user.id === currUser.id))
-  console.log('reservations 1: ', reservations);
+  //console.log('reservations 1: ', reservations);
   
   const renderBook = () => (
     <Show
@@ -75,7 +80,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
   return (
     <>
       {renderBook()}
-      {(currUser.id === owner?.data.id) && RenderReservations(reservations)}
+      {(currUser.id === owner?.data.id) && RenderReservations({reservations, updateReservation})}
     </>
   )
 };
