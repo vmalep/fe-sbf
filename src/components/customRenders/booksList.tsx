@@ -3,21 +3,22 @@ import {
   TextField,
   Space,
   Button,
-  Select,
+  //Select,
 } from "@pankod/refine-antd";
 
 import {
   EyeOutlined,
-  FileAddOutlined,
+  CheckSquareOutlined,
+  CheckSquareFilled,
 } from "@ant-design/icons";
 
-import { IBook } from "interfaces";
+//import { IBook } from "interfaces";
 
 export const RenderBooks = (props: any) => {
   const { books: dataSource, currUser, show, createReservation } = props;
   //console.log('bookList dataSource: ', dataSource);
+  console.log('currUser: ', currUser);
   const currRole = currUser?.role;
-  //console.log('currRole: ', currRole);
 
   return (
     <Table
@@ -44,7 +45,7 @@ export const RenderBooks = (props: any) => {
             dataIndex={["users_permissions_user", "username"]}
             title="Owner"
           />
-          <Table.Column
+          {/* <Table.Column
             dataIndex="reservations"
             key="reservStatus"
             title="Reservation status"
@@ -57,7 +58,7 @@ export const RenderBooks = (props: any) => {
                     defaultValue={"Select"}
                     style={{ width: 120 }}
                     options={[
-                      {label: "Interested", value: "interested"},
+                      { label: "Interested", value: "interested" },
                     ]}
                     onChange={() => {
                       console.log("interested");
@@ -75,21 +76,43 @@ export const RenderBooks = (props: any) => {
               }
               return Object.prototype.toString.call(myReservation) === '[object Object]' ? myReservation.status : null;
             }}
-          />
+          /> */}
         </>
       )}
       {currRole && (
-        <Table.Column<IBook>
+        <Table.Column
           title="Actions"
           dataIndex="actions"
-          render={(_, record) => (
-              <Button
-                icon={<EyeOutlined />}
-                onClick={(): void =>
-                  show("books", `${record?.id}`)
-                }
-              />
-          )}
+          render={(_, record: any) => {
+            console.log('record: ', record);
+            const myReservation = record.reservations.filter((reservation: any) => reservation?.users_permissions_user.id === currUser.id)[0];
+            return (
+              <Space>
+                {(!myReservation) && (
+                  <Button
+                    icon={<CheckSquareOutlined />}
+                    onClick={() => {
+                      createReservation({
+                        resource: "reservations",
+                        values: {
+                          book: record?.id,
+                          users_permissions_user: currUser.id,
+                          status: "interested"
+                        }
+                      })
+                    }}
+                  />
+                )}
+                {(myReservation) && <CheckSquareFilled style={{ fontSize: '32px' }} />}
+                <Button
+                  icon={<EyeOutlined />}
+                  onClick={(): void =>
+                    show("books", `${record?.id}`)
+                  }
+                />
+              </Space>
+            )
+          }}
         />
       )}
     </Table>

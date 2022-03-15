@@ -1,8 +1,8 @@
 import { useShow, IResourceComponentsProps, useCreate, useGetIdentity } from "@pankod/refine-core";
 
-import { Show, Typography, Button } from "@pankod/refine-antd";
+import { Show, Typography, Button, EditButton, DeleteButton } from "@pankod/refine-antd";
 
-import { RenderReservations } from "components/customRenders/reservationsList";
+import { RenderReservations } from "components/customRenders";
 
 import { IBook, IReservation } from "interfaces";
 import NormalizeData from "helpers/normalizeData";
@@ -20,22 +20,30 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
       ],
     },
   });
+  const { mutate } = useCreate<IReservation>();
+  const { data: currUser } = useGetIdentity();
   const { data, isLoading } = queryResult;
   const record = data?.data;
+  const owner = record?.users_permissions_user;
   const library = record?.library.data?.attributes;
-  const owner = record?.users_permissions_user.data?.attributes;
-  const ownerId = record?.users_permissions_user.data?.id;
   const reservations = NormalizeData(record?.reservations);
-  const { data: currUser } = useGetIdentity();
-  const { mutate } = useCreate<IReservation>();
-
+  //const filteredReservations = reservations?.filter((reservation: any) => (reservation.users_permissions_user.id === currUser.id))
+  console.log('reservations 1: ', reservations);
+  
   const renderBook = () => (
     <Show
       isLoading={isLoading}
       pageHeaderProps={{
         extra: (
           <>
-            <Button
+            {(currUser.id === owner?.data.id) && (
+              <>
+                <EditButton size="large" recordItemId={record?.id} />
+                <DeleteButton size="large" recordItemId={record?.id} />
+              </>
+              
+            )}
+{/*             <Button
               onClick={() => {
                 mutate({
                   resource: "reservations",
@@ -48,7 +56,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
               }}
             >
               Sélectionner
-            </Button>
+            </Button> */}
           </>
         ),
       }}
@@ -58,7 +66,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
       <Title level={5}>Title</Title>
       <Text>{library?.title}</Text>
       <Title level={5}>Owner</Title>
-      <Text>{owner?.username}</Text>
+      <Text>{owner?.data?.attributes.username}</Text>
       <Title level={5}>Price</Title>
       <Text>{record?.price}</Text>
     </Show>
@@ -67,7 +75,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
   return (
     <>
       {renderBook()}
-      { (ownerId === currUser.id) && RenderReservations(reservations)}
+      {(currUser.id === owner?.data.id) && RenderReservations(reservations)}
     </>
   )
 };

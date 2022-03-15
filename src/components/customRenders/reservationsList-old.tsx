@@ -1,7 +1,5 @@
 import {
-  IResourceComponentsProps,
   useGetIdentity,
-  useNavigation,
 } from "@pankod/refine-core";
 
 import {
@@ -10,7 +8,6 @@ import {
   Form,
   Select,
   TextField,
-  getDefaultSortOrder,
   Space,
   EditButton,
   Input,
@@ -20,13 +17,10 @@ import {
   useEditableTable,
 } from "@pankod/refine-antd";
 
-import {
-  EyeOutlined,
-} from "@ant-design/icons";
-
 import { IReservation } from "interfaces";
 
-export const ReservationList: React.FC<IResourceComponentsProps> = () => {
+export const RenderReservations = (props: string) => {
+  const bookId = props;
   const { data: currUser } = useGetIdentity();
   const {
     tableProps,
@@ -36,35 +30,24 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
     saveButtonProps,
     cancelButtonProps,
     editButtonProps,
-    sorter
   } = useEditableTable<IReservation>({
-    initialSorter: [
-      {
-        field: "id",
-        order: "desc",
-      },
-    ],
-    metaData: {
-      populate: [
-        "users_permissions_user",
-        "book",
-        "book.library",
-        "book.users_permissions_user",
-      ],
-    },
+    resource: "reservations",
     permanentFilter: [
       {
         field: "users_permissions_user.id",
         operator: "eq",
-        value: currUser?.role !== "admin" ? currUser?.id : undefined,
+        value: currUser?.id,
+      },
+      {
+        field: "book.id",
+        operator: "eq",
+        value: bookId,
       },
     ],
   });
-  //console.log("reserv table props: ", tableProps);
-  const { show } = useNavigation();
 
   return (
-    <List>
+    <List title="Reservation">
       <Form {...formProps}>
         <Table
           {...tableProps}
@@ -82,35 +65,7 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
             key="id"
             title="ID"
             render={(value) => <TextField value={value} />}
-            defaultSortOrder={getDefaultSortOrder("id", sorter)}
-            sorter
           />
-          <Table.Column
-            key="[book][id]"
-            dataIndex={["book", "data", "attributes", "library", "data", "attributes", "title"]}
-            title="Book"
-            sorter
-          />
-          <Table.Column
-            key="[user][id]"
-            dataIndex={["book", "data", "attributes", "users_permissions_user", "data", "attributes", "username"]}
-            title="Owner"
-            sorter
-          />
-          <Table.Column
-            key="[user][id]"
-            dataIndex={["book", "data", "attributes", "price"]}
-            title="Price (€)"
-            sorter
-          />
-          {currUser?.role === "admin" && (
-            <Table.Column
-              key="[user][id]"
-              dataIndex={["users_permissions_user", "data", "attributes", "username"]}
-              title="User"
-              sorter
-            />
-          )}
           <Table.Column
             dataIndex="status"
             key="status"
@@ -187,12 +142,6 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
                     recordItemId={record.id}
                     hideText
                     size="small"
-                  />
-                  <Button
-                    icon={<EyeOutlined />}
-                    onClick={(): void =>
-                      show("books", `${record?.book.data.id}`)
-                    }
                   />
                 </Space>
               );
