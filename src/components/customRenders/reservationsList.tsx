@@ -62,7 +62,7 @@ export const RenderReservations = (props: any) => {
           return <TextField value={value} />;
         }}
       />
-      <Table.Column<IReservation>
+{/*       <Table.Column<IReservation>
         title="Actions"
         dataIndex="actions"
         render={(_, record) => (
@@ -72,7 +72,7 @@ export const RenderReservations = (props: any) => {
             </Link>
           </Space>
         )}
-      />
+      /> */}
     </Table>
   );
 }
