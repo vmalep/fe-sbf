@@ -21,6 +21,7 @@ import {
   FilterDropdown,
   BooleanField,
   Card,
+  useEditableTable,
 } from "@pankod/refine-antd";
 
 import {
@@ -32,9 +33,10 @@ import {
 
 import { RenderReservations } from "components/customRenders";
 import NormalizeData from "helpers/normalizeData";
+import { useState } from "react";
 
 export const BookList: React.FC<IResourceComponentsProps> = () => {
-  const { data: user } = useGetIdentity();
+  const { data: currUser } = useGetIdentity();
   const { mutate: updateReservation } = useUpdate<IReservation>();
   const { tableProps, sorter } = useTable<IBook, HttpError, IBookFilterVariables>({
     initialSorter: [
@@ -53,16 +55,40 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
         "reservations.users_permissions_user",
       ],
     },
-    permanentFilter: [
-      {
-        field: "users_permissions_user.id",
-        operator: "eq",
-        value: user?.role !== "admin" ? user?.id : undefined,
-      }
-    ],
   });
 
-  //console.log("tableProps: ", tableProps);
+  const {
+    tableProps: reservationsTableProps,
+    formProps,
+    isEditing,
+    setId: setEditId,
+    saveButtonProps,
+    cancelButtonProps,
+    editButtonProps,
+  } = useEditableTable<IReservation>({
+    resource: "reservations",
+    initialSorter: [
+      {
+        field: "id",
+        order: "desc",
+      },
+    ],
+    metaData: {
+      populate: [
+        "users_permissions_user",
+        "book",
+        "book.library",
+        "book.users_permissions_user",
+      ],
+    },
+    permanentFilter: [
+      {
+        field: "book.users_permissions_user.id",
+        operator: "eq",
+        value: currUser?.role !== "admin" ? currUser?.id : undefined,
+      },
+    ],
+  });
 
   const { selectProps: librarySelectProps } = useSelect<ILibrary>({
     resource: "libraries",
@@ -76,10 +102,30 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
           expandable={{
             expandedRowRender: (record: { reservations: any; }) => {
               //console.log('record: ', Object.entries(record?.reservations.data).length);
-              const reservations = NormalizeData(record?.reservations);
+              const reservationsIds = NormalizeData(record?.reservations).map((reservation: any) => reservation.id);
+              console.log('reservationsIds: ', reservationsIds);
+              console.log('reservationsTableProps: ', reservationsTableProps);
+              const filteredReservationsTablePropsDS =
+              reservationsTableProps.dataSource?.filter(
+                (reservation: IReservation) => reservationsIds.indexOf(reservation.id) !== -1
+                );
+              console.log('filteredReservationsTablePropsDS: ', filteredReservationsTablePropsDS);
+              const filteredReservationsTableProps = {...reservationsTableProps, dataSource: filteredReservationsTablePropsDS};
               return (
                 <>
-                  {RenderReservations({reservations, updateReservation})}
+                  {RenderReservations(
+                    {
+                      reservationsIds,
+                      updateReservation,
+                      filteredReservationsTableProps,
+                      formProps,
+                      isEditing,
+                      setEditId,
+                      saveButtonProps,
+                      cancelButtonProps,
+                      editButtonProps,
+                    }
+                  )}
                 </>
               )},
               rowExpandable: (record: { reservations: { data: { [s: string]: unknown; } | ArrayLike<unknown>; }; }) => Object.entries(record?.reservations.data).length > 0
@@ -139,7 +185,7 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
               </FilterDropdown>
             )}
             />
-          {user?.role === "admin" && (
+          {currUser?.role === "admin" && (
             <Table.Column
             key="[user][id]"
             dataIndex={["users_permissions_user", "data", "attributes", "username"]}
