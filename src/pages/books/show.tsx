@@ -1,6 +1,6 @@
 import { useShow, IResourceComponentsProps, useCreate, useGetIdentity } from "@pankod/refine-core";
 
-import { Show, Typography, Button } from "@pankod/refine-antd";
+import { Show, Typography, Button, EditButton, DeleteButton } from "@pankod/refine-antd";
 
 import { RenderReservations } from "components/customRenders";
 
@@ -36,7 +36,14 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
       pageHeaderProps={{
         extra: (
           <>
-            <Button
+            {(currUser.id === owner?.data.id) && (
+              <>
+                <EditButton size="large" recordItemId={record?.id} />
+                <DeleteButton size="large" recordItemId={record?.id} />
+              </>
+              
+            )}
+{/*             <Button
               onClick={() => {
                 mutate({
                   resource: "reservations",
@@ -49,7 +56,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
               }}
             >
               Sélectionner
-            </Button>
+            </Button> */}
           </>
         ),
       }}
