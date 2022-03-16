@@ -9,13 +9,9 @@ import {
   Form,
 } from "@pankod/refine-antd";
 
-//import routerProvider from "@pankod/refine-react-router";
-
-//import { EyeOutlined } from "@ant-design/icons";
 import { IReservation } from "interfaces";
 
 export const RenderReservations = (props: any) => {
-  //console.log('render res props: ', props);
   const {
     filteredReservationsTableProps: tableProps,
     formProps,
@@ -25,12 +21,17 @@ export const RenderReservations = (props: any) => {
     cancelButtonProps,
     editButtonProps,
   } = props;
-  //console.log('dataSource: ', reservations);
-  //const Link = routerProvider.Link;
-  //console.log('reservationsTableProps: ', tableProps)
 
   return (
-    <Form {...formProps}>
+    <Form
+      {...formProps}
+      onFinish={(values: any) => {
+        console.log('values: ', values);
+        return formProps.onFinish?.({
+          ...values,
+        });
+    }}
+    >
       <Table
         {...tableProps}
         pagination={false}
