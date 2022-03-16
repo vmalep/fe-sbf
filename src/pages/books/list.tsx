@@ -72,6 +72,7 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
     editButtonProps,
   } = useEditableTable<IReservation>({
     resource: "reservations",
+    redirect: false,
     initialSorter: [
       {
         field: "id",
