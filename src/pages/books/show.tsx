@@ -7,21 +7,9 @@ import {
 import {
   Show,
   Typography,
-  Button,
   EditButton,
   DeleteButton,
   List,
-  Table,
-  TextField,
-  useTable,
-  getDefaultSortOrder,
-  Space,
-  ShowButton,
-  NumberField,
-  Select,
-  useSelect,
-  FilterDropdown,
-  BooleanField,
   Card,
   useEditableTable,
 } from "@pankod/refine-antd";
@@ -29,7 +17,6 @@ import {
 import { RenderReservations } from "components/customRenders";
 
 import { IBook, IReservation } from "interfaces";
-import NormalizeData from "helpers/normalizeData";
 
 const { Title, Text } = Typography;
 
@@ -60,6 +47,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
     editButtonProps,
   } = useEditableTable<IReservation>({
     resource: "reservations",
+    redirect: false,
     initialSorter: [
       {
         field: "id",

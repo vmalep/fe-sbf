@@ -30,7 +30,7 @@ export const RenderReservations = (props: any) => {
   //console.log('reservationsTableProps: ', tableProps)
 
   return (
-    <Form {...formProps} redirect={false}>
+    <Form {...formProps}>
       <Table
         {...tableProps}
         pagination={false}
