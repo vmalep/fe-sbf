@@ -31,10 +31,10 @@ export const RenderReservations = (props: any) => {
   console.log('reservationsTableProps: ', tableProps)
 
   return (
-    <List>
       <Form {...formProps}>
         <Table
           {...tableProps}
+          pagination={false}
           rowKey="id"
           onRow={(record) => ({
             onClick: (event: any) => {
@@ -97,7 +97,5 @@ export const RenderReservations = (props: any) => {
           />
         </Table>
       </Form>
-    </List>
-
   );
 }
