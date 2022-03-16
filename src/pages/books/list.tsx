@@ -35,6 +35,7 @@ import NormalizeData from "helpers/normalizeData";
 
 export const BookList: React.FC<IResourceComponentsProps> = () => {
   const { data: currUser } = useGetIdentity();
+  console.log('currUser: ', currUser);
   const { tableProps, sorter } = useTable<IBook, HttpError, IBookFilterVariables>({
     initialSorter: [
       {
@@ -52,6 +53,13 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
         "reservations.users_permissions_user",
       ],
     },
+    permanentFilter: [
+      {
+        field: "users_permissions_user.id",
+        operator: "eq",
+        value: currUser?.role !== "admin" ? currUser?.id : undefined,
+      },
+    ],
   });
 
   const {
@@ -176,13 +184,13 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
               </FilterDropdown>
             )}
             />
-          {currUser?.role === "admin" && (
+          {/* {currUser?.role === "admin" && ( */}
             <Table.Column
             key="[user][id]"
             dataIndex={["users_permissions_user", "data", "attributes", "username"]}
             title="Owner"
             />
-          )}
+          {/* )} */}
           <Table.Column
             key="state"
             dataIndex="state"
