@@ -2,7 +2,6 @@ import {
   IResourceComponentsProps,
   HttpError,
   useGetIdentity,
-  useUpdate,
 } from "@pankod/refine-core";
 
 import {
@@ -33,11 +32,9 @@ import {
 
 import { RenderReservations } from "components/customRenders";
 import NormalizeData from "helpers/normalizeData";
-import { useState } from "react";
 
 export const BookList: React.FC<IResourceComponentsProps> = () => {
   const { data: currUser } = useGetIdentity();
-  const { mutate: updateReservation } = useUpdate<IReservation>();
   const { tableProps, sorter } = useTable<IBook, HttpError, IBookFilterVariables>({
     initialSorter: [
       {
@@ -101,22 +98,16 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
           {...tableProps} rowKey="id"
           expandable={{
             expandedRowRender: (record: { reservations: any; }) => {
-              //console.log('record: ', Object.entries(record?.reservations.data).length);
               const reservationsIds = NormalizeData(record?.reservations).map((reservation: any) => reservation.id);
-              console.log('reservationsIds: ', reservationsIds);
-              console.log('reservationsTableProps: ', reservationsTableProps);
               const filteredReservationsTablePropsDS =
               reservationsTableProps.dataSource?.filter(
                 (reservation: IReservation) => reservationsIds.indexOf(reservation.id) !== -1
                 );
-              console.log('filteredReservationsTablePropsDS: ', filteredReservationsTablePropsDS);
               const filteredReservationsTableProps = {...reservationsTableProps, dataSource: filteredReservationsTablePropsDS};
               return (
                 <>
                   {RenderReservations(
                     {
-                      reservationsIds,
-                      updateReservation,
                       filteredReservationsTableProps,
                       formProps,
                       isEditing,

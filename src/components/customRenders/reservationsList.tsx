@@ -18,8 +18,6 @@ import { IReservation } from "interfaces";
 export const RenderReservations = (props: any) => {
   //console.log('render res props: ', props);
   const {
-    reservationsIds,
-    updateReservation,
     filteredReservationsTableProps: tableProps,
     formProps,
     isEditing,
