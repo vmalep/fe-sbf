@@ -1,7 +1,9 @@
 import {
   Table,
-  //Space,
-  //Button,
+  Space,
+  Button,
+  SaveButton,
+  EditButton,
   TextField,
   Select,
   List,
@@ -10,8 +12,8 @@ import {
 
 //import routerProvider from "@pankod/refine-react-router";
 
-//import { EditOutlined } from "@ant-design/icons";
-//import { IReservation } from "interfaces";
+import { EyeOutlined } from "@ant-design/icons";
+import { IReservation } from "interfaces";
 
 export const RenderReservations = (props: any) => {
   //console.log('render res props: ', props);
@@ -31,47 +33,47 @@ export const RenderReservations = (props: any) => {
   console.log('reservationsTableProps: ', tableProps)
 
   return (
-      <Form {...formProps}>
-        <Table
-          {...tableProps}
-          pagination={false}
-          rowKey="id"
-          onRow={(record) => ({
-            onClick: (event: any) => {
-              if (event.target.nodeName === "TD") {
-                setEditId && setEditId(record.id);
-              }
-            },
-          })}
-        >
-          <Table.Column
-            dataIndex="id"
-            key="id"
-            title="ID"
-            render={(value) => <TextField value={value} />}
-          />
-          <Table.Column
-            key="[user][id]"
-            dataIndex={["users_permissions_user", "data", "attributes", "username"]}
-            title="User"
-            sorter
-          />
-          <Table.Column
-            key="comment"
-            dataIndex="comment"
-            title="Comment"
-          />
-          <Table.Column
-            key="status"
-            dataIndex="status"
-            title="Status"
-            render={(value: any, record: any) => {
-              if (
-                (value === "proposed") ||
-                //(value === "confirmed") || When confirmed, the owner should not be able to modify it anymore...
-                (value === "rejected")
-              ) {
-                return (
+    <Form {...formProps} redirect={false}>
+      <Table
+        {...tableProps}
+        pagination={false}
+        rowKey="id"
+        onRow={(record) => ({
+          onClick: (event: any) => {
+            if (event.target.nodeName === "TD") {
+              setEditId && setEditId(record.id);
+            }
+          },
+        })}
+      >
+        <Table.Column
+          dataIndex="id"
+          key="id"
+          title="ID"
+          render={(value) => <TextField value={value} />}
+        />
+        <Table.Column
+          key="[user][id]"
+          dataIndex={["users_permissions_user", "data", "attributes", "username"]}
+          title="User"
+          sorter
+        />
+        <Table.Column
+          key="comment"
+          dataIndex="comment"
+          title="Comment"
+        />
+        <Table.Column
+          dataIndex="status"
+          key="status"
+          title="Status"
+          render={(value, record: IReservation) => {
+            if (isEditing(record.id)) {
+              return (
+                <Form.Item
+                  name="status"
+                  style={{ margin: 0 }}
+                >
                   <Select
                     defaultValue={value}
                     options={[
@@ -79,23 +81,48 @@ export const RenderReservations = (props: any) => {
                       { label: "Confirmed", value: "confirmed" },
                       { label: "Rejected", value: "rejected" },
                     ]}
-                    onSelect={() => {
-                      console.log('handleChange:');
-                      console.log('value: ', value);
-                      console.log('record: ', record);
-                      updateReservation({
-                        resource: "reservations",
-                        id: record.id,
-                        values: { status: value },
-                      })
-                    }}
                   />
-                )
-              }
-              return <TextField value={value} />;
-            }}
-          />
-        </Table>
-      </Form>
+                </Form.Item>
+              );
+            }
+            return <TextField value={value} />;
+          }}
+          sorter
+        />
+        <Table.Column<IReservation>
+          title="Actions"
+          dataIndex="actions"
+          render={(_, record) => {
+            if (isEditing(record.id)) {
+              return (
+                <Space>
+                  <SaveButton
+                    {...saveButtonProps}
+                    hideText
+                    size="small"
+                  />
+                  <Button
+                    {...cancelButtonProps}
+                    size="small"
+                  >
+                    Cancel
+                  </Button>
+                </Space>
+              );
+            }
+            return (
+              <Space>
+                <EditButton
+                  {...editButtonProps(record.id)}
+                  hideText
+                  size="small"
+                  disabled={record.status === "interested"}
+                />
+              </Space>
+            );
+          }}
+        />
+      </Table>
+    </Form>
   );
 }
