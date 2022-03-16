@@ -30,7 +30,7 @@ export const RenderReservations = (props: any) => {
         return formProps.onFinish?.({
           ...values,
         });
-    }}
+      }}
     >
       <Table
         {...tableProps}
