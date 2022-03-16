@@ -6,13 +6,12 @@ import {
   EditButton,
   TextField,
   Select,
-  List,
   Form,
 } from "@pankod/refine-antd";
 
 //import routerProvider from "@pankod/refine-react-router";
 
-import { EyeOutlined } from "@ant-design/icons";
+//import { EyeOutlined } from "@ant-design/icons";
 import { IReservation } from "interfaces";
 
 export const RenderReservations = (props: any) => {
@@ -28,7 +27,7 @@ export const RenderReservations = (props: any) => {
   } = props;
   //console.log('dataSource: ', reservations);
   //const Link = routerProvider.Link;
-  console.log('reservationsTableProps: ', tableProps)
+  //console.log('reservationsTableProps: ', tableProps)
 
   return (
     <Form {...formProps} redirect={false}>
