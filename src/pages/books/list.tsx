@@ -20,19 +20,21 @@ import {
   FilterDropdown,
   BooleanField,
   Card,
+  useEditableTable,
 } from "@pankod/refine-antd";
 
 import {
   IBook,
   ILibrary,
   IBookFilterVariables,
+  IReservation,
 } from "interfaces";
 
 import { RenderReservations } from "components/customRenders";
 import NormalizeData from "helpers/normalizeData";
 
 export const BookList: React.FC<IResourceComponentsProps> = () => {
-  const { data: user } = useGetIdentity();
+  const { data: currUser } = useGetIdentity();
   const { tableProps, sorter } = useTable<IBook, HttpError, IBookFilterVariables>({
     initialSorter: [
       {
@@ -50,16 +52,40 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
         "reservations.users_permissions_user",
       ],
     },
-    permanentFilter: [
-      {
-        field: "users_permissions_user.id",
-        operator: "eq",
-        value: user?.role !== "admin" ? user?.id : undefined,
-      }
-    ],
   });
 
-  //console.log("tableProps: ", tableProps);
+  const {
+    tableProps: reservationsTableProps,
+    formProps,
+    isEditing,
+    setId: setEditId,
+    saveButtonProps,
+    cancelButtonProps,
+    editButtonProps,
+  } = useEditableTable<IReservation>({
+    resource: "reservations",
+    initialSorter: [
+      {
+        field: "id",
+        order: "desc",
+      },
+    ],
+    metaData: {
+      populate: [
+        "users_permissions_user",
+        "book",
+        "book.library",
+        "book.users_permissions_user",
+      ],
+    },
+    permanentFilter: [
+      {
+        field: "book.users_permissions_user.id",
+        operator: "eq",
+        value: currUser?.role !== "admin" ? currUser?.id : undefined,
+      },
+    ],
+  });
 
   const { selectProps: librarySelectProps } = useSelect<ILibrary>({
     resource: "libraries",
@@ -71,22 +97,36 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
         <Table
           {...tableProps} rowKey="id"
           expandable={{
-            expandedRowRender: record => {
-              //console.log('record: ', Object.entries(record?.reservations.data).length);
-              const reservations = NormalizeData(record?.reservations);
+            expandedRowRender: (record: { reservations: any; }) => {
+              const reservationsIds = NormalizeData(record?.reservations).map((reservation: any) => reservation.id);
+              const filteredReservationsTablePropsDS =
+              reservationsTableProps.dataSource?.filter(
+                (reservation: IReservation) => reservationsIds.indexOf(reservation.id) !== -1
+                );
+              const filteredReservationsTableProps = {...reservationsTableProps, dataSource: filteredReservationsTablePropsDS};
               return (
                 <>
-                  {RenderReservations(reservations)}
+                  {RenderReservations(
+                    {
+                      filteredReservationsTableProps,
+                      formProps,
+                      isEditing,
+                      setEditId,
+                      saveButtonProps,
+                      cancelButtonProps,
+                      editButtonProps,
+                    }
+                  )}
                 </>
               )},
-              rowExpandable: record => Object.entries(record?.reservations.data).length > 0
+              rowExpandable: (record: { reservations: { data: { [s: string]: unknown; } | ArrayLike<unknown>; }; }) => Object.entries(record?.reservations.data).length > 0
           }}
         >
           <Table.Column
             dataIndex="id"
             key="id"
             title="ID"
-            render={(value) => <TextField value={value} />}
+            render={(value: any) => <TextField value={value} />}
             defaultSortOrder={getDefaultSortOrder("id", sorter)}
             sorter
           />
@@ -94,20 +134,20 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
             key="[school_year][id]"
             dataIndex={["library", "data", "attributes", "course", "data", "attributes", "school_year", "data", "attributes", "title"]}
             title="School year"
-            render={(value) => <TextField value={value} />}
+            render={(value: any) => <TextField value={value} />}
           />
           <Table.Column
             key="[course][id]"
             dataIndex={["library", "data", "attributes", "course", "data", "attributes", "title"]}
             title="Course"
-            render={(value) => <TextField value={value} />}
+            render={(value: any) => <TextField value={value} />}
           />
           <Table.Column
             key="[library][id]"
             dataIndex={["library", "data", "attributes", "title"]}
             title="Title"
             sorter
-            filterDropdown={(props) => (
+            filterDropdown={(props: any) => (
               <FilterDropdown {...props}>
                 <Select
                   allowClear
@@ -123,8 +163,8 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
             key="is_available"
             dataIndex="is_available"
             title="Available"
-            render={(value) => <BooleanField value={value} />}
-            filterDropdown={(props) => (
+            render={(value: any) => <BooleanField value={value} />}
+            filterDropdown={(props: any) => (
               <FilterDropdown {...props}>
                 <Select
                   placeholder="Select availability"
@@ -136,7 +176,7 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
               </FilterDropdown>
             )}
             />
-          {user?.role === "admin" && (
+          {currUser?.role === "admin" && (
             <Table.Column
             key="[user][id]"
             dataIndex={["users_permissions_user", "data", "attributes", "username"]}
@@ -154,14 +194,14 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
             key="price"
             title="Price (€)"
             align="right"
-            render={(value) => <NumberField value={value} />}
+            render={(value: any) => <NumberField value={value} />}
             defaultSortOrder={getDefaultSortOrder("title", sorter)}
             sorter
           />
           <Table.Column<IBook>
             title="Actions"
             dataIndex="actions"
-            render={(_, record) => (
+            render={(_: any, record: { id: any; }) => (
               <Space>
                 <ShowButton hideText size="small" recordItemId={record.id} />
                 <EditButton hideText size="small" recordItemId={record.id} />
