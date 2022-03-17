@@ -10,7 +10,7 @@ import {
 } from "@pankod/refine-antd";
 
 import { IReservation } from "interfaces";
-import HandleConfirmedReservations from "helpers/handleConfirmedReservations";
+//import HandleConfirmedReservations from "helpers/handleConfirmedReservations";
 
 export const RenderReservations = (props: any) => {
   const {

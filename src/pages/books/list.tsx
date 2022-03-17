@@ -7,13 +7,16 @@ import {
 import {
   List,
   Table,
+  Form,
   TextField,
   useTable,
   getDefaultSortOrder,
   Space,
+  Button,
   EditButton,
   DeleteButton,
   ShowButton,
+  SaveButton,
   NumberField,
   Select,
   useSelect,
@@ -30,14 +33,13 @@ import {
   IReservation,
 } from "interfaces";
 
-import { RenderReservations } from "components/customRenders";
 import NormalizeData from "helpers/normalizeData";
 
 import { useState } from "react";
 
 export const BookList: React.FC<IResourceComponentsProps> = () => {
   const { data: currUser } = useGetIdentity();
-  const [ currRecordId, setCurrRecordId ] = useState("");
+  const [currRecordId, setCurrRecordId] = useState("");
   const { tableProps, sorter } = useTable<IBook, HttpError, IBookFilterVariables>({
     initialSorter: [
       {
@@ -102,6 +104,119 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
     resource: "libraries",
   });
 
+  const handleConfirmedReservations = (props: any) => {
+    const  { currRecordId, reservationsIds } = props;
+    reservationsIds
+    .filter((reservationId: string) => reservationId !== currRecordId)
+    .map((reservationId: string) => console.log(reservationId));
+  }
+
+  const renderReservations = (props: any) => {
+    const { filteredReservationsTableProps: tableProps, reservationsIds } = props;
+    return (
+      <Form
+        {...formProps}
+        onFinish={(values: any) => {
+          handleConfirmedReservations( { currRecordId, reservationsIds } );
+          return formProps.onFinish?.({
+            ...values,
+          });
+        }}
+      >
+        <Table
+          {...tableProps}
+          pagination={false}
+          rowKey="id"
+          onRow={(record) => ({
+            onClick: (event: any) => {
+              if (event.target.nodeName === "TD") {
+                setEditId && setEditId(record.id);
+              }
+            },
+          })}
+        >
+          <Table.Column
+            dataIndex="id"
+            key="id"
+            title="ID"
+            render={(value) => <TextField value={value} />}
+          />
+          <Table.Column
+            key="[user][id]"
+            dataIndex={["users_permissions_user", "data", "attributes", "username"]}
+            title="User"
+            sorter
+          />
+          <Table.Column
+            key="comment"
+            dataIndex="comment"
+            title="Comment"
+          />
+          <Table.Column
+            dataIndex="status"
+            key="status"
+            title="Status"
+            render={(value, record: IReservation) => {
+              if (isEditing(record.id)) {
+                setCurrRecordId(record.id);
+                return (
+                  <Form.Item
+                    name="status"
+                    style={{ margin: 0 }}
+                  >
+                    <Select
+                      defaultValue={value}
+                      options={[
+                        { label: "Proposed", value: "proposed" },
+                        { label: "Confirmed", value: "confirmed" },
+                        { label: "Rejected", value: "rejected" },
+                      ]}
+                    />
+                  </Form.Item>
+                );
+              }
+              return <TextField value={value} />;
+            }}
+            sorter
+          />
+          <Table.Column<IReservation>
+            title="Actions"
+            dataIndex="actions"
+            render={(_, record) => {
+              if (isEditing(record.id)) {
+                return (
+                  <Space>
+                    <SaveButton
+                      {...saveButtonProps}
+                      hideText
+                      size="small"
+                    />
+                    <Button
+                      {...cancelButtonProps}
+                      size="small"
+                    >
+                      Cancel
+                    </Button>
+                  </Space>
+                );
+              }
+              return (
+                <Space>
+                  <EditButton
+                    {...editButtonProps(record.id)}
+                    hideText
+                    size="small"
+                    disabled={record.status === "interested"}
+                  />
+                </Space>
+              );
+            }}
+          />
+        </Table>
+      </Form>
+    )
+  }
+
   return (
     <Card>
       <List>
@@ -111,14 +226,14 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
             expandedRowRender: (record: { reservations: any; }) => {
               const reservationsIds = NormalizeData(record?.reservations).map((reservation: any) => reservation.id);
               const filteredReservationsTablePropsDS =
-              reservationsTableProps.dataSource?.filter(
-                (reservation: IReservation) => reservationsIds.indexOf(reservation.id) !== -1
+                reservationsTableProps.dataSource?.filter(
+                  (reservation: IReservation) => reservationsIds.indexOf(reservation.id) !== -1
                 );
-              const filteredReservationsTableProps = {...reservationsTableProps, dataSource: filteredReservationsTablePropsDS};
+              const filteredReservationsTableProps = { ...reservationsTableProps, dataSource: filteredReservationsTablePropsDS };
               return (
                 <>
-                  {RenderReservations(
-                    {
+                  {renderReservations({ filteredReservationsTableProps, reservationsIds })}
+                  {/*                     {
                       filteredReservationsTableProps,
                       formProps,
                       isEditing,
@@ -129,10 +244,11 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
                       currRecordId, setCurrRecordId,
                       reservationsIds,
                     }
-                  )}
+                  )} */}
                 </>
-              )},
-              rowExpandable: (record: { reservations: { data: { [s: string]: unknown; } | ArrayLike<unknown>; }; }) => Object.entries(record?.reservations.data).length > 0
+              )
+            },
+            rowExpandable: (record: { reservations: { data: { [s: string]: unknown; } | ArrayLike<unknown>; }; }) => Object.entries(record?.reservations.data).length > 0
           }}
         >
           <Table.Column
@@ -185,15 +301,15 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
                     { label: "Available", value: "true" },
                     { label: "Not available", value: "false" },
                   ]}
-                  />
+                />
               </FilterDropdown>
             )}
-            />
+          />
           {currUser?.role === "admin" && (
             <Table.Column
-            key="[user][id]"
-            dataIndex={["users_permissions_user", "data", "attributes", "username"]}
-            title="Owner"
+              key="[user][id]"
+              dataIndex={["users_permissions_user", "data", "attributes", "username"]}
+              title="Owner"
             />
           )}
           <Table.Column

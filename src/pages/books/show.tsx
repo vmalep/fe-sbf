@@ -9,14 +9,9 @@ import {
   Typography,
   EditButton,
   DeleteButton,
-  List,
-  Card,
-  useEditableTable,
 } from "@pankod/refine-antd";
 
-import { RenderReservations } from "components/customRenders";
-
-import { IBook, IReservation } from "interfaces";
+import { IBook } from "interfaces";
 
 const { Title, Text } = Typography;
 
@@ -36,42 +31,6 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
   const record = data?.data;
   const owner = record?.users_permissions_user;
   const library = record?.library.data?.attributes;
-
-  const {
-    tableProps: filteredReservationsTableProps,
-    formProps,
-    isEditing,
-    setId: setEditId,
-    saveButtonProps,
-    cancelButtonProps,
-    editButtonProps,
-  } = useEditableTable<IReservation>({
-    resource: "reservations",
-    redirect: false,
-    initialSorter: [
-      {
-        field: "id",
-        order: "desc",
-      },
-    ],
-    metaData: {
-      populate: [
-        "users_permissions_user",
-        "book",
-        "book.library",
-        "book.users_permissions_user",
-      ],
-    },
-    permanentFilter: [
-      {
-        field: "book.id",
-        operator: "eq",
-        value: record?.id,
-      },
-    ],
-  });
-
-  //console.log('filteredReservationsTableProps: ', filteredReservationsTableProps);
 
   const renderBook = () => (
     <Show
@@ -103,7 +62,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
   return (
     <>
       {renderBook()}
-      {(currUser.id === owner?.data.id) && (
+{/*       {(currUser.id === owner?.data.id) && (
         <Card>
           <List title="Reservations">
             {RenderReservations(
@@ -119,7 +78,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
             )}
           </List>
         </Card>
-      )}
+      )} */}
     </>
   )
 };
