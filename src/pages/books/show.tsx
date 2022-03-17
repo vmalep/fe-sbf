@@ -1,7 +1,7 @@
 import {
   useShow,
   IResourceComponentsProps,
-  useGetIdentity
+  useGetIdentity,
 } from "@pankod/refine-core";
 
 import {

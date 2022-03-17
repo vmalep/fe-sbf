@@ -1,6 +1,4 @@
 import axios from "axios";
-//import { ISchoolYear } from "interfaces";
-//import { API_URL } from "../constants";
 import qs from 'qs';
 
 const API_URL = process.env.REACT_APP_API_URL!;
@@ -12,7 +10,7 @@ const GetBookTitle = async (id: any) => {
       fields: ["title"]
     },
     )
-    const data = await axios.get(`${API_URL}/api/books/${id}/?${query}`, {
+    const data = await axios.get(`${API_URL}/books/${id}/?${query}`, {
     });
     const title: string = data?.data.data.attributes.title;
     //console.log('title: ', title);

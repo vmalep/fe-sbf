@@ -9,13 +9,10 @@ import {
   Form,
 } from "@pankod/refine-antd";
 
-//import routerProvider from "@pankod/refine-react-router";
-
-//import { EyeOutlined } from "@ant-design/icons";
 import { IReservation } from "interfaces";
+import HandleConfirmedReservations from "helpers/handleConfirmedReservations";
 
 export const RenderReservations = (props: any) => {
-  //console.log('render res props: ', props);
   const {
     filteredReservationsTableProps: tableProps,
     formProps,
@@ -24,13 +21,24 @@ export const RenderReservations = (props: any) => {
     saveButtonProps,
     cancelButtonProps,
     editButtonProps,
+    currRecordId, setCurrRecordId,
+    reservationsIds,
   } = props;
-  //console.log('dataSource: ', reservations);
-  //const Link = routerProvider.Link;
-  //console.log('reservationsTableProps: ', tableProps)
 
   return (
-    <Form {...formProps}>
+    <Form
+      {...formProps}
+      onFinish={(values: any) => {
+/*         console.log('values: ', values); // commented out because becoming too complicated... Considering writting a single file Books list instead...
+        console.log('currRecordId: ', currRecordId);
+        console.log('reservationsIds: ', reservationsIds);
+        HandleConfirmedReservations( { currRecordId, reservationsIds });
+        console.log('handle confirmed reservations done'); */
+        return formProps.onFinish?.({
+          ...values,
+        });
+      }}
+    >
       <Table
         {...tableProps}
         pagination={false}
@@ -66,6 +74,7 @@ export const RenderReservations = (props: any) => {
           title="Status"
           render={(value, record: IReservation) => {
             if (isEditing(record.id)) {
+              setCurrRecordId(record.id);
               return (
                 <Form.Item
                   name="status"
