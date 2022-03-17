@@ -33,9 +33,12 @@ import {
 import { RenderReservations } from "components/customRenders";
 import NormalizeData from "helpers/normalizeData";
 
+import { useState } from "react";
+
 export const BookList: React.FC<IResourceComponentsProps> = () => {
   const { data: currUser } = useGetIdentity();
   //console.log('currUser: ', currUser);
+  const [ currRecordId, setCurrRecordId ] = useState("");
   const { tableProps, sorter } = useTable<IBook, HttpError, IBookFilterVariables>({
     initialSorter: [
       {
@@ -124,6 +127,8 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
                       saveButtonProps,
                       cancelButtonProps,
                       editButtonProps,
+                      currRecordId, setCurrRecordId,
+                      reservationsIds,
                     }
                   )}
                 </>

@@ -2,7 +2,6 @@ import {
   useShow,
   IResourceComponentsProps,
   useGetIdentity,
-  useForm,
 } from "@pankod/refine-core";
 
 import {

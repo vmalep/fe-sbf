@@ -10,6 +10,7 @@ import {
 } from "@pankod/refine-antd";
 
 import { IReservation } from "interfaces";
+import HandleConfirmedReservations from "helpers/handleConfirmedReservations";
 
 export const RenderReservations = (props: any) => {
   const {
@@ -20,13 +21,19 @@ export const RenderReservations = (props: any) => {
     saveButtonProps,
     cancelButtonProps,
     editButtonProps,
+    currRecordId, setCurrRecordId,
+    reservationsIds,
   } = props;
 
   return (
     <Form
       {...formProps}
       onFinish={(values: any) => {
-        console.log('values: ', values);
+/*         console.log('values: ', values); // commented out because becoming too complicated... Considering writting a single file Books list instead...
+        console.log('currRecordId: ', currRecordId);
+        console.log('reservationsIds: ', reservationsIds);
+        HandleConfirmedReservations( { currRecordId, reservationsIds });
+        console.log('handle confirmed reservations done'); */
         return formProps.onFinish?.({
           ...values,
         });
@@ -67,6 +74,7 @@ export const RenderReservations = (props: any) => {
           title="Status"
           render={(value, record: IReservation) => {
             if (isEditing(record.id)) {
+              setCurrRecordId(record.id);
               return (
                 <Form.Item
                   name="status"

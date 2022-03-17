@@ -1,6 +1,4 @@
 import axios from "axios";
-//import { IUser } from "interfaces";
-//import { API_URL } from "../constants";
 
 const API_URL = process.env.REACT_APP_API_URL!;
 
