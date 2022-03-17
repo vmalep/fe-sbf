@@ -10,7 +10,7 @@ import qs from 'qs';
 
 import "react-mde/lib/styles/css/react-mde-all.css";
 
-import { IReservation } from "interfaces";
+//import { IReservation } from "interfaces";
 
 const API_URL = process.env.REACT_APP_API_URL!;
 const TOKEN_KEY = process.env.REACT_APP_API_TOKEN_KEY!;

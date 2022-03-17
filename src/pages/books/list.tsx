@@ -2,6 +2,7 @@ import {
   IResourceComponentsProps,
   HttpError,
   useGetIdentity,
+  useOne,
 } from "@pankod/refine-core";
 
 import {
@@ -100,15 +101,20 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
     ],
   });
 
-  const { selectProps: librarySelectProps } = useSelect<ILibrary>({
-    resource: "libraries",
-  });
+// Todo: create custom route on the BE to check if
+/*   const checkedReservation = useOne<IReservation>({
+    resource: "reservations",
+    id: reservationId,
+  }); */
 
   const handleConfirmedReservations = (props: any) => {
-    const  { currRecordId, reservationsIds } = props;
+    const { currRecordId, reservationsIds } = props;
     reservationsIds
-    .filter((reservationId: string) => reservationId !== currRecordId)
-    .map((reservationId: string) => console.log(reservationId));
+      .filter((reservationId: string) => reservationId !== currRecordId)
+      .map((reservationId: string) => {
+        //const data = checkedReservation(reservationId);
+        return console.log(reservationId)
+      });
   }
 
   const renderReservations = (props: any) => {
@@ -117,7 +123,7 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
       <Form
         {...formProps}
         onFinish={(values: any) => {
-          handleConfirmedReservations( { currRecordId, reservationsIds } );
+          handleConfirmedReservations({ currRecordId, reservationsIds });
           return formProps.onFinish?.({
             ...values,
           });
@@ -216,6 +222,11 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
       </Form>
     )
   }
+
+
+  const { selectProps: librarySelectProps } = useSelect<ILibrary>({
+    resource: "libraries",
+  });
 
   return (
     <Card>
