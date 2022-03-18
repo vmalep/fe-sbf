@@ -56,9 +56,11 @@ const MyReservationsPage = () => {
 function App() {
 
   const [role, setRole] = useState("public");
+  console.log('role: ', role);
   
   const { t, i18n } = useTranslation();
   const axiosInstance = axios.create();
+  console.log('api_url: ', API_URL);
   const strapiAuthHelper = AuthHelper(API_URL);
   const getCurrentRole = GetUserRole();
   const i18nProvider = {
@@ -69,6 +71,7 @@ function App() {
 
   const authProvider: AuthProvider = {
     login: async ({ username, password }) => {
+      console.log('login App');
       const { data, status } = await strapiAuthHelper.login(username, password);
       console.log(username, password);
       if (status === 200) {

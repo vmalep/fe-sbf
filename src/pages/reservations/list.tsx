@@ -60,7 +60,7 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
       },
     ],
   });
-  //console.log("reserv table props: ", tableProps);
+  console.log("reservations List tableProps: ", tableProps);
   const { show } = useNavigation();
 
   return (
