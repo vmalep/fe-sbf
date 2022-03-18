@@ -6,8 +6,8 @@ import {
 import routerProvider from "@pankod/refine-react-router";
 import axios from "axios";
 import "@pankod/refine-antd/dist/styles.min.css";
-import { AuthHelper } from "@pankod/refine-strapi-v4";
-import { DataProvider } from "./custom/strapi-4";
+import { AuthHelper, DataProvider } from "@pankod/refine-strapi-v4";
+//import { DataProvider } from "./custom/strapi-4";
 //import { customAuthProvider } from "authProvider";
 import { useState } from "react";
 import GetUserRole from "./helpers/getUserRole";
