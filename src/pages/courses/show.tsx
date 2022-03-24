@@ -22,7 +22,7 @@ export const CourseShow: React.FC<IResourceComponentsProps> = () => {
   });
   const { data, isLoading } = queryResult;
   const record = data?.data;
-  const school_year = record?.school_year.data?.attributes;
+  const school_year = record?.school_year;
 
   const normalizedRecord = NormalizeData(record);
 

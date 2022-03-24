@@ -37,7 +37,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
   const record = data?.data;
   const owner = record?.users_permissions_user;
   console.log('bookShow owner: ', owner);
-  const library = record?.library.data?.attributes;
+  const library = record?.library;
 
   const {
     tableProps: filteredReservationsTableProps,

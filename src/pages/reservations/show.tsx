@@ -20,9 +20,9 @@ export const ReservationShow: React.FC<IResourceComponentsProps> = () => {
   const { data, isLoading } = queryResult;
   const record = data?.data;
   console.log('rec res: ', record);
-  const library = record?.book.data.attributes.library.data?.attributes;
-  const owner = record?.book.data.attributes.users_permissions_user;
-  const user = record?.users_permissions_user.data?.attributes;
+  const library = record?.book.library;
+  const owner = record?.book.users_permissions_user;
+  const user = record?.users_permissions_user;
 
   return (
     <Show isLoading={isLoading}>

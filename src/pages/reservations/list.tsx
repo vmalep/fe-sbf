@@ -191,7 +191,7 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
                   <Button
                     icon={<EyeOutlined />}
                     onClick={(): void =>
-                      show("books", `${record?.book.data.id}`)
+                      show("books", `${record?.book.id}`)
                     }
                   />
                 </Space>

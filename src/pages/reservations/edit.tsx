@@ -27,7 +27,7 @@ export const ReservationEdit: React.FC<IResourceComponentsProps> = () => {
 
   const { selectProps: selectUserProps } = useSelect<IUser>({
     resource: "users",
-    defaultValue: queryResult?.data?.data?.users_permissions_user?.data?.id,
+    defaultValue: queryResult?.data?.data?.users_permissions_user?.id,
     optionLabel: "username",
     optionValue: "id",
   });
@@ -57,7 +57,7 @@ export const ReservationEdit: React.FC<IResourceComponentsProps> = () => {
               mediaUploadMapper({
                 ...values,
                 book: values.book?.data.id,
-                users_permissions_user: values.users_permissions_user?.data.id,
+                users_permissions_user: values.users_permissions_user?.id,
               }),
             )
           );
@@ -77,7 +77,7 @@ export const ReservationEdit: React.FC<IResourceComponentsProps> = () => {
               (book: IBook) => {
                 return (
                   <Option key={book.id}>
-                    {book.library.data.attributes.title}
+                    {book.library.title}
                   </Option>
                 );
               }

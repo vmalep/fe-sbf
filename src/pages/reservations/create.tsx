@@ -17,7 +17,7 @@ export const ReservationCreate: React.FC<IResourceComponentsProps> = () => {
 
   const { selectProps: selectUserProps } = useSelect<IUser>({
     resource: "users",
-    defaultValue: queryResult?.data?.data?.users_permissions_user?.data?.id,
+    defaultValue: queryResult?.data?.data?.users_permissions_user?.id,
     optionLabel: "username",
     optionValue: "id",
   });
@@ -61,14 +61,14 @@ export const ReservationCreate: React.FC<IResourceComponentsProps> = () => {
         >
           <Select
             defaultValue={
-              queryResult?.data?.data?.book?.data?.id
+              queryResult?.data?.data?.book?.id
             }
           >
             {(bookSelect?.data?.data || []).map(
               (book: IBook) => {
                 return (
                   <Option key={book.id}>
-                    {book.library.data.attributes.title}
+                    {book.library.title}
                   </Option>
                 );
               }

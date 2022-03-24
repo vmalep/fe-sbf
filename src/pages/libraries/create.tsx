@@ -72,14 +72,14 @@ export const LibraryCreate: React.FC<IResourceComponentsProps> = () => {
         >
           <Select
             defaultValue={
-              queryResult?.data?.data?.course?.data?.id
+              queryResult?.data?.data?.course?.id
             }
           >
             {(courseSelect?.data?.data || []).map(
               (course: ICourse) => {
                 return (
                   <Option key={course.id}>
-                    {course.title} - {course.school_year.data.attributes.title}
+                    {course.title} - {course.school_year.title}
                   </Option>
                 );
               }
