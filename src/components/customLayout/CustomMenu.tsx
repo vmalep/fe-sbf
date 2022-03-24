@@ -67,11 +67,11 @@ export const CustomMenu: React.FC = () => {
 
         {user?.role && (
           <>
-            <Menu.Item key="books" icon={<SolutionOutlined />}>
-              <Link to="/books">My books</Link>
+            <Menu.Item key="my-books" icon={<SolutionOutlined />}>
+              <Link to="/my-books">My books</Link>
             </Menu.Item>
-            <Menu.Item key="reservations" icon={<ShoppingCartOutlined />}>
-              <Link to="/reservations">My reservations</Link>
+            <Menu.Item key="my-reservations" icon={<ShoppingCartOutlined />}>
+              <Link to="/my-reservations">My reservations</Link>
             </Menu.Item>
             <Menu.Item key="users" icon={<UsergroupDeleteOutlined />}>
               <Link to="/users">Users</Link>

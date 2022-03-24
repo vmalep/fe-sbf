@@ -35,7 +35,7 @@ import NormalizeData from "helpers/normalizeData";
 
 import { useState } from "react";
 
-export const BookList: React.FC<IResourceComponentsProps> = () => {
+export const MyBookList: React.FC<IResourceComponentsProps> = () => {
   const { data: currUser } = useGetIdentity();
   const [ currRecordId, setCurrRecordId ] = useState("");
   const { tableProps, sorter } = useTable<IBook, HttpError, IBookFilterVariables>({
