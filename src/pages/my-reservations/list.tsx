@@ -26,7 +26,7 @@ import {
 
 import { IReservation } from "interfaces";
 
-export const ReservationList: React.FC<IResourceComponentsProps> = () => {
+export const MyReservationList: React.FC<IResourceComponentsProps> = () => {
   const { data: currUser } = useGetIdentity();
   const {
     tableProps,
@@ -52,13 +52,6 @@ export const ReservationList: React.FC<IResourceComponentsProps> = () => {
         "book.users_permissions_user",
       ],
     },
-    permanentFilter: [
-      {
-        field: "users_permissions_user.id",
-        operator: "eq",
-        value: currUser?.role !== "admin" ? currUser?.id : undefined,
-      },
-    ],
   });
   console.log("reservations List tableProps: ", tableProps);
   const { show } = useNavigation();

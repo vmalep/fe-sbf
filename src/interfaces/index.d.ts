@@ -1,24 +1,9 @@
 export interface IBook { // Todo: add picture, status ("as new", "used", etc.)
   id: string;
   price: number;
-  users_permissions_user: {
-    data: {
-      id: string;
-      attributes: IUser;
-    };
-  };
-  library: {
-    data: {
-      id: string;
-      attributes: ILibrary;
-    };
-  };
-  reservations: {
-    data: {
-      id: string;
-      attributes: IReservation;
-    };
-  };
+  users_permissions_user: IUser;
+  library: ILibrary;
+  reservations: IReservations[];
   is_available: boolean;
   comment: string;
   state: "asNew" | "fine" | "veryGood" | "good" | "fair" | "poor" | "bindingCopy";
@@ -27,24 +12,9 @@ export interface IBook { // Todo: add picture, status ("as new", "used", etc.)
 export interface ILibrary {
   id: string;
   title: string;
-  library: {
-    data: {
-      id: string;
-      attributes: ILibrary;
-    };
-  };
-  course: {
-    data: {
-      id: string;
-      attributes: ICourse;
-    };
-  };
-  books: {
-    data: {
-      id: string;
-      attributes: IBook;
-    };
-  };
+  library: ILibrary;
+  course: ICourse;
+  books: IBooks[];
   isdn: string;
   author: string;
   school_year_id: string;
@@ -52,29 +22,13 @@ export interface ILibrary {
 export interface ICourse{
   id: string;
   title: string;
-  school_year: {
-    data: {
-      id: string;
-      attributes: ISchoolYear;
-    };
-  };
-  libraries: {
-    data: {
-      id: string;
-      attributes: ILibrary;
-    };
-  };
-  //school_year_id: string;
+  school_year: ISchoolYear;
+  libraries: ILibraries[];
 }
 export interface ISchoolYear {
   id: string;
   title: string;
-  courses: {
-    data: {
-      id: string;
-      attributes: ICourse;
-    };
-  };
+  courses: ICourses[];
 }
 export interface ISchoolYearContext {
   schoolYearContext: ISchoolYear;
@@ -118,31 +72,15 @@ export interface IUser { // Todo: add geo location
 }
 export interface IReservation {
   id: string;
-  book: {
-    data: {
-      id: string;
-      attributes: IBook;
-    };
-  };
-  users_permissions_user: {
-    data: {
-      id: string;
-      attributes: IUser;
-    };
-  };
+  book: IBook;
+  users_permissions_user: IUser;
   status: "interested" | "proposed" | "confirmed" | "rejected";
   comment: string;
 }
 export interface IReservationNormalized {
   id: string;
-  book: {
-      id: string;
-      attributes: IBook;
-  };
-  users_permissions_user: {
-      id: string;
-      attributes: IUser;
-  };
+  book: IBook;
+  users_permissions_user: IUser;
   status: "interested" | "proposed" | "confirmed" | "rejected";
   comment: string;
 }
@@ -153,18 +91,8 @@ export interface IBookFilterVariables {
   maxprice: number;
 }
 export interface ILibraryFilterVariables {
-  course: {
-    data: {
-      id: string;
-      attributes: ICourse;
-    };
-  };
-  school_year: {
-    data: {
-      id: string;
-      attributes: ISchoolYear;
-    };
-  };
+  course: ICourse;
+  school_year: ISchoolYear;
 }
 export interface IId {
   id: string;

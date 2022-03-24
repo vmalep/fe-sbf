@@ -75,7 +75,7 @@ export const BookCreate: React.FC<IResourceComponentsProps> = () => {
               (library: ILibrary) => {
                 return (
                   <Option key={library.id}>
-                    {library.title} - {library.course.data.attributes.title} - {library.course.data.attributes.school_year.data.attributes.title}
+                    {library.title} - {library.course.title} - {library.course.school_year.title}
                   </Option>
                 );
               }

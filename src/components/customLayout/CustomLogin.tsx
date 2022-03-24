@@ -20,7 +20,7 @@ import {
 } from "./styles";
 //import logo from "../../../assets/images/refine.svg";
 
-const { Text, Title } = Typography;
+const { Title } = Typography;
 export interface ILoginForm {
     username: string;
     password: string;

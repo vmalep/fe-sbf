@@ -35,9 +35,9 @@ import NormalizeData from "helpers/normalizeData";
 
 import { useState } from "react";
 
-export const BookList: React.FC<IResourceComponentsProps> = () => {
+export const MyBookList: React.FC<IResourceComponentsProps> = () => {
   const { data: currUser } = useGetIdentity();
-  const [ currRecordId, setCurrRecordId ] = useState("");
+  const [currRecordId, setCurrRecordId] = useState("");
   const { tableProps, sorter } = useTable<IBook, HttpError, IBookFilterVariables>({
     initialSorter: [
       {
@@ -113,12 +113,13 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
           {...tableProps} rowKey="id"
           expandable={{
             expandedRowRender: (record: { reservations: any; }) => {
+              //console.log('test: ', Object.entries(record?.reservations).length);
               const reservationsIds = NormalizeData(record?.reservations).map((reservation: any) => reservation.id);
               const filteredReservationsTablePropsDS =
-              reservationsTableProps.dataSource?.filter(
-                (reservation: IReservation) => reservationsIds.indexOf(reservation.id) !== -1
+                reservationsTableProps.dataSource?.filter(
+                  (reservation: IReservation) => reservationsIds.indexOf(reservation.id) !== -1
                 );
-              const filteredReservationsTableProps = {...reservationsTableProps, dataSource: filteredReservationsTablePropsDS};
+              const filteredReservationsTableProps = { ...reservationsTableProps, dataSource: filteredReservationsTablePropsDS };
               return (
                 <>
                   {RenderReservations(
@@ -135,9 +136,9 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
                     }
                   )}
                 </>
-              )},
-              rowExpandable: (record: { reservations: { [s: string]: unknown; } | ArrayLike<unknown>; }) => Object.entries(record?.reservations).length > 0
-            }}
+              )
+            },
+            rowExpandable: (record: { reservations: { [s: string]: unknown; } | ArrayLike<unknown>; }) => Object.entries(record?.reservations).length > 0          }}
         >
           <Table.Column
             dataIndex="id"
@@ -189,17 +190,17 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
                     { label: "Available", value: "true" },
                     { label: "Not available", value: "false" },
                   ]}
-                  />
+                />
               </FilterDropdown>
             )}
-            />
-          {/* {currUser?.role === "admin" && ( */}
+          />
+          {currUser?.role === "admin" && (
             <Table.Column
-            key="[user][id]"
-            dataIndex={["users_permissions_user", "username"]}
-            title="Owner"
+              key="[user][id]"
+              dataIndex={["users_permissions_user", "username"]}
+              title="Owner"
             />
-          {/* )} */}
+          )}
           <Table.Column
             key="state"
             dataIndex="state"
