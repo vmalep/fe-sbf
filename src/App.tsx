@@ -128,15 +128,19 @@ function App() {
       dataProvider={DataProvider(API_URL, axiosInstance)}
       resources={[
         {
+          name: "my-books",
+          list: MyBookList,
+        },
+        {
+          name: "my-reservations",
+          list: MyReservationList,
+        },
+        {
           name: "books",
           list: BookList,
           create: BookCreate,
           edit: BookEdit,
           show: BookShow,
-        },
-        {
-          name: "my-books",
-          list: MyBookList,
         },
         {
           name: "libraries",
@@ -172,10 +176,6 @@ function App() {
           create: ReservationCreate,
           edit: ReservationEdit,
           show: ReservationShow,
-        },
-        {
-          name: "my-reservations",
-          list: MyReservationList,
         },
       ]}
       Title={Title}

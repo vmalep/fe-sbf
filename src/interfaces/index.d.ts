@@ -1,12 +1,7 @@
 export interface IBook { // Todo: add picture, status ("as new", "used", etc.)
   id: string;
   price: number;
-  users_permissions_user: {
-    data: {
-      id: string;
-      attributes: IUser;
-    };
-  };
+  users_permissions_user: IUser;
   library: {
     data: {
       id: string;

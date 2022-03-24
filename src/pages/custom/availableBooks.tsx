@@ -26,6 +26,7 @@ const { Title, Text } = Typography;
 export const AvailableBooks: React.FC<IResourceComponentsProps> = () => {
 
   const currUser = useGetIdentity<IUser>().data;
+  console.log('currUser: ', currUser);
   const [currSchoolYear, setCurrSchoolYear] = useState("1");
   const [normalizedCourses, setNormalizedCourses] = useState();
   const [includesMyBooks, setIncludesMyBooks] = useState<boolean>(false);

@@ -16,7 +16,7 @@ import {
 
 import { RenderReservations } from "components/customRenders";
 
-import { IBook, IReservation } from "interfaces";
+import { IBook, IReservation, IUser } from "interfaces";
 
 const { Title, Text } = Typography;
 
@@ -31,10 +31,12 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
       ],
     },
   });
-  const { data: currUser } = useGetIdentity();
+  const currUser = useGetIdentity<IUser>().data;
+  console.log('currUser: ', currUser);
   const { data, isLoading } = queryResult;
   const record = data?.data;
   const owner = record?.users_permissions_user;
+  console.log('bookShow owner: ', owner);
   const library = record?.library.data?.attributes;
 
   const {
@@ -79,7 +81,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
       pageHeaderProps={{
         extra: (
           <>
-            {(currUser?.id === owner?.data.id) && (
+            {(currUser?.id === owner?.id) && (
               <>
                 <EditButton size="large" recordItemId={record?.id} />
                 <DeleteButton size="large" recordItemId={record?.id} />
@@ -94,7 +96,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
       <Title level={5}>Title</Title>
       <Text>{library?.title}</Text>
       <Title level={5}>Owner</Title>
-      <Text>{owner?.data?.attributes.username}</Text>
+      <Text>{owner?.username}</Text>
       <Title level={5}>Price</Title>
       <Text>{record?.price}</Text>
     </Show>
@@ -103,7 +105,7 @@ export const BookShow: React.FC<IResourceComponentsProps> = () => {
   return (
     <>
       {renderBook()}
-      {(currUser.id === owner?.data.id) && (
+      {(currUser?.id === owner?.id) && (
         <Card>
           <List title="Reservations">
             {RenderReservations(
