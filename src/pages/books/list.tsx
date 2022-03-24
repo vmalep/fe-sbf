@@ -136,8 +136,8 @@ export const BookList: React.FC<IResourceComponentsProps> = () => {
                   )}
                 </>
               )},
-              //rowExpandable: (record: { reservations: { data: { [s: string]: unknown; } | ArrayLike<unknown>; }; }) => Object.entries(record?.reservations.data).length > 0
-          }}
+              rowExpandable: (record: { reservations: { data: { [s: string]: unknown; } | ArrayLike<unknown>; }; }) => Object.entries(record?.reservations).length > 0
+            }}
         >
           <Table.Column
             dataIndex="id"
