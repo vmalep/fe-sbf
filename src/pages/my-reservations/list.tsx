@@ -175,11 +175,13 @@ export const MyReservationList: React.FC<IResourceComponentsProps> = () => {
                     {...editButtonProps(record.id)}
                     hideText
                     size="small"
+                    resource="reservations"
                   />
                   <DeleteButton
                     recordItemId={record.id}
                     hideText
                     size="small"
+                    resource="reservations"
                   />
                   <Button
                     icon={<EyeOutlined />}

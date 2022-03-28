@@ -2,6 +2,7 @@ import {
   IResourceComponentsProps,
   HttpError,
   useGetIdentity,
+  useNavigation,
 } from "@pankod/refine-core";
 
 import {
@@ -11,9 +12,7 @@ import {
   useTable,
   getDefaultSortOrder,
   Space,
-  EditButton,
-  DeleteButton,
-  ShowButton,
+  Button,
   NumberField,
   Select,
   useSelect,
@@ -35,9 +34,14 @@ import NormalizeData from "helpers/normalizeData";
 
 import { useState } from "react";
 
+import {
+  EyeOutlined,
+} from "@ant-design/icons";
+
 export const MyBookList: React.FC<IResourceComponentsProps> = () => {
   const { data: currUser } = useGetIdentity();
   const [currRecordId, setCurrRecordId] = useState("");
+  const { show } = useNavigation();
   const { tableProps, sorter } = useTable<IBook, HttpError, IBookFilterVariables>({
     initialSorter: [
       {
@@ -55,13 +59,6 @@ export const MyBookList: React.FC<IResourceComponentsProps> = () => {
         "reservations.users_permissions_user",
       ],
     },
-    permanentFilter: [
-      {
-        field: "[users_permissions_user][id]",
-        operator: "eq",
-        value: 1, //currUser?.role !== "admin" ? currUser?.id : undefined,
-      },
-    ],
   });
 
   console.log('bookList tableProps: ', tableProps);
@@ -90,15 +87,6 @@ export const MyBookList: React.FC<IResourceComponentsProps> = () => {
         "book.library",
         "book.users_permissions_user",
       ],
-      filters: {
-        book: {
-          users_permission_user: {
-            id: {
-              $eq: 1, //currUser?.role !== "admin" ? currUser?.id : undefined,
-            },
-          },
-        },
-      },
     },
   });
 
@@ -138,7 +126,8 @@ export const MyBookList: React.FC<IResourceComponentsProps> = () => {
                 </>
               )
             },
-            rowExpandable: (record: { reservations: { [s: string]: unknown; } | ArrayLike<unknown>; }) => Object.entries(record?.reservations).length > 0          }}
+            rowExpandable: (record: { reservations: { [s: string]: unknown; } | ArrayLike<unknown>; }) => Object.entries(record?.reservations).length > 0
+          }}
         >
           <Table.Column
             dataIndex="id"
@@ -221,9 +210,15 @@ export const MyBookList: React.FC<IResourceComponentsProps> = () => {
             dataIndex="actions"
             render={(_: any, record: { id: any; }) => (
               <Space>
-                <ShowButton hideText size="small" recordItemId={record.id} />
+                <Button
+                  icon={<EyeOutlined />}
+                  onClick={(): void =>
+                    show("books", `${record?.id}`)
+                  }
+                />
+                {/* <ShowButton hideText size="small" recordItemId={record.id} />
                 <EditButton hideText size="small" recordItemId={record.id} />
-                <DeleteButton hideText size="small" recordItemId={record.id} />
+                <DeleteButton hideText size="small" recordItemId={record.id} /> */}
               </Space>
             )}
           />
